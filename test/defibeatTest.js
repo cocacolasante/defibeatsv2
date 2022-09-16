@@ -64,4 +64,7 @@ describe("Defi Beats V2", () =>{
     await DefiBeats.connect(user2).buySong(1, {value: "15"});
     expect(await ethers.provider.getBalance(deployer.address)).to.equal(intialBalance + BigInt(1))
   })
+  it("checks the cancel listing function", async () => {
+    
+  })
 })

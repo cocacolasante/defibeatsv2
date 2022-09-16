@@ -38,6 +38,8 @@ contract DefiBeats is ERC721URIStorage, Ownable{
 
     event SongListed(uint indexed tokenId, address seller, string tokenUri);
 
+    event SongCancelled(uint indexed tokenId, address seller, string tokenUri);
+
     event SongPurchased(uint indexed tokenId, address seller, string tokenUri, uint price);
 
     modifier onlyAdmin {
@@ -139,9 +141,21 @@ contract DefiBeats is ERC721URIStorage, Ownable{
 
         song.isForSale = false;
         song.price = 0;
+
+        emit SongCancelled(song.tokenId , msg.sender, song.tokenUri);
+    }
+
+    function updateListingPrice(uint songNumber, uint newPrice) public {
+        Song memory song = songs[songNumber];
+        require(msg.sender == song.currentOwner, "Only current owner can cancel listing");
+
+        song.price = newPrice;
+
     }
 
 
+
+    // add "remix" function to add remixes of song to the nft and ipfs
 
     // update contract functions
     function updateFee(uint _newFeeAmount) public onlyAdmin returns(uint) {
