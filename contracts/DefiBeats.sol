@@ -27,6 +27,8 @@ contract DefiBeats is ERC721URIStorage, Ownable{
 
     struct Song{
         uint tokenId;
+        string name;
+        string collection;
         address payable currentOwner;
         string tokenUri;
         uint price;
@@ -54,7 +56,7 @@ contract DefiBeats is ERC721URIStorage, Ownable{
     }
 
     // make song / mint function
-    function makeSong(string memory _tokenUri) external payable returns(uint){
+    function makeSong(string memory _tokenUri, string memory songName, string memory collection) external payable returns(uint){
         _tokenIds.increment();
         tokenCount++;
 
@@ -69,6 +71,8 @@ contract DefiBeats is ERC721URIStorage, Ownable{
 
         songs[newTokenId] = Song(
             newTokenId,
+            songName,
+            collection,
             payable(msg.sender),
             _tokenUri,
             0,
@@ -98,6 +102,8 @@ contract DefiBeats is ERC721URIStorage, Ownable{
 
         allSongs.push(Song(
             songNumber,
+            song.name,
+            song.collection,
             payable(msg.sender),
             song.tokenUri,
             songPrice,
@@ -152,8 +158,6 @@ contract DefiBeats is ERC721URIStorage, Ownable{
         song.price = newPrice;
 
     }
-
-
 
     // add "remix" function to add remixes of song to the nft and ipfs
 

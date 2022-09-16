@@ -1,8 +1,8 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
-const toWeiStr = (num) => ethers.utils.parseEther(num.toString()) //
-const toWeiInt = (num) => ethers.utils.parseEther(num) //
+const toWeiStr = (num) => ethers.utils.parseEther(num.toString())
+const toWeiInt = (num) => ethers.utils.parseEther(num) 
 const fromWei = (num) => ethers.utils.formatEther(num)
 
 describe("Defi Beats V2", () =>{
@@ -22,7 +22,7 @@ describe("Defi Beats V2", () =>{
  
 
 
-    await DefiBeats.connect(user1).makeSong(SAMPLE_URI)
+    await DefiBeats.connect(user1).makeSong(SAMPLE_URI, "test1", "test2")
     await DefiBeats.connect(user1).listSong(1, 10)
 
   })
@@ -64,7 +64,11 @@ describe("Defi Beats V2", () =>{
     await DefiBeats.connect(user2).buySong(1, {value: "15"});
     expect(await ethers.provider.getBalance(deployer.address)).to.equal(intialBalance + BigInt(1))
   })
-  it("checks the cancel listing function", async () => {
-    
+  it("checks the cancel listing event is emitted", async () => {
+    expect(await DefiBeats.connect(user1).cancelListing(1)).to.emit(DefiBeats, "SongCancelled")
+  })
+  it("checks the nft is transferred from market to owner after cancelled listing", async () =>{
+    await DefiBeats.connect(user1).cancelListing(1)
+    expect(await DefiBeats.ownerOf(1)).to.equal(user1.address)
   })
 })

@@ -16,8 +16,6 @@ contract ProfileNFT is ERC721URIStorage {
     mapping(uint=>address) public ownerOfNft;
     mapping(address=>Creator) public creators;
 
-    
-
     struct Creator{
         address payable creator;
         string profileMessage;
