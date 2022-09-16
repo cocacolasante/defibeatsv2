@@ -1,5 +1,5 @@
 TO DO
-profile nft contract with status message
+test profile nft contract 
 remix function for beats
 test all
 build front end

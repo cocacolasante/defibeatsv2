@@ -23,7 +23,7 @@ contract DefiBeats is ERC721URIStorage, Ownable{
 
     mapping(uint=>Song) public songs;
 
-    Song[] public marketSongs;
+    Song[] public allSongs;
 
     struct Song{
         uint tokenId;
@@ -96,7 +96,7 @@ contract DefiBeats is ERC721URIStorage, Ownable{
         // transfer nft from owner to contract
         transferFrom(msg.sender, address(this), song.tokenId);
 
-        marketSongs.push(Song(
+        allSongs.push(Song(
             songNumber,
             payable(msg.sender),
             song.tokenUri,

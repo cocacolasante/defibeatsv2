@@ -14,12 +14,22 @@ contract ProfileNFT is ERC721URIStorage {
 
     mapping(address=>uint)public nftProfileOwners;
     mapping(uint=>address) public ownerOfNft;
-    mapping(address=>string) public profileMessage;
+    mapping(address=>Creator) public creators;
+
+    
+
+    struct Creator{
+        address payable creator;
+        string profileMessage;
+        uint tipsReceived;
+        uint profileToken;
+    }
 
     constructor()ERC721("DefiBeats Profile", "DFBP"){}
 
     function mint(string memory _tokenUri) external returns(uint){
         _tokenIds.increment();
+        tokenCount++;
 
         uint newTokenId = _tokenIds.current();
 
@@ -27,6 +37,13 @@ contract ProfileNFT is ERC721URIStorage {
 
         ownerOfNft[newTokenId] = msg.sender;
         _setTokenURI(newTokenId, _tokenUri);
+
+        creators[msg.sender] = Creator(
+            payable(msg.sender),
+            "",
+            0,
+            newTokenId
+        );
 
         return(newTokenId);
     }
@@ -40,7 +57,16 @@ contract ProfileNFT is ERC721URIStorage {
     }
 
     function setMessage(string memory message) public returns(string memory) {
-        return(profileMessage[msg.sender] = message);
+        return(creators[msg.sender].profileMessage = message);
     }
-    
+
+    function tipCreator(address creator) external payable {
+        require(msg.value > 0, "cannot tip 0");
+        payable(creator).transfer(msg.value);
+        creators[creator].tipsReceived += msg.value;
+    }
+
+    function setProfile(uint tokenId) public returns(uint){
+        return(creators[msg.sender].profileToken = tokenId);
+    }
 }
