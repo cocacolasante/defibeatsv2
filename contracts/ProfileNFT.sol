@@ -13,11 +13,11 @@ contract ProfileNFT is ERC721URIStorage {
     uint public tokenCount;
 
     mapping(address=>uint)public nftProfileOwners;
-    mapping(uint=>address) public ownerOfNft;
-    mapping(address=>Creator) public creators;
+    mapping(uint=>Creator) public numberToCreator;
+    mapping(address=>Creator) public creatorsProfile;
 
     struct Creator{
-        address payable creator;
+        address payable creatorAddress;
         string profileMessage;
         uint tipsReceived;
         uint profileToken;
@@ -33,10 +33,16 @@ contract ProfileNFT is ERC721URIStorage {
 
         _mint(msg.sender, newTokenId);
 
-        ownerOfNft[newTokenId] = msg.sender;
+        numberToCreator[newTokenId] = Creator(
+            payable(msg.sender),
+            "",
+            0,
+            newTokenId
+        );
+
         _setTokenURI(newTokenId, _tokenUri);
 
-        creators[msg.sender] = Creator(
+        creatorsProfile[msg.sender] = Creator(
             payable(msg.sender),
             "",
             0,
@@ -49,22 +55,35 @@ contract ProfileNFT is ERC721URIStorage {
     function burn(uint _tokenId) external {
         require(msg.sender == ownerOf(_tokenId), "must be owner to burn");
 
-        delete ownerOfNft[_tokenId];
+        delete numberToCreator[_tokenId];
         _burn(_tokenId);
     
     }
 
-    function setMessage(string memory message) public returns(string memory) {
-        return(creators[msg.sender].profileMessage = message);
+    function setMessage(address creatorsPro, string memory message) public returns(string memory ) {
+        Creator storage creator = creatorsProfile[creatorsPro];
+        require(msg.sender == creator.creatorAddress, "cannot set someone elses message" );
+
+        return(creator.profileMessage = message);
     }
 
-    function tipCreator(address creator) external payable {
+    function tipCreator(address creatorAddress) external payable returns(uint){
         require(msg.value > 0, "cannot tip 0");
-        payable(creator).transfer(msg.value);
-        creators[creator].tipsReceived += msg.value;
+        require(msg.sender != creatorAddress, "cannot tip yourself");
+
+        Creator storage creator = creatorsProfile[creatorAddress];
+
+        payable(creatorAddress).transfer(msg.value);
+
+        return(creator.tipsReceived += msg.value);
+        
     }
 
     function setProfile(uint tokenId) public returns(uint){
-        return(creators[msg.sender].profileToken = tokenId);
+        require(msg.sender == ownerOf(tokenId), "owner can only set profile they own");
+
+        Creator storage creator = creatorsProfile[msg.sender];
+        
+        return(creator.profileToken = tokenId);
     }
 }

@@ -67,7 +67,7 @@ contract DefiBeats is ERC721URIStorage, Ownable{
         ownerOfNft[newTokenId] = msg.sender;
         _setTokenURI(newTokenId, _tokenUri);
 
-        setApprovalForAll(address(this), true);
+        
 
         songs[newTokenId] = Song(
             newTokenId,
@@ -79,6 +79,16 @@ contract DefiBeats is ERC721URIStorage, Ownable{
             false,
             payable(msg.sender)
         );
+        allSongs.push(Song(
+            newTokenId,
+            songName,
+            collection,
+            payable(msg.sender),
+            _tokenUri,
+            0,
+            false,
+            payable(msg.sender)
+        ));
 
         emit SongMade(newTokenId, msg.sender, _tokenUri);
 
@@ -88,35 +98,28 @@ contract DefiBeats is ERC721URIStorage, Ownable{
 
     // song number is tokenId
     function listSong(uint songNumber, uint songPrice) external {
-        require(msg.sender == songs[songNumber].currentOwner, "cannot list songs you do not own");
+        require(msg.sender == ownerOf(songNumber), "cannot list songs you do not own");
 
-        Song memory song = songs[songNumber];
-        address ogProducer = song.originalProducer;
+        Song storage song = songs[songNumber];
 
-        song.currentOwner = payable(msg.sender);
+
         song.isForSale = true;
         song.price = songPrice;
+        song.currentOwner = payable(msg.sender);
+
+        setApprovalForAll(address(this), true);
 
         // transfer nft from owner to contract
         transferFrom(msg.sender, address(this), song.tokenId);
 
-        allSongs.push(Song(
-            songNumber,
-            song.name,
-            song.collection,
-            payable(msg.sender),
-            song.tokenUri,
-            songPrice,
-            true,
-            payable(ogProducer)
-        ));
 
         emit SongListed(song.tokenId , msg.sender, song.tokenUri);
+
 
     }
 
     function buySong(uint songNumber) external payable {
-        Song memory song = songs[songNumber];
+        Song storage song = songs[songNumber];
         uint totalPrice = song.price + transactionFee + transactionFee;
         require(msg.value >= totalPrice, "Please pay the required amount");
 
@@ -124,9 +127,10 @@ contract DefiBeats is ERC721URIStorage, Ownable{
         uint amountToTransfer = msg.value - transactionFees;
 
         // transfer payment
-        song.currentOwner.transfer(amountToTransfer);
+        
         song.originalProducer.transfer(royaltyFee); 
         feeAccount.transfer(transactionFee);
+        song.currentOwner.transfer(amountToTransfer);
 
         // transfer nft
         _transfer(address(this), msg.sender, song.tokenId);
@@ -135,12 +139,13 @@ contract DefiBeats is ERC721URIStorage, Ownable{
         song.currentOwner = payable(msg.sender);
         song.isForSale = false;
 
+
         emit SongPurchased(song.tokenId , msg.sender, song.tokenUri, msg.value);   
 
     }
 
     function cancelListing(uint songNumber) public {
-        Song memory song = songs[songNumber];
+        Song storage song = songs[songNumber];
         require(msg.sender == song.currentOwner, "Only current owner can cancel listing");
 
         _transfer(address(this), msg.sender, song.tokenId);
@@ -152,7 +157,7 @@ contract DefiBeats is ERC721URIStorage, Ownable{
     }
 
     function updateListingPrice(uint songNumber, uint newPrice) public {
-        Song memory song = songs[songNumber];
+        Song storage song = songs[songNumber];
         require(msg.sender == song.currentOwner, "Only current owner can cancel listing");
 
         song.price = newPrice;
@@ -177,7 +182,5 @@ contract DefiBeats is ERC721URIStorage, Ownable{
     function changeFeeAccount(address newFeeAddress) public onlyAdmin returns(address){
         return feeAccount = payable(newFeeAddress);
     }
-
-
-    
+  
 }
