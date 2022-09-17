@@ -33,3 +33,14 @@
   text-align: center;
   align-content: center;
 }
+
+.button{
+  z-index: 2;
+  float: right;
+  background-color: whitesmoke;
+  
+
+}
+.button-container{
+  padding-right: 30px;
+}

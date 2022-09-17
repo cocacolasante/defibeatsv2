@@ -8,7 +8,7 @@ const initialState = ({
     account: null
 })
 
-const providerSlice = createSlice({
+export const providerSlice = createSlice({
     name: "provider",
     initialState: initialState,
     reducers: {
