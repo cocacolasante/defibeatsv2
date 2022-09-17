@@ -1,6 +1,46 @@
+import { ethers } from "ethers"
 
+import { useState, useEffect } from "react";
 
 const SearchBar = () => {
+
+    const [activeAccount, setActiveAccount] = useState("")
+
+    const connectWallet = async () => {
+        try{
+            const {ethereum} = window;
+            if(!ethereum){
+                alert("Please install Metamask")
+                return;
+              }
+
+            const accounts = await ethereum.request({method: "eth_requestAccounts"})
+            setActiveAccount(accounts[0])
+            console.log(`Account connected: ${accounts[0]}`)
+        }catch (error){
+            console.log(error)
+        }
+    }
+    
+
+    const checkIfWalletIsConnected = async () => {
+
+        const {ethereum} = window;
+
+        if(!ethereum){
+            alert("please install metamask")
+            return;
+        } else{
+            console.log("we have the ethereum object")
+        }
+        
+
+    }
+
+    useEffect(()=>{
+        checkIfWalletIsConnected();
+    },[])
+
   return (
     <div className="search-bar-container">
         <div >

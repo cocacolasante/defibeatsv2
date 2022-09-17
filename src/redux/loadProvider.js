@@ -15,6 +15,7 @@ const providerSlice = createSlice({
         loadProvider: (state) => {
             const connection = new ethers.providers.Web3Provider(window.ethereum)
             state.connection = connection;
+            console.log("provider loaded")
         },
         loadNetwork: (state) => {
             const { chainId } = ethers.providers.getNetwork()

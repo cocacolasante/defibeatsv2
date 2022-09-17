@@ -2,6 +2,9 @@ import SearchBar from "../components/SearchBar";
 import MusicPlayer from "../components/MusicPlayer";
 
 const SearchAndPlayer = () =>{
+
+    
+
     return(
         <div>
             <div >
