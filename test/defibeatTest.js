@@ -242,8 +242,5 @@ describe("Defi Beats V2", () =>{
       })
     })
   })
-  describe("Hire Creator Contract", () => {
-    
-  })
 })
 
