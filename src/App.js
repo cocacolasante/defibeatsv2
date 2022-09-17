@@ -1,16 +1,17 @@
+import { Routes, Route } from 'react-router-dom';
 import './App.css';
-import "./bootstrapcss/bootstrap.min.css";
 
-import NavBar from './components/Navbar';
+import SearchAndPlayer from './routes/SearchAndPlayer';
 
 function App() {
   return (
-    <div className="App">
-      <div >
-        <NavBar />
-
-      </div>
-    </div>
+    <Routes>
+      <Route path='/' element={ <SearchAndPlayer />} >
+        {/* <Route index element={ <Home />} /> */}
+        
+      </Route>
+     
+    </Routes>
   );
 }
 

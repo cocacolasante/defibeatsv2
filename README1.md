@@ -1,6 +1,7 @@
 TO DO
-test profile nft contract 
-remix function for beats
-test all
+
+remix function for beats - still have to do
+test all - tested marketplace and profile - check plus
+
 build front end
-find ipfs host url //infura or another one
+find ipfs host url //infura or another one to link to for nft 
