@@ -1,9 +1,16 @@
 import { ethers } from "ethers"
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux'
+import { loadProvider } from "../redux/actions";
 
 const SearchBar = () => {
 
     const [activeAccount, setActiveAccount] = useState()
+    const dispatch = useDispatch();
+
+    
+    
+
 
     const connectWallet = async () => {
         try{
@@ -16,6 +23,8 @@ const SearchBar = () => {
             const accounts = await ethereum.request({method: "eth_requestAccounts"})
             setActiveAccount(accounts[0])
             console.log(`Account connected: ${accounts[0]}`)
+            
+            
             
 
         }catch (error){
@@ -35,10 +44,22 @@ const SearchBar = () => {
             console.log("we have the ethereum object")
         }
 
-        
+        const accounts = await ethereum.request({method: "eth_accounts"})
+
+        if(accounts.length !== 0){
+            const currentAccount = accounts[0]
+            setActiveAccount(currentAccount)
+            console.log(`Connected to ${currentAccount}`)
+        } else{
+            console.log("No accounts authorized or connected")
+        }
+
+
+        loadProvider(dispatch)
 
     }
 
+  
 
 
     useEffect(()=>{

@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
-import providerSlice from './loadProvider'
+import {provider} from './reducers'
 
 export const store = configureStore({
     reducer: {
-        provider: providerSlice
+        provider: provider
     },
   })
   
