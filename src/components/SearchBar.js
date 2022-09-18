@@ -1,18 +1,18 @@
 import { ethers } from "ethers"
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux'
-import { loadProvider } from "../redux/actions";
+import { loadProvider, loadAccount } from "../redux/actions";
 
 const SearchBar = () => {
 
     const [activeAccount, setActiveAccount] = useState()
     const dispatch = useDispatch();
 
-    
-    
+    const provider = useSelector(state=>state.provider.connection)
 
-
+    
     const connectWallet = async () => {
+       
         try{
             const {ethereum} = window;
             if(!ethereum){
@@ -21,15 +21,23 @@ const SearchBar = () => {
               }
 
             const accounts = await ethereum.request({method: "eth_requestAccounts"})
-            setActiveAccount(accounts[0])
-            console.log(`Account connected: ${accounts[0]}`)
-            
-            
-            
+            const account = accounts[0]
 
+            setActiveAccount(account)
+
+            console.log(`Account connected: ${accounts[0]}`)
+
+            dispatch({type: "ACCOUNT_LOADED", account: account}) 
+            
+            let balance = await provider.getBalance(account)
+            balance = ethers.utils.formatEther(balance)
+        
+            dispatch({ type: 'ETHER_BALANCE_LOADED', balance: balance })
+            
         }catch (error){
             console.log(error)
         }
+                    
     }
     
 
@@ -49,20 +57,22 @@ const SearchBar = () => {
         if(accounts.length !== 0){
             const currentAccount = accounts[0]
             setActiveAccount(currentAccount)
+
             console.log(`Connected to ${currentAccount}`)
+
+            dispatch({type: "ACCOUNT_LOADED", account: currentAccount})
+
         } else{
             console.log("No accounts authorized or connected")
         }
 
-
         loadProvider(dispatch)
-
+        
     }
-
-  
 
 
     useEffect(()=>{
+
         checkIfWalletIsConnected();
     },[])
 
@@ -75,11 +85,11 @@ const SearchBar = () => {
             <div>
 
                 <ul className="navbar-links">
-                    <a href="">Home</a>
-                    <a href="">Browse</a>
-                    <a href="">My Songs</a>
+                    <a href="">Profile</a>
                     <a href="">Upload</a>
-                    <a href="">Profile</a> 
+                    <a href="">My Songs</a>
+                    <a href="">Browse</a>
+                    <a href="">Home</a> 
                                      
                 </ul>
                 

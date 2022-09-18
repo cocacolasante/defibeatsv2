@@ -21,6 +21,7 @@ contract ProfileNFT is ERC721URIStorage {
         string profileMessage;
         uint tipsReceived;
         uint profileToken;
+        uint numOfLikes;
     }
 
     constructor()ERC721("DefiBeats Profile", "DFBP"){}
@@ -37,7 +38,8 @@ contract ProfileNFT is ERC721URIStorage {
             payable(msg.sender),
             "",
             0,
-            newTokenId
+            newTokenId,
+            0
         );
 
         _setTokenURI(newTokenId, _tokenUri);
@@ -46,7 +48,8 @@ contract ProfileNFT is ERC721URIStorage {
             payable(msg.sender),
             "",
             0,
-            newTokenId
+            newTokenId,
+            0
         );
 
         return(newTokenId);
@@ -85,5 +88,13 @@ contract ProfileNFT is ERC721URIStorage {
         Creator storage creator = creatorsProfile[msg.sender];
         
         return(creator.profileToken = tokenId);
+    }
+
+    function sendLike(address creatorAddress) external returns(uint){
+        require(msg.sender !=creatorAddress, "cannot like your own profile");
+        
+        Creator storage creator = creatorsProfile[creatorAddress];
+
+        return creator.numOfLikes++;
     }
 }

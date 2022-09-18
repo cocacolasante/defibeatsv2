@@ -240,6 +240,12 @@ describe("Defi Beats V2", () =>{
         profile = await ProfileNFT.creatorsProfile(user1.address)
         expect(profile.profileToken).to.equal(2)
       })
+      it("checks the send like function", async () =>{
+        await ProfileNFT.connect(user2).sendLike(user1.address)
+        let profile = await ProfileNFT.creatorsProfile(user1.address)
+
+        expect(await profile.numOfLikes).to.equal(1)
+      })
     })
   })
 })
