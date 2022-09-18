@@ -1,5 +1,6 @@
 import SearchBar from "../components/SearchBar";
 import MusicPlayer from "../components/MusicPlayer";
+import { Outlet } from 'react-router-dom';
 
 const SearchAndPlayer = () =>{
 
@@ -13,6 +14,7 @@ const SearchAndPlayer = () =>{
             <div>
                 <SearchBar />
             </div>
+            <Outlet />
       </div>
     )
 }
