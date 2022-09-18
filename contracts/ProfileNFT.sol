@@ -16,6 +16,8 @@ contract ProfileNFT is ERC721URIStorage {
     mapping(uint=>Creator) public numberToCreator;
     mapping(address=>Creator) public creatorsProfile;
 
+    mapping(address=>mapping(address=>bool)) public hasLikeProfile;
+
     struct Creator{
         address payable creatorAddress;
         string profileMessage;
@@ -92,6 +94,9 @@ contract ProfileNFT is ERC721URIStorage {
 
     function sendLike(address creatorAddress) external returns(uint){
         require(msg.sender !=creatorAddress, "cannot like your own profile");
+        require(hasLikeProfile[msg.sender][creatorAddress] == false, "already liked artist");
+
+        hasLikeProfile[msg.sender][creatorAddress] = true;
         
         Creator storage creator = creatorsProfile[creatorAddress];
 

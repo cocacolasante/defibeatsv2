@@ -1,4 +1,5 @@
 import { ethers } from "ethers"
+import {Link } from "react-router-dom"
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux'
 import { loadProvider, loadAccount } from "../redux/actions";
@@ -87,11 +88,11 @@ const SearchBar = () => {
             <div>
 
                 <ul className="navbar-links">
-                    <a href="">Profile</a>
-                    <a href="">Upload</a>
-                    <a href="">My Songs</a>
-                    <a href="">Browse</a>
-                    <a href="">Home</a> 
+                    <Link className="nav-bar-links-link" to='profile'>Profile</Link>
+                    <Link className="nav-bar-links-link" to='/upload'>Upload</Link>
+                    <Link className="nav-bar-links-link" to='/mysongs'>My Songs</Link>
+                    <Link className="nav-bar-links-link" to='/browse'>Browse</Link>
+                    <Link className="nav-bar-links-link" to='/'>Home</Link> 
                                      
                 </ul>
                 
