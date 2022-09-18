@@ -3,9 +3,8 @@
   display: flex;
   position: fixed;
   color: black;
-  padding: 100px 50px;
   border: 1px solid black;
-  width: 200px;
+  width: 300px;
   height: 100%;
   overflow-x: hidden;
   z-index: 1;
@@ -32,6 +31,8 @@
 .search-bar-form{
   text-align: center;
   align-content: center;
+  padding: 15px;
+  padding-left: 30px;
 }
 
 .button{
@@ -43,4 +44,22 @@
 }
 .button-container{
   padding-right: 30px;
+}
+
+.search-bar {
+  color: black;
+  text-align: center;
+  text-decoration: none;
+  font-size: 17px;
+  outline: none;
+}
+
+.divtest{
+  border: solid black;
+}
+
+.title-header{
+  display: flex;
+  position: fixed;
+  padding-left: 10px;
 }

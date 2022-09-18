@@ -6,6 +6,8 @@ import { loadProvider, loadAccount } from "../redux/actions";
 const SearchBar = () => {
 
     const [activeAccount, setActiveAccount] = useState()
+    const [search, setSearch] = useState("")
+
     const dispatch = useDispatch();
 
     const provider = useSelector(state=>state.provider.connection)
@@ -97,7 +99,7 @@ const SearchBar = () => {
             
 
             <div className="search-bar-form">
-                SearchBar
+                <input className="search-bar" type="text" placeholder="Search For a Song.." />
             </div>
         </div>
             
