@@ -7,14 +7,13 @@ const SearchAndPlayer = () =>{
     
 
     return(
-        <div>
-            <div >
+        <div id='wrapper'>
+                
                 <MusicPlayer />
-            </div>
-            <div>
-                <SearchBar />
-            </div>
+            <div id='content-wrapper'>
+            <SearchBar />
             <Outlet />
+            </div>
       </div>
     )
 }

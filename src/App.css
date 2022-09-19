@@ -1,15 +1,3 @@
-.side-bar-container{
-  height: 100%;
-  display: flex;
-  position: fixed;
-  color: black;
-  width: 300px;
-  height: 100%;
-  overflow-x: hidden;
-  z-index: 2;
-  background-color: grey;
-  justify-content: center;
-}
 
 .search-bar-container{
   position: fixed;
@@ -23,15 +11,23 @@
 .nav-bar-links-link {
   float: right;
   color: black;
-  text-align: center;
   padding: 14px 16px;
   text-decoration: none;
   font-size: 17px;
+  
+}
+.navcustom{
+  margin-top: 0px;
+  
+}
+
+.navbar-links{
+  float: left;
 }
 
 .search-bar-form{
-  text-align: center;
-  align-content: center;
+  text-align: right;
+  align-content: right;
   padding: 15px;
   padding-left: 30px;
 }
@@ -44,8 +40,11 @@
 
 }
 .button-container{
-  padding-right: 30px;
+  position: absolute;
+  top: 15%;
+  left: 80%;
 }
+
 
 .search-bar {
   color: black;
@@ -93,7 +92,7 @@
 .home-container{
   width: 100%;
   height: 100%;
-  background-color: lightcyan;
+  background-color: whitesmoke;
   margin-left: 200px;
   padding-top: 100px;
 }
@@ -112,7 +111,7 @@
   flex-wrap: wrap;
   padding-left: 100px;
   padding-right: 100px;
-  
+  padding-bottom: 50px;
 }
 
 .title-container-upload{

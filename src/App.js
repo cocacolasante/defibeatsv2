@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
+import "./bootstrapcss/bootstrap.min.css"
 
 import SearchAndPlayer from './routes/SearchAndPlayer';
 import Home from './routes/Home';

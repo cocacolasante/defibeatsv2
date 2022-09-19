@@ -4,13 +4,15 @@ import RecentUploads from "../components/RecentUploads";
 const Home = ({contract}) =>{
 
     return(
-        <div className="home-container">
-            <div className="featured-container" >
+        <div id="content">
+        <div className="content-wrapper">
+            <div className="row" >
                 <FeaturedSong />
             </div>
             <div className="home-recent-upload" >
                 <RecentUploads />
             </div>
+        </div>
         </div>
     )
 }
