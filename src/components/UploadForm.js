@@ -70,8 +70,11 @@ const UploadForm = ({DefiBeats}) => {
           </div>
           <div>
             <label for='description'>Enter short song description or message</label>
+            <br />
             <textarea value='description' onChange={(e)=>setDescription(e.target.value)} />
+            
           </div>
+          <br />
           <div className="form-div">
             <label >Song File</label>
             <input type='file' placeholder="Enter Song File..." />

@@ -1,11 +1,10 @@
 import SongListing from './SongListing'
 
-import React from 'react'
 
-const RecentUploads = () => {
+const TopPurchases = () => {
   return (
     <div className='recent-upload-container'>
-        <h2>Recent Uploads</h2>
+        <h2>Top Purchases</h2>
         <div className='recent-upload-card-container'>
             <SongListing />
             <SongListing />
@@ -20,4 +19,4 @@ const RecentUploads = () => {
   )
 }
 
-export default RecentUploads
+export default TopPurchases

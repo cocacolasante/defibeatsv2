@@ -1,5 +1,6 @@
 import FeaturedSong from "../components/FeaturedSong";
 import RecentUploads from "../components/RecentUploads";
+import TopPurchases from "../components/TopPurchases";
 
 const Home = ({contract}) =>{
 
@@ -11,6 +12,9 @@ const Home = ({contract}) =>{
             </div>
             <div className="home-recent-upload" >
                 <RecentUploads />
+            </div>
+            <div className="home-recent-upload" >
+                <TopPurchases />
             </div>
         </div>
         </div>

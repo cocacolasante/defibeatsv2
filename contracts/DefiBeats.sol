@@ -42,7 +42,7 @@ contract DefiBeats is ERC721URIStorage, Ownable{
 
     event SongCancelled(uint indexed tokenId, address seller, string tokenUri);
 
-    event SongPurchased(uint indexed tokenId, address seller, string tokenUri, uint price);
+    event SongPurchased(uint indexed tokenId, address seller, string tokenUri, uint indexed price);
 
     modifier onlyAdmin {
         require(msg.sender == admin);
