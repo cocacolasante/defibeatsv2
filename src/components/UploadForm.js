@@ -52,18 +52,31 @@ const UploadForm = ({DefiBeats}) => {
         <form className="form">
           <div className="form-div">
             <label >Song Name</label>
-            <input type='text' placeholder="Enter Song Name..." />
+            <input type='text' onChange={(e)=>setName(e.target.value)} placeholder="Enter Song Name..." />
           </div>
           <div className="form-div">
             <label >Collection Name</label>
-            <input type='text' placeholder="Enter Collection Name..." />
+            <input type='text' onChange={(e)=>setCollectionName(e.target.value)} placeholder="Enter Collection Name..." />
+          </div>
+          <div className="form-div">
+          <label for="genre">Choose Song Genre:</label>
+            <select id="genre" name="genre">
+              <option value="rock">Rock</option>
+              <option value="rap-hiphop">Rap/Hip-Hop</option>
+              <option value="alternative">Alternative</option>
+              <option value="punk">Punk</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div>
+            <label for='description'>Enter short song description or message</label>
+            <textarea value='description' onChange={(e)=>setDescription(e.target.value)} />
           </div>
           <div className="form-div">
             <label >Song File</label>
             <input type='file' placeholder="Enter Song File..." />
           </div>
-          <button >Mint Song Now!</button>
-          <button >List Song Now!</button>
+          <button onSubmit={null} >Mint Song Now!</button>
         </form>
       </div>
     </div>

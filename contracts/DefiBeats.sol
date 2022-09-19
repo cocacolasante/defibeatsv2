@@ -36,7 +36,7 @@ contract DefiBeats is ERC721URIStorage, Ownable{
         address payable originalProducer;
     }
 
-    event SongMade(uint indexed tokenId, address producer, string tokenUri);
+    event SongMade(uint indexed tokenId, address indexed producer, string tokenUri);
 
     event SongListed(uint indexed tokenId, address seller, string tokenUri);
 
