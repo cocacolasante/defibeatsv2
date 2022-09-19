@@ -5,7 +5,7 @@ import UploadForm from '../components/UploadForm'
 
 const Upload = () => {
   return (
-    <div>
+    <div id='content'>
       <UploadForm />
       
     </div>

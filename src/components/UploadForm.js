@@ -44,7 +44,7 @@ const UploadForm = ({DefiBeats}) => {
 
   
   return (
-    <div className="home-container">
+    <div id='content-wrapper'>
       <div className="title-container-upload">
         <h2>Create song</h2>
       </div>
@@ -62,6 +62,8 @@ const UploadForm = ({DefiBeats}) => {
             <label >Song File</label>
             <input type='file' placeholder="Enter Song File..." />
           </div>
+          <button >Mint Song Now!</button>
+          <button >List Song Now!</button>
         </form>
       </div>
     </div>

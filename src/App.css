@@ -82,7 +82,7 @@
   flex-direction: column;
   position: absolute;
   top: 25%;
-  left: 25%;
+  left: 10%;
 }
 .song-listing-card{
   max-width: 150px;
@@ -114,6 +114,7 @@
   padding-bottom: 50px;
 }
 
+
 .title-container-upload{
   text-align: center;
   padding-bottom: 50px;
@@ -131,4 +132,8 @@
 }
 .form-div{
   padding-bottom: 20px;
+}
+
+#song-card-id{
+  text-align: center;
 }
