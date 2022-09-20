@@ -1,18 +1,37 @@
 import {useState} from "react"
-import { create as ipfsHttpClient} from "ipfs-http-client"
-const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0/')
+import { create as ipfsClient} from "ipfs-http-client"
+import { ethers } from "ethers"
+import env from "react-dotenv";
+import defibeatsAbi from "../assets/defibeats.json"
+import { Buffer } from "buffer";
+
+const auth =
+  'Basic ' + Buffer.from(env.REACT_APP_INFURA_PROJECT_ID + ':' + env.REACT_APP_INFURA_SECRET_KEY).toString('base64');
+const client = ipfsClient({
+  host: 'ipfs.infura.io',
+  port: 5001,
+  protocol: 'https',
+  headers: {
+      authorization: auth,
+      },
+  });
 
 
-const UploadForm = ({DefiBeats}) => {
-  const [price, setPrice] = useState()
+const UploadForm = () => {
+      
+
+
+  const DEFIBEATS_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+
   const [name, setName] = useState()
   const [songFile, setSongFile] = useState()
   const [collectionName, setCollectionName] = useState()
-  const [description, setDescription] = useState()
+  const [description, setDescription] = useState("")
 
   const uploadToIpfs = async (event) =>{
     event.preventDefault()
     const file = event.target.files[0]
+
     if(typeof file !== 'undefined'){
       try{
         const result = await client.add(file)
@@ -24,8 +43,11 @@ const UploadForm = ({DefiBeats}) => {
     }
   }
 
-  const createSong = async () => {
+  const createSong = async (event) => {
+    event.preventDefault()
+
     if(!name || !songFile || !collectionName || !description) return;
+    
     try {
       const result = await client.add(JSON.stringify({name, collectionName, description, songFile}))
       mintSong(result, name, collectionName);
@@ -36,9 +58,29 @@ const UploadForm = ({DefiBeats}) => {
     }
   }
 
-  const mintSong = async (result) => {
+  const mintSong = async (result, _name, _collectionName) => {
+    
     const uri = `https://ipfs.infura.io/ipfs/${result.path}`
-    await (await DefiBeats.makeSong(uri, name, collectionName)).wait()
+
+    try{
+      const {ethereum} = window;
+
+      if(ethereum){
+        const provider = new ethers.providers.Web3Provider(ethereum)
+        const signer = provider.getSigner()
+        const DefiBeats = new ethers.Contract(DEFIBEATS_ADDRESS, defibeatsAbi.abi, signer)
+
+        console.log("Loading Metamask to pay for gas")
+        
+
+        let txn = await DefiBeats.makeSong(uri, _name, _collectionName)
+        const receipt = await txn.wait()
+        console.log(receipt)
+      }
+
+    }catch (error){
+      console.log(error)
+    }
 
   }
 
@@ -49,7 +91,7 @@ const UploadForm = ({DefiBeats}) => {
         <h2>Create song</h2>
       </div>
       <div className="upload-form-container">
-        <form className="form">
+        <form onSubmit={createSong} className="form">
           <div className="form-div">
             <label >Song Name</label>
             <input type='text' onChange={(e)=>setName(e.target.value)} placeholder="Enter Song Name..." />
@@ -71,15 +113,15 @@ const UploadForm = ({DefiBeats}) => {
           <div>
             <label for='description'>Enter short song description or message</label>
             <br />
-            <textarea value='description' onChange={(e)=>setDescription(e.target.value)} />
+            <textarea placeholder='description' onChange={(e)=>setDescription(e.target.value)} />
             
           </div>
           <br />
           <div className="form-div">
             <label >Song File</label>
-            <input type='file' placeholder="Enter Song File..." />
+            <input onChange={uploadToIpfs} type='file' placeholder="Enter Song File..." />
           </div>
-          <button onSubmit={null} >Mint Song Now!</button>
+          <input type="submit" value="Mint Song Now!" />
         </form>
       </div>
     </div>
