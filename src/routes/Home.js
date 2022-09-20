@@ -2,7 +2,7 @@ import FeaturedSong from "../components/FeaturedSong";
 import RecentUploads from "../components/RecentUploads";
 import TopPurchases from "../components/TopPurchases";
 
-const Home = ({contract}) =>{
+const Home = () =>{
 
     return(
         <div id="content">
