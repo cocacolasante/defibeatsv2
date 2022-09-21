@@ -102,4 +102,5 @@ contract ProfileNFT is ERC721URIStorage {
 
         return creator.numOfLikes++;
     }
+
 }

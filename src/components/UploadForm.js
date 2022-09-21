@@ -4,6 +4,7 @@ import { ethers } from "ethers"
 import env from "react-dotenv";
 import defibeatsAbi from "../assets/defibeats.json"
 import { Buffer } from "buffer";
+import {DEFIBEATS_ADDRESS} from "../config"
 
 const auth =
   'Basic ' + Buffer.from(env.REACT_APP_INFURA_PROJECT_ID + ':' + env.REACT_APP_INFURA_SECRET_KEY).toString('base64');
@@ -19,10 +20,6 @@ const client = ipfsClient({
 
 const UploadForm = () => {
       
-
-
-  const DEFIBEATS_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
-
   const [name, setName] = useState()
   const [songFile, setSongFile] = useState()
   const [collectionName, setCollectionName] = useState()
@@ -36,7 +33,7 @@ const UploadForm = () => {
       try{
         const result = await client.add(file)
         console.log(result)
-        setSongFile(`https://ipfs.infura.io/ipfs/${result.path}`)
+        setSongFile(`https://defibeats.infura-ipfs.io/ipfs/${result.path}`)
       }catch(error){
         console.log(error)
       }
@@ -60,7 +57,7 @@ const UploadForm = () => {
 
   const mintSong = async (result, _name, _collectionName) => {
     
-    const uri = `https://ipfs.infura.io/ipfs/${result.path}`
+    const uri = `https://defibeats.infura-ipfs.io/ipfs/${result.path}`
 
     try{
       const {ethereum} = window;

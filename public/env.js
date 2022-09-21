@@ -64,5 +64,8 @@ window.env = {
   "npm_config_prefix": "/usr/local",
   "npm_node_execpath": "/usr/local/bin/node",
   "REACT_APP_INFURA_PROJECT_ID": "2F0aU2D5ATVsNrYy6NFX6f2hsXa",
-  "REACT_APP_INFURA_SECRET_KEY": "433c8edfc055e7fdf2bc6565efea0a17"
+  "REACT_APP_INFURA_SECRET_KEY": "433c8edfc055e7fdf2bc6565efea0a17",
+  "REACT_APP_ALCHEMY_API_KEY": "L2rDVbPr3kxbpI0WFM6SufZoWfXELg1L",
+  "POLYGON_MUMBAI_URL": "https://polygon-mumbai.g.alchemy.com/v2/L2rDVbPr3kxbpI0WFM6SufZoWfXELg1L",
+  "PRIVATE_KEY_DEPLOYER": "dbc794584f16078c23e638400bcd5800a0e85bd0af1cab2b64c3428a64e6e712"
 };

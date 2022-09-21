@@ -1,10 +1,14 @@
-
-
-import React from 'react'
+import CurrentUsersProfile from "../components/CurrentUsersProfile"
+import OwnedProfileNft from "../components/OwnedProfileNft"
 
 const Profile = () => {
   return (
-    <div>Profile</div>
+    <div id="content">
+      <CurrentUsersProfile />
+      <div>
+        <OwnedProfileNft />
+      </div>
+    </div>
   )
 }
 
