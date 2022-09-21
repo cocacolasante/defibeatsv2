@@ -24,13 +24,9 @@ const OwnedProfileNft = () => {
         const nfts = await alchemy.nft.getNftsForOwner(account, {
             contractAddresses: [PROFILENFT_ADDRESS]
         });
-
-        
-        
+ 
         setProfilePics(nfts.ownedNfts)
         console.log(nfts.ownedNfts)
-
-    
 
     }
 
@@ -47,10 +43,11 @@ const OwnedProfileNft = () => {
             <p>{i} </p>
             
             <p>{i.image} </p>
+            <br/>
+            <button>Set As Profile</button>
         </div>
         
     ))} 
-        <h6>test</h6>
     </div>
   )
 }

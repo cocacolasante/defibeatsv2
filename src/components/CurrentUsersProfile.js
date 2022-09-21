@@ -55,6 +55,7 @@ const client = ipfsClient({
 
       mintProfileNft(uri);
       
+
       
     } catch(error){
       console.log(error)
@@ -77,6 +78,12 @@ const client = ipfsClient({
         let txn = await ProfileNFT.mint(uri)
         const receipt = await txn.wait()
         console.log(receipt)
+
+        if(receipt.status === 1){
+          console.log("Mint Successful!")
+        } else {
+          alert("Transaction failed, please try again")
+        }
 
       }
     }catch (error){

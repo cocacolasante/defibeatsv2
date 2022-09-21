@@ -25,3 +25,17 @@ export const providerReducer = (state = {}, action) => {
         return state
     }
   }
+
+  export const profileNftReducer = (state={}, action) =>{
+    switch(action.type){
+      case "USER_PROFILE_LOADED":
+        return{
+          ...state,
+          userProfile: action.userProfile
+        }
+
+      
+      default:
+        return state
+    }
+  }

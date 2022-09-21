@@ -3,15 +3,18 @@ import {Link } from "react-router-dom"
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux'
 import { loadProvider, loadAccount } from "../redux/actions";
+import {PROFILENFT_ADDRESS} from "../config"
+import profileNftAbi from "../assets/profilenft.json"
+import { loadProfileNft } from "../redux/actions";
 
 const SearchBar = () => {
 
     const [activeAccount, setActiveAccount] = useState()
     const [search, setSearch] = useState("")
-
     const dispatch = useDispatch();
-
     const provider = useSelector(state=>state.provider.connection)
+    const currentStateAccount = useSelector(state=>state.provider.account)
+
 
     
     const connectWallet = async () => {
@@ -32,14 +35,13 @@ const SearchBar = () => {
 
             dispatch({type: "ACCOUNT_LOADED", account: account}) 
             
-            let balance = await provider.getBalance(account)
-            balance = ethers.utils.formatEther(balance)
-        
-            dispatch({ type: 'ETHER_BALANCE_LOADED', balance: balance })
-            
+            loadAccount(provider, dispatch)
+                    
         }catch (error){
             console.log(error)
         }
+
+        
                     
     }
     
@@ -64,12 +66,16 @@ const SearchBar = () => {
             console.log(`Connected to ${currentAccount}`)
 
             dispatch({type: "ACCOUNT_LOADED", account: currentAccount})
+            
+            
+            const connection = new ethers.providers.Web3Provider(ethereum)
+
+            dispatch({ type: 'PROVIDER_LOADED', connection }) // causes bug in console, still have to figure out
+            
 
         } else{
             console.log("No accounts authorized or connected")
         }
-
-        loadProvider(dispatch)
         
     }
 
@@ -77,7 +83,9 @@ const SearchBar = () => {
     useEffect(()=>{
 
         checkIfWalletIsConnected();
+        loadProfileNft(provider, activeAccount, dispatch)
     },[])
+
 
   return (
     <div className="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top ">

@@ -1,8 +1,10 @@
 import { ethers } from 'ethers'
+import {PROFILENFT_ADDRESS} from "../config"
+import profileNftAbi from "../assets/profilenft.json"
 
-export const loadProvider = (dispatch) => {
-
-  const connection = new ethers.providers.Web3Provider(window.ethereum)
+export const loadProvider = async (dispatch) => {
+  const {ethereum} = window
+  const connection = new ethers.providers.Web3Provider(ethereum)
   dispatch({ type: 'PROVIDER_LOADED', connection })
 
   return connection
@@ -14,10 +16,17 @@ export const loadAccount = async (provider, dispatch) => {
   
     dispatch({ type: 'ACCOUNT_LOADED', account })
   
-    let balance = await provider.getBalance(account)
-    balance = ethers.utils.formatEther(balance)
-  
-    dispatch({ type: 'ETHER_BALANCE_LOADED', balance: balance })
-  
     return account
   }
+
+export const loadProfileNft = async (provider, account, dispatch) =>{
+
+  const ProfileNFT = new ethers.Contract(PROFILENFT_ADDRESS, profileNftAbi.abi, provider)
+  const currentProfile = await ProfileNFT.creatorsProfile(account)
+
+  console.log(currentProfile[3]) // logs the position in the current profile struct from solidity
+  dispatch({type: 'USER_PROFILE_LOADED', userProfile: currentProfile})
+
+  return currentProfile
+
+}
