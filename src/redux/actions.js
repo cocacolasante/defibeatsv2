@@ -19,14 +19,24 @@ export const loadAccount = async (provider, dispatch) => {
     return account
   }
 
-export const loadProfileNft = async (provider, account, dispatch) =>{
+export const loadProfileNftContract = async (provider, dispatch) =>{
+  let ProfileNFTContract
 
-  const ProfileNFT = new ethers.Contract(PROFILENFT_ADDRESS, profileNftAbi.abi, provider)
-  const currentProfile = await ProfileNFT.creatorsProfile(account)
+  ProfileNFTContract = new ethers.Contract(PROFILENFT_ADDRESS, profileNftAbi.abi, provider)
+  
+  dispatch({type: 'PROFILE_NFT_CONTRACT_LOADED', ProfileNFTContract})
 
-  console.log(currentProfile[3]) // logs the position in the current profile struct from solidity
-  dispatch({type: 'USER_PROFILE_LOADED', userProfile: currentProfile})
+  return ProfileNFTContract
 
-  return currentProfile
+}
 
+export const loadProfile = async (account, provider, dispatch) =>{
+  let ProfileNFTContract, userProfile
+
+  ProfileNFTContract = new ethers.Contract(PROFILENFT_ADDRESS, profileNftAbi.abi, provider)
+  userProfile = await ProfileNFTContract.creatorsProfile(account)
+  
+  dispatch({type: 'USER_PROFILE_LOADED', userProfile})
+  
+  return userProfile
 }

@@ -2,10 +2,8 @@ import { ethers } from "ethers"
 import {Link } from "react-router-dom"
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux'
-import { loadProvider, loadAccount } from "../redux/actions";
-import {PROFILENFT_ADDRESS} from "../config"
-import profileNftAbi from "../assets/profilenft.json"
-import { loadProfileNft } from "../redux/actions";
+import { loadAccount } from "../redux/actions";
+import { loadProfileNftContract, loadProfile } from "../redux/actions";
 
 const SearchBar = () => {
 
@@ -14,6 +12,7 @@ const SearchBar = () => {
     const dispatch = useDispatch();
     const provider = useSelector(state=>state.provider.connection)
     const currentStateAccount = useSelector(state=>state.provider.account)
+    const nftContract = useSelector(state=>state.ProfileNftContract)
 
 
     
@@ -71,6 +70,8 @@ const SearchBar = () => {
             const connection = new ethers.providers.Web3Provider(ethereum)
 
             dispatch({ type: 'PROVIDER_LOADED', connection }) // causes bug in console, still have to figure out
+
+            
             
 
         } else{
@@ -83,7 +84,9 @@ const SearchBar = () => {
     useEffect(()=>{
 
         checkIfWalletIsConnected();
-        loadProfileNft(provider, activeAccount, dispatch)
+        loadProfileNftContract(provider, dispatch)
+        loadProfile(activeAccount, provider, dispatch)
+
     },[])
 
 
