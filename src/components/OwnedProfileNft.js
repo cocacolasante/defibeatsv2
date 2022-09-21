@@ -46,7 +46,7 @@ const OwnedProfileNft = () => {
         <div className='input-group mb-3' key={i}>
             <p>{i} </p>
             
-            <p>{na.image} </p>
+            <p>{i.image} </p>
         </div>
         
     ))} 

@@ -24,6 +24,7 @@ const UploadForm = () => {
   const [songFile, setSongFile] = useState()
   const [collectionName, setCollectionName] = useState()
   const [description, setDescription] = useState("")
+  const [genre, setGenre] = useState()
 
   const uploadToIpfs = async (event) =>{
     event.preventDefault()
@@ -46,7 +47,8 @@ const UploadForm = () => {
     if(!name || !songFile || !collectionName || !description) return;
     
     try {
-      const result = await client.add(JSON.stringify({name, collectionName, description, songFile}))
+      const result = await client.add(JSON.stringify({name: name, collectionName: collectionName, description:description, song: songFile, genre: genre}))
+      
       mintSong(result, name, collectionName);
 
 
@@ -99,7 +101,7 @@ const UploadForm = () => {
           </div>
           <div className="form-div">
           <label for="genre">Choose Song Genre:</label>
-            <select id="genre" name="genre">
+            <select onChange={(e)=>setGenre(e.target.value)} id="genre" name="genre">
               <option value="rock">Rock</option>
               <option value="rap-hiphop">Rap/Hip-Hop</option>
               <option value="alternative">Alternative</option>
