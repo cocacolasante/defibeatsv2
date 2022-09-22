@@ -27,6 +27,41 @@ const OwnedProfileNft = () => {
  
         setProfilePics(nfts.ownedNfts)
         // console.log(nfts.ownedNfts)
+        const numNfts = nfts["totalCount"];
+        const nftList = nfts["ownedNfts"];
+        
+        
+
+        // console.log(`Total NFTs owned by ${account}: ${numNfts} \n`);
+
+        console.log()
+
+
+        // let i = 1;
+        
+        // for (let nft of nftList) {
+        //     console.log(`${i}. ${nft.metadata}`);
+        //     i++;
+        // }
+        return (
+            <div>{nftList.map((nft, i)=>(
+                <div className='input-group mb-3' key={i}>
+                    <p>{i} </p>
+                    
+                    <img src={nft.image} />
+                    <br/>
+                    <button>Set As Profile</button>
+                </div>
+                
+            ))} 
+            </div>
+            
+            )
+    
+    
+    
+    
+    
 
     }
 
@@ -42,7 +77,7 @@ const OwnedProfileNft = () => {
         <div className='input-group mb-3' key={i}>
             <p>{i} </p>
             
-            <p>{i.image} </p>
+            <img src={na.image} />
             <br/>
             <button>Set As Profile</button>
         </div>

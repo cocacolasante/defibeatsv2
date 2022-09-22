@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
-import {providerReducer, profileNftReducer} from './reducers'
+import {providerReducer, profileNftReducer, userProfileReducer} from './reducers'
+
 
 
 export const store = configureStore({
     reducer: {
         provider: providerReducer,
-        profileNft: profileNftReducer
+        profileNft: profileNftReducer,
+        userProfile: userProfileReducer
     }
   })
   

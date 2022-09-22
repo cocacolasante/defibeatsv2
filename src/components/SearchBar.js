@@ -3,7 +3,7 @@ import {Link } from "react-router-dom"
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux'
 import { loadAccount } from "../redux/actions";
-import { loadProfileNftContract, loadProfile } from "../redux/actions";
+import { loadProfileNftContract } from "../redux/actions";
 
 const SearchBar = () => {
 
@@ -11,9 +11,7 @@ const SearchBar = () => {
     const [search, setSearch] = useState("")
     const dispatch = useDispatch();
     const provider = useSelector(state=>state.provider.connection)
-    const currentStateAccount = useSelector(state=>state.provider.account)
-    const nftContract = useSelector(state=>state.ProfileNftContract)
-
+    
 
     
     const connectWallet = async () => {
@@ -70,21 +68,23 @@ const SearchBar = () => {
             const connection = new ethers.providers.Web3Provider(ethereum)
 
             dispatch({ type: 'PROVIDER_LOADED', connection }) // causes bug in console, still have to figure out
+            
 
         } else{
             console.log("No accounts authorized or connected")
         }
         
     }
-
+   
 
     useEffect(()=>{
-
+        
         checkIfWalletIsConnected();
         loadProfileNftContract(provider, dispatch)
-       
+        
 
     },[])
+    
 
 
   return (
@@ -92,8 +92,7 @@ const SearchBar = () => {
         <div className="button-container">
             {!activeAccount ? <button onClick={connectWallet} className="button">connect</button> : <button onClick={null} className='button'>Wallet: {activeAccount.slice(0, 6)}...{activeAccount.slice(-4)}</button> }
         </div>
-        
-            
+    
 
                 <ul className="navbar-links">
                     <Link className="nav-bar-links-link" to='profile'>Profile</Link>
