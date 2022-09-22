@@ -2,10 +2,12 @@ import { ethers } from 'ethers';
 import { PROFILENFT_ADDRESS } from '../config';
 import profileNftAbi from "../assets/profilenft.json"
 import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 
 const ProducersProfile = () => {
 
-  
+  const [producersProfile, setProducersProfile] = useState([])
+  const producerAddress = useSelector(state=>state.provider.account)
 
   const fetchUsersProfile = async () =>{
     try{
@@ -15,8 +17,10 @@ const ProducersProfile = () => {
         const signer = provider.getSigner()
         const ProfileNFT = new ethers.Contract(PROFILENFT_ADDRESS, profileNftAbi.abi, signer)
 
-        const ArtistProfile = await ProfileNFT.numberToCreator(1)
-        return ArtistProfile
+        const ArtistProfile = await ProfileNFT.creatorsProfile(producerAddress)
+        console.log(ArtistProfile)
+        setProducersProfile(ArtistProfile)
+
       }
 
     }catch(error){
@@ -24,17 +28,21 @@ const ProducersProfile = () => {
     }
   }
 
+  useEffect(()=>{
+    fetchUsersProfile()
+  }, [])
+
   return (
     <div id='content'>
         <h1>Test</h1>
         <div id='content-wrapper'>
               <div>
-                  <h2>Producer</h2>
+                  <h2>Producer Address: {producersProfile[0]}</h2>
               </div>
               <div>
                   <h3>UserName</h3>
-                  <h4>Profile Picture</h4>
-                  <p>Message</p>
+                  <h4>Profile Picture: </h4>
+                  <p>Message: {producersProfile[1]}</p>
                   <p>Likes</p>
                   <button>Click here to like artist</button>
                   <p>Tips</p>
