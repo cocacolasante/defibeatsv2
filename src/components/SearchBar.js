@@ -2,7 +2,7 @@ import { ethers } from "ethers"
 import {Link } from "react-router-dom"
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux'
-import { loadAccount } from "../redux/actions";
+import { loadAccount, loadProfile } from "../redux/actions";
 import { loadProfileNftContract } from "../redux/actions";
 
 const SearchBar = () => {
@@ -11,6 +11,7 @@ const SearchBar = () => {
     const [search, setSearch] = useState("")
     const dispatch = useDispatch();
     const provider = useSelector(state=>state.provider.connection)
+    const profileContract = useSelector(state=>state.profileNft.ProfileContract)
     
 
     
@@ -85,7 +86,6 @@ const SearchBar = () => {
 
     },[])
     
-
 
   return (
     <div className="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top ">

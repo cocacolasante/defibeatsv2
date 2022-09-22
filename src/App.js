@@ -14,7 +14,7 @@ function App() {
     <Routes>
       <Route path='/' element={ <SearchAndPlayer />} >
         <Route index element={ <Home />} />
-        <Route path='/browse/*' element={<Browse />} />
+        <Route path='/browse' element={<Browse />} />
         <Route path='/mysongs' element={<MySongs />} />
         <Route path='/upload' element={<Upload />} />
         <Route path='/profile' element={<Profile />} />

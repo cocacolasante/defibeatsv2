@@ -1,13 +1,13 @@
 import { Routes, Route } from 'react-router-dom'
+import ProducersProfile from '../components/ProducersProfile'
 
 import React from 'react'
 
 const Browse = () => {
   return(
     <div id='content'>
-      <div id='content-wrapper'>
-        I am the browse component
-        </div>
+      
+        <ProducersProfile />
     </div>
 )
 }

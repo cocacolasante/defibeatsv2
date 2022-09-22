@@ -30,15 +30,15 @@ export const loadProfileNftContract = async (provider, dispatch) =>{
 
 }
 
-// export const loadProfile = async (provider, account, contract, dispatch) =>{
-//   let ProfileNFTContract, user
+export const loadProfile = async (provider, account, contract, dispatch) =>{
+  let ProfileNFTContract, user
 
-//   ProfileNFTContract = new ethers.Contract(contract, profileNftAbi.abi, provider)
-//   user = await contract.tokenCount()
+  ProfileNFTContract = new ethers.Contract(contract, profileNftAbi.abi, provider)
+  user = await ProfileNFTContract.tokenCount(account)
   
-//   console.log(user)
+  console.log(user)
 
-//   dispatch({type: 'USER_LOADED', user})
+  dispatch({type: 'USER_LOADED', user})
   
-//   return user
-// }
+  return user
+}
