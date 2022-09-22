@@ -31,7 +31,7 @@ export const providerReducer = (state = {}, action) => {
     userProfile: []
   }
 
-  export const profileNftReducer = (state=DEFAULT_STATE, action) =>{
+  export const profileNftReducer = (state={}, action) =>{
     switch(action.type){
       case "PROFILE_NFT_CONTRACT_LOADED":
         return{
@@ -39,9 +39,9 @@ export const providerReducer = (state = {}, action) => {
           ProfileContract: action.ProfileNFTContract
         }
       case "USER_PROFILE_LOADED":
-        return {
+        return{
           ...state,
-          userProfile: action.userProfile
+          userProfile: [action.userProfile]
         }
       default:
         return state

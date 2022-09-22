@@ -30,12 +30,14 @@ export const loadProfileNftContract = async (provider, dispatch) =>{
 
 }
 
-export const loadProfile = async (account, provider, dispatch) =>{
+export const loadProfile = async (provider, account, dispatch) =>{
   let ProfileNFTContract, userProfile
 
   ProfileNFTContract = new ethers.Contract(PROFILENFT_ADDRESS, profileNftAbi.abi, provider)
   userProfile = await ProfileNFTContract.creatorsProfile(account)
-  
+
+  console.log(userProfile)
+
   dispatch({type: 'USER_PROFILE_LOADED', userProfile})
   
   return userProfile

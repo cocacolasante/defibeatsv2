@@ -71,9 +71,6 @@ const SearchBar = () => {
 
             dispatch({ type: 'PROVIDER_LOADED', connection }) // causes bug in console, still have to figure out
 
-            
-            
-
         } else{
             console.log("No accounts authorized or connected")
         }
@@ -85,7 +82,7 @@ const SearchBar = () => {
 
         checkIfWalletIsConnected();
         loadProfileNftContract(provider, dispatch)
-        loadProfile(activeAccount, provider, dispatch)
+       
 
     },[])
 

@@ -26,7 +26,7 @@ const OwnedProfileNft = () => {
         });
  
         setProfilePics(nfts.ownedNfts)
-        console.log(nfts.ownedNfts)
+        // console.log(nfts.ownedNfts)
 
     }
 
