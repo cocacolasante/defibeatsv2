@@ -246,6 +246,13 @@ describe("Defi Beats V2", () =>{
 
         expect(await profile.numOfLikes).to.equal(1)
       })
+      it("checks the set user name function", async () => {
+        await ProfileNFT.connect(user1).setUsername(user1.address, "cocacolasante")
+
+        profile = await ProfileNFT.creatorsProfile(user1.address)
+        expect(profile.username).to.equal("cocacolasante")
+        
+      })
     })
   })
 })

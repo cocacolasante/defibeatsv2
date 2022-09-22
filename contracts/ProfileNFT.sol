@@ -20,6 +20,7 @@ contract ProfileNFT is ERC721URIStorage {
 
     struct Creator{
         address payable creatorAddress;
+        string username;
         string profileMessage;
         uint tipsReceived;
         uint profileToken;
@@ -39,6 +40,7 @@ contract ProfileNFT is ERC721URIStorage {
         numberToCreator[newTokenId] = Creator(
             payable(msg.sender),
             "",
+            "",
             0,
             newTokenId,
             0
@@ -48,6 +50,7 @@ contract ProfileNFT is ERC721URIStorage {
 
         creatorsProfile[msg.sender] = Creator(
             payable(msg.sender),
+            "",
             "",
             0,
             newTokenId,
@@ -102,6 +105,16 @@ contract ProfileNFT is ERC721URIStorage {
         Creator storage creator = creatorsProfile[creatorAddress];
 
         return creator.numOfLikes++;
+    }
+
+    function setUsername(address creatorAddress, string memory _username) external returns(string memory){
+        require(msg.sender ==creatorAddress, "cannot like your own profile");
+        // require(_username.length <= 15, "username is too long");
+
+        Creator storage creator = creatorsProfile[msg.sender];
+
+        return creator.username = _username;
+        
     }
 
 }
