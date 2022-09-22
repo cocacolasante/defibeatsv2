@@ -7,7 +7,14 @@ const ProducersProfile = () => {
             <h2>Producers Profile</h2>
         </div>
         <div>
-            <h3>User name(use message for it)</h3>
+            <h3>User name</h3>
+            <h4>Profile Picture</h4>
+            <p>Message</p>
+            <p>Likes</p>
+            <button>Click here to like artist</button>
+            <p>Tips</p>
+            <input placeholder='enter tip amount in ether' type='number' />
+
         </div>
     </div>
   )
