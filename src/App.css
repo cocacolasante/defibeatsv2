@@ -141,3 +141,8 @@
 .myrecent-uploads{
   text-align: center;
 }
+
+.profile-picture{
+  max-height: 200px;
+  max-width: 200px;
+}

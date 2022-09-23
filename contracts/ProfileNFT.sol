@@ -116,7 +116,6 @@ contract ProfileNFT is ERC721URIStorage {
         return creator.username = _username;
         
     }
-
     
 
 }
