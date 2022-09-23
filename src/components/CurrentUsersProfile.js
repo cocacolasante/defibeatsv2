@@ -5,6 +5,7 @@ import env from "react-dotenv";
 import { Buffer } from "buffer";
 import { useState } from 'react';
 import {PROFILENFT_ADDRESS} from "../config"
+import { useSelector } from 'react-redux';
 
 
 
@@ -97,7 +98,7 @@ const client = ipfsClient({
   return (
     <div id=''>
         <div>
-            <h2>username</h2>
+            <h2>username {useSelector(state=>state.provider.account)} </h2>
         </div>
         <div>
             <input onChange={uploadToIpfs} type='file' placeholder="Upload Profile Picture..." />

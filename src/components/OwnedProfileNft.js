@@ -98,22 +98,6 @@ const OwnedProfileNft = () => {
         
     }
 
-
-
-
-    const renderAllProfileNfts = async () =>{
-        if(!isLoading && nftProfImg){
-            nftProfImg.map((i, image)=>{
-                return(
-                    <div key={i}>
-                        <img src={image} className="img-thumbnail" />
-                    </div>
-                )
-            })
-        }
-        
-    }
-
    
     useEffect(()=>{
         profileContract();
