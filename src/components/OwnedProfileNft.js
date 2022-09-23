@@ -27,10 +27,16 @@ const OwnedProfileNft = () => {
         }
     }
 
-    const [profilePics, setProfilePics] = useState([])
+    const [profilePics, setProfilePics] = useState()
     const [currentProfile, setCurrentProfile] = useState()
-    const [testPicArray, setTestPicArray] = useState([])
     const [nftProfileContract, setnftProfileContract] = useState()
+
+    const [isLoading, setIsLoading] = useState(false)
+
+    const [nftProfImg, setNftProfImg] = useState()
+
+    const [profileNftMeta, setProfileNftMeta] = useState()
+
 
     
     let pictureArrayIpfsGateway =[]
@@ -38,6 +44,9 @@ const OwnedProfileNft = () => {
 
 
     const getAllProfileNfts = async () =>{
+        
+
+
         const config = {
             apiKey: env.REACT_APP_ALCHEMY_API_KEY,
             network: Network.MATIC_MUMBAI,
@@ -49,49 +58,93 @@ const OwnedProfileNft = () => {
         });
  
         
-        // console.log(nfts.ownedNfts)
         const nftOwned = nfts.ownedNfts
-        // console.log(nftOwned)
 
-        const nftOwnedUri1 = nftOwned[0];
-        const tokenMeta = nftOwnedUri1["rawMetadata"]
-        const tokenLink = tokenMeta["image"]
-        // console.log(tokenLink)
-        // setTestPic(tokenLink)
+        // outline to get to nft image uri
+        // const nftOwnedUri1 = nftOwned[0];
+        // const tokenMeta = nftOwnedUri1["rawMetadata"]
+        // const tokenLink = tokenMeta["image"]
 
+        setProfileNftMeta(nftOwned)
 
-        let profilesGateways = new Promise.all(nftOwned.map(async i =>{
+        let profImageMap = nftOwned.map( i =>{
 
+            //set current profile picture
             pictureArrayIpfsGateway.push(i["rawMetadata"]["image"])
-
             setCurrentProfile(pictureArrayIpfsGateway[1])
-              
+
+            return (i["rawMetadata"]["image"])
+        })
+
+        setNftProfImg(profImageMap)
+
+        
+        // nftOwned.map(async i =>{
+
+        //     //set current profile picture
+        //     pictureArrayIpfsGateway.push(i["rawMetadata"]["image"])
+        //     setCurrentProfile(pictureArrayIpfsGateway[1])
+
+        //     setProfilePics(pictureArrayIpfsGateway[i])
             
-        }))
+        //     let image = i["rawMetadata"]["image"]
+        //     // setNftProfImg(image)
+            
+        //     console.log(nftProfImg)
 
-        console.log(pictureArrayIpfsGateway)
-        // map through array of gateways and get image link to add to img src
+        // })
+        
 
+        
     }
 
 
 
+
+    const renderAllProfileNfts = async () =>{
+        if(!isLoading && nftProfImg){
+            nftProfImg.map((i, image)=>{
+                return(
+                    <div key={i}>
+                        <img src={image} className="img-thumbnail" />
+                    </div>
+                )
+            })
+        }
+        
+    }
+
    
     useEffect(()=>{
+        profileContract();
+  
         if(account){
-            getAllProfileNfts();
+            getAllProfileNfts()
+            
         }
-    }, [])
+        
+    },[] )
 
 
   return (
     <div>
         <div id="content" className="profile-picture">
+        <h3>Current Profile Picture</h3>
             <img className="img-thumbnail" src={currentProfile} />
+            {!nftProfImg ? (
+                <p>Loading blockchain data</p>
+            ) : (
+                nftProfImg.map((i)=>{
+                return(
+                    <div key={i}>
+                        <img className="img-thumbnail"  src={i} />
+                        <button>Set As Profile</button>
+                    </div>
+                )
+            })
+            )}
         </div>
-        <div>
-            
-        </div>
+
     </div>
   )
 }
