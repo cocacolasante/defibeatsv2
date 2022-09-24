@@ -1,7 +1,8 @@
 TO DO
 
-remix function for beats - still have to do
-test all - tested marketplace and profile - check plus
-
-build front end
-find ipfs host url //infura or another one to link to for nft 
+PROFILE PAGE TO DO:
+send users profile image uri to redux store
+send users profile info to redux store
+set message function
+set username function
+display username and status message dynamically

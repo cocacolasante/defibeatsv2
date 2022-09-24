@@ -129,18 +129,25 @@ const OwnedProfileNft = () => {
 
   return (
     <div>
-        <div >
+        <div className="header-container" >
             <h2>User Account: {useSelector(state=>state.provider.account)} </h2>
+            
+        </div>
+        <div >
+            <h3 className="profile-headers">Current Username: </h3>
+        </div>
+        <div >
+            <h3 className="profile-headers">Current Status: </h3>
         </div>
         <h3 className="profile-headers">Current Profile Picture</h3>
         <div id="content" className="profile-picture prof-pic-container">
             <img className="img-thumbnail" src={currentProfile} />
             </div>
-            <div>
+            <div className="header-container">
                 <h3 className="profile-headers">Set User Name: </h3>
                 <input type='text' placeholder="New Username" />
             </div>
-            <div>
+            <div className="header-container">
                 <h3 className="profile-headers">Set Status Message: </h3>
                 <input type='text' placeholder="New Status" />
             </div>
