@@ -1,7 +1,6 @@
 import { Alchemy, Network } from "alchemy-sdk";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from 'react';
-import Identicon from "identicon.js"
 import env from "react-dotenv";
 import {PROFILENFT_ADDRESS} from "../config"
 import profileNftAbi from "../assets/profilenft.json"
@@ -130,25 +129,41 @@ const OwnedProfileNft = () => {
 
   return (
     <div>
-        <div id="content" className="profile-picture">
-        <h3>Current Profile Picture</h3>
-            <img className="img-thumbnail" src={currentProfile} />
-
-            {!nftMetaData ? (
-                <p>Loading blockchain data</p>
-            ) : (
-                
-                nftMetaData.map((i)=>{
-                return(
-                    <div key={i[0]}>
-                        <img className="img-thumbnail"  src={i[1]} />
-                        <button type="click" value={i[0]} onClick={e=>handleSetStateProfile(e)}>Set As Profile</button>
-                        <p>{i[0]}</p>
-                    </div>
-                )
-            })
-            )}
+        <div >
+            <h2>User Account: {useSelector(state=>state.provider.account)} </h2>
         </div>
+        <h3 className="profile-headers">Current Profile Picture</h3>
+        <div id="content" className="profile-picture prof-pic-container">
+            <img className="img-thumbnail" src={currentProfile} />
+            </div>
+            <div>
+                <h3 className="profile-headers">Set User Name: </h3>
+                <input type='text' placeholder="New Username" />
+            </div>
+            <div>
+                <h3 className="profile-headers">Set Status Message: </h3>
+                <input type='text' placeholder="New Status" />
+            </div>
+            <h3 className="profile-headers">Set Profile Picture</h3>
+            <div className="text-center profile-grid ">
+               
+                {!nftMetaData ? (
+                    <p>Loading blockchain data</p>
+                ) : (
+                    
+                    nftMetaData.map((i)=>{
+                    return(
+                        <div className="profile-picture" key={i[0]}>
+                            <img className="img-thumbnail"  src={i[1]} />
+                            <button type="click" value={i[0]} onClick={e=>handleSetStateProfile(e)}>Set As Profile</button>
+                            <p>{i[0]}</p>
+                        </div>
+                    )
+                })
+                )}
+               
+            </div>
+       
 
     </div>
   )

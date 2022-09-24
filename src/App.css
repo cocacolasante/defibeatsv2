@@ -76,6 +76,7 @@
 
 .song-image{
   border: 1px solid black;
+  background-color: grey;
   height: 150px;
   width: 150px;
   display: flex;
@@ -145,4 +146,24 @@
 .profile-picture{
   max-height: 200px;
   max-width: 200px;
+}
+
+.profile-grid{
+  display: inline-flex;
+  padding-bottom: 50px;
+
+}
+
+.profile-container{
+  padding-left: 20px;
+}
+
+.profile-headers{
+  padding-top: 15px;
+  padding-bottom: 5px;
+}
+
+.profile-upload{
+  padding-bottom: 100px;
+  padding-top: 50px;
 }

@@ -96,11 +96,10 @@ const client = ipfsClient({
 
 
   return (
-    <div id=''>
-        <div>
-            <h2>username {useSelector(state=>state.provider.account)} </h2>
-        </div>
-        <div>
+    <div >
+        
+        <div className='profile-upload'>
+            <h3 className="profile-headers">Upload New Profile Photo</h3>
             <input onChange={uploadToIpfs} type='file' placeholder="Upload Profile Picture..." />
             <button onClick={createProfilePic} >Mint Profile Photo Now</button>
         </div>

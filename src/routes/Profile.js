@@ -3,10 +3,12 @@ import OwnedProfileNft from "../components/OwnedProfileNft"
 
 const Profile = () => {
   return (
-    <div id="content">
-      <CurrentUsersProfile />
+    <div className='profile-container' id="content">
+    
+    <OwnedProfileNft />
       <div>
-        <OwnedProfileNft />
+        
+        <CurrentUsersProfile />
       </div>
     </div>
   )
