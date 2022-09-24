@@ -9,6 +9,9 @@ const ProducersProfile = () => {
   const [producersProfile, setProducersProfile] = useState([])
   const producerAddress = useSelector(state=>state.provider.account)
 
+  // use alchemy api to pull meta data
+  // use balanceOf to pull nfts created by producer
+
   const fetchUsersProfile = async () =>{
     try{
       const {ethereum } = window;

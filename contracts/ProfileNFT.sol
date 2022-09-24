@@ -15,7 +15,7 @@ contract ProfileNFT is ERC721URIStorage {
     mapping(address=>uint)public nftProfileOwners;
     mapping(uint=>Creator) public numberToCreator;
     mapping(address=>Creator) public creatorsProfile;
-
+    
     mapping(address=>mapping(address=>bool)) public hasLikeProfile;
 
     struct Creator{
