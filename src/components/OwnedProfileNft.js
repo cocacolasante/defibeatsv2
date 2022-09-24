@@ -11,7 +11,17 @@ const OwnedProfileNft = () => {
 
     const account = useSelector(state=>state.provider.account)
 
-    // load profile contract and current users blockchain profile
+
+    const [currentProfile, setCurrentProfile] = useState()
+    const [nftProfileContract, setnftProfileContract] = useState()
+    
+    const [blockchainProfile, setBlockchainProfile] = useState()
+    const [nftMetaData, setNftMetaData] = useState()
+
+    const [statusMessage, setStatusMessage] = useState()
+    const [displayStatus, setDisplayStatus] = useState()
+
+   // load profile contract and current users blockchain profile
     const profileContract = async () =>{
         try {
             const {ethereum} = window;
@@ -37,23 +47,13 @@ const OwnedProfileNft = () => {
 
                 // load current profile picture from blockchain
                 setCurrentProfile(userTokenImage)
-                console.log(blockchainProfile)
+                
             }
 
         }catch(error){
             console.log(error)
         }
     }
-
-    const [currentProfile, setCurrentProfile] = useState()
-    const [nftProfileContract, setnftProfileContract] = useState()
-    
-    const [blockchainProfile, setBlockchainProfile] = useState()
-
-    const [nftMetaData, setNftMetaData] = useState()
-
-   
-    let pictureArrayIpfsGateway =[]
 
     const getAllProfileNfts = async () =>{
         
@@ -80,7 +80,7 @@ const OwnedProfileNft = () => {
         })
         
         setNftMetaData(nftMeta)
-     
+        
     }
 
     // set profile pic function needs testing 
@@ -111,19 +111,47 @@ const OwnedProfileNft = () => {
         }
     }
 
-    const handleSetStateProfile = async (e) =>{
-        
-        handleSetProfile(e.target.value)
-        
+    const handleSetStateProfile = async (e) =>{ 
+        handleSetProfile(e.target.value)   
+    }
+
+    const setProfileMessage = async () =>{
+        try{
+            const {ethereum} = window;
+            if(ethereum){
+                const provider = new ethers.providers.Web3Provider(ethereum)
+                const signer = provider.getSigner()
+                const localProfileContract = new ethers.Contract(PROFILENFT_ADDRESS, profileNftAbi.abi, signer)
+
+                console.log("Loading Metamask to pay for gas")
+
+                let txn = await localProfileContract.setMessage(account, statusMessage)
+                const receipt = await txn.wait()
+                if(receipt.status === 1){
+                    alert("Profile Status Change Successful! Please refresh to view changes")
+          
+                  } else {
+                    alert("Transaction failed, please try again")
+                  }
+
+            }
+        } catch(error){
+            console.log(error)
+        }
+    }
+
+    const getStatus = async () =>{
+        let status = await blockchainProfile["profileMessage"]
+        setDisplayStatus(status)
     }
 
    
     useEffect(()=>{
         profileContract();
         getAllProfileNfts();
-        console.log("test to see how many times run")
+        getStatus()
            
-    },[currentProfile])
+    },[currentProfile, statusMessage, displayStatus])
 
 
 
@@ -137,7 +165,9 @@ const OwnedProfileNft = () => {
             <h3 className="profile-headers">Current Username: </h3>
         </div>
         <div >
-            <h3 className="profile-headers">Current Status: </h3>
+        
+            <h3 className="profile-headers">Current Status: {!displayStatus ? <p></p> : displayStatus }  </h3>
+          
         </div>
         <h3 className="profile-headers">Current Profile Picture</h3>
         <div id="content" className="profile-picture prof-pic-container">
@@ -149,7 +179,8 @@ const OwnedProfileNft = () => {
             </div>
             <div className="header-container">
                 <h3 className="profile-headers">Set Status Message: </h3>
-                <input type='text' placeholder="New Status" />
+                <input type='text' placeholder="New Status" onSubmit={setProfileMessage} onChange={e=>setStatusMessage(e.target.value)} />
+                <button type='button' onClick={setProfileMessage} placeholder="submit" >Set Status</button>
             </div>
             <h3 className="profile-headers">Set Profile Picture</h3>
             <div className="text-center profile-grid ">

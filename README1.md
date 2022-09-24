@@ -1,4 +1,5 @@
-TO DO
+TO DO:
+reploy smart contract with updated abi
 
 PROFILE PAGE TO DO:
 send users profile image uri to redux store
