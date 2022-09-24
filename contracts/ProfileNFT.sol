@@ -20,11 +20,11 @@ contract ProfileNFT is ERC721URIStorage {
 
     struct Creator{
         address payable creatorAddress;
-        string username;
         string profileMessage;
         uint tipsReceived;
         uint profileToken;
         uint numOfLikes;
+        string username;
     }
 
     constructor()ERC721("DefiBeats Profile", "DFBP"){}
@@ -40,10 +40,10 @@ contract ProfileNFT is ERC721URIStorage {
         numberToCreator[newTokenId] = Creator(
             payable(msg.sender),
             "",
-            "",
             0,
             newTokenId,
-            0
+            0,
+            ""
         );
 
         _setTokenURI(newTokenId, _tokenUri);
@@ -51,10 +51,10 @@ contract ProfileNFT is ERC721URIStorage {
         creatorsProfile[msg.sender] = Creator(
             payable(msg.sender),
             "",
-            "",
             0,
             newTokenId,
-            0
+            0,
+            ""
         );
         setProfile(newTokenId);
 

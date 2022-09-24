@@ -37,7 +37,7 @@ const OwnedProfileNft = () => {
 
                 // load current profile picture from blockchain
                 setCurrentProfile(userTokenImage)
-                
+                console.log(blockchainProfile)
             }
 
         }catch(error){
