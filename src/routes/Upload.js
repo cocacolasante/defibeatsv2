@@ -9,7 +9,7 @@ const Upload = () => {
     <div id='content'>
       <UploadForm />
       <div className='myrecent-uploads'>
-        <MyRecentUploads />
+        
       </div>
     </div>
   )

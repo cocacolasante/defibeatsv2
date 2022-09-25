@@ -24,7 +24,6 @@ const UploadForm = () => {
   const [songFile, setSongFile] = useState()
   const [collectionName, setCollectionName] = useState()
   const [description, setDescription] = useState("")
-  const [genre, setGenre] = useState()
 
   const uploadToIpfs = async (event) =>{
     event.preventDefault()
@@ -33,8 +32,9 @@ const UploadForm = () => {
     if(typeof file !== 'undefined'){
       try{
         const result = await client.add(file)
-        console.log(result)
+        
         setSongFile(`https://defibeats.infura-ipfs.io/ipfs/${result.path}`)
+        console.log(songFile)
       }catch(error){
         console.log(error)
       }
@@ -47,9 +47,11 @@ const UploadForm = () => {
     if(!name || !songFile || !collectionName || !description) return;
     
     try {
-      const result = await client.add(JSON.stringify({name: name, collectionName: collectionName, description:description, song: songFile, genre: genre}))
+      const result = await client.add(JSON.stringify({name: name, collectionName: collectionName, description: description, song: songFile}))
       
-      mintSong(result, name, collectionName);
+      const uri = `https://defibeats.infura-ipfs.io/ipfs/${result.path}`
+
+      mintSong(uri, name, collectionName);
 
 
     } catch(error){
@@ -57,9 +59,7 @@ const UploadForm = () => {
     }
   }
 
-  const mintSong = async (result, _name, _collectionName) => {
-    
-    const uri = `https://defibeats.infura-ipfs.io/ipfs/${result.path}`
+  const mintSong = async (_uri, _name, _collectionName) => {
 
     try{
       const {ethereum} = window;
@@ -72,9 +72,14 @@ const UploadForm = () => {
         console.log("Loading Metamask to pay for gas")
         
 
-        let txn = await DefiBeats.makeSong(uri, _name, _collectionName)
+        let txn = await DefiBeats.makeSong(_uri, _name, _collectionName)
         const receipt = await txn.wait()
-        console.log(receipt)
+
+        if(receipt.status === 1){
+          console.log("Song Mint Successful!")
+        } else {
+          alert("Transaction failed, please try again")
+        }
       }
 
     }catch (error){
@@ -99,25 +104,14 @@ const UploadForm = () => {
             <label >Collection Name</label>
             <input type='text' onChange={(e)=>setCollectionName(e.target.value)} placeholder="Enter Collection Name..." />
           </div>
-          <div className="form-div">
-          <label for="genre">Choose Song Genre:</label>
-            <select onChange={(e)=>setGenre(e.target.value)} id="genre" name="genre">
-              <option value="rock">Rock</option>
-              <option value="rap-hiphop">Rap/Hip-Hop</option>
-              <option value="alternative">Alternative</option>
-              <option value="punk">Punk</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
           <div>
             <label for='description'>Enter short song description or message</label>
             <br />
-            <textarea placeholder='description' onChange={(e)=>setDescription(e.target.value)} />
-            
+            <textarea placeholder='description' onChange={(e)=>setDescription(e.target.value)} />   
           </div>
           <br />
           <div className="form-div">
-            <label >Song File</label>
+            <label>Song File</label>
             <input onChange={uploadToIpfs} type='file' placeholder="Enter Song File..." />
           </div>
           <input type="submit" value="Mint Song Now!" />

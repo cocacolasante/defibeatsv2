@@ -144,9 +144,12 @@ const OwnedProfileNft = () => {
     }
 
     const getStatus = async () =>{
-        let status = await blockchainProfile[1]
-        let _username = await blockchainProfile[5]
+        let status = await blockchainProfile["profileMessage"]
         setDisplayStatus(status)
+        
+    }
+    const getUsername = async () => {
+        let _username = await blockchainProfile["username"]
         setDisplayUsername(_username)
     }
 
@@ -181,6 +184,7 @@ const OwnedProfileNft = () => {
         profileContract();
         getAllProfileNfts();
         getStatus()
+        getUsername()
            
     },[currentProfile, statusMessage, displayStatus, username, displayUsername])
 

@@ -78,7 +78,7 @@ const client = ipfsClient({
 
         let txn = await ProfileNFT.mint(uri)
         const receipt = await txn.wait()
-        console.log(receipt)
+        
 
         if(receipt.status === 1){
           console.log("Mint Successful!")
