@@ -20,6 +20,9 @@ const OwnedProfileNft = () => {
 
     const [statusMessage, setStatusMessage] = useState()
     const [displayStatus, setDisplayStatus] = useState()
+    const [username, setUsername] = useState()
+    const [displayUsername, setDisplayUsername] = useState()
+
 
    // load profile contract and current users blockchain profile
     const profileContract = async () =>{
@@ -111,7 +114,7 @@ const OwnedProfileNft = () => {
         }
     }
 
-    const handleSetStateProfile = async (e) =>{ 
+    const handleSetStateProfile = (e) =>{ 
         handleSetProfile(e.target.value)   
     }
 
@@ -141,9 +144,37 @@ const OwnedProfileNft = () => {
     }
 
     const getStatus = async () =>{
-        let status = await blockchainProfile["profileMessage"]
+        let status = await blockchainProfile[1]
+        let _username = await blockchainProfile[5]
         setDisplayStatus(status)
+        setDisplayUsername(_username)
     }
+
+    const setCurrentUsername = async () =>{
+        try{
+            const {ethereum} = window;
+            if(ethereum){
+                const provider = new ethers.providers.Web3Provider(ethereum)
+                const signer = provider.getSigner()
+                const localProfileContract = new ethers.Contract(PROFILENFT_ADDRESS, profileNftAbi.abi, signer)
+
+                console.log("Loading Metamask to pay for gas")
+
+                let txn = await localProfileContract.setUsername(account, username)
+                const receipt = await txn.wait()
+                if(receipt.status === 1){
+                    alert("Profile Username Change Successful! Please refresh to view changes")
+          
+                  } else {
+                    alert("Transaction failed, please try again")
+                  }
+
+            }
+        } catch(error){
+            console.log(error)
+        }
+    }
+
 
    
     useEffect(()=>{
@@ -151,7 +182,7 @@ const OwnedProfileNft = () => {
         getAllProfileNfts();
         getStatus()
            
-    },[currentProfile, statusMessage, displayStatus])
+    },[currentProfile, statusMessage, displayStatus, username, displayUsername])
 
 
 
@@ -162,7 +193,7 @@ const OwnedProfileNft = () => {
             
         </div>
         <div >
-            <h3 className="profile-headers">Current Username: </h3>
+            <h3 className="profile-headers">Current Username: {!displayUsername ? <p></p> : displayUsername} </h3>
         </div>
         <div >
         
@@ -175,7 +206,8 @@ const OwnedProfileNft = () => {
             </div>
             <div className="header-container">
                 <h3 className="profile-headers">Set User Name: </h3>
-                <input type='text' placeholder="New Username" />
+                <input type='text' placeholder="New Username" onSubmit={setCurrentUsername} onChange={e=>setUsername(e.target.value)} />
+                <button type="button" onClick={setCurrentUsername} >Set Username</button>
             </div>
             <div className="header-container">
                 <h3 className="profile-headers">Set Status Message: </h3>
