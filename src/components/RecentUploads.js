@@ -3,10 +3,12 @@ import SongListing from './SongListing'
 import env from "react-dotenv";
 import { ethers } from "ethers";
 import { DEFIBEATS_ADDRESS } from "../config";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 
 const RecentUploads = () => {
+
+  const [recentSongs, setRecentSongs] = useState()
 
     const fetchRecentMints = async () => {
         const config = {
@@ -20,6 +22,7 @@ const RecentUploads = () => {
       const allNftSongs = await alchemy.nft.getNftsForContract(DEFIBEATS_ADDRESS, {
           omitMetadata: omitMetadata,
       });
+      setRecentSongs(allNftSongs)
       console.log(JSON.stringify(allNftSongs, null, 2));
 
   }
