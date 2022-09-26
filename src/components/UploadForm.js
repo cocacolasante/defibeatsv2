@@ -53,6 +53,8 @@ const UploadForm = () => {
 
       mintSong(uri, name, collectionName);
 
+      console.log(uri)
+      
 
     } catch(error){
       console.log(error)
