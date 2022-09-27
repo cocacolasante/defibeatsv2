@@ -14,6 +14,8 @@ const MyRecentSongs = () => {
     const [activeAccount, setActiveAccount] = useState()
     const [listingPrice, setListingPrice] = useState()
     const [isLoading, setIsLoading] = useState(false)
+    const [songsForSale, setSongsForSale] = useState([])
+
 
     const checkIfWalletIsConnected = async () => {
 
@@ -81,6 +83,48 @@ const MyRecentSongs = () => {
               console.log(error)
           }
       }
+
+    // const getSongForSaleData = async () => {
+    //     try {
+    //       const {ethereum} = window;
+    //       if(ethereum){
+    //           const provider = new ethers.providers.Web3Provider(ethereum)
+              
+    //           const DefiBeatsContract = new ethers.Contract(DEFIBEATS_ADDRESS, defibeatsAbi.abi, provider)
+              
+    
+    //           const allSongs = await DefiBeatsContract.returnAllSongs()
+    //           // console.log(allSongs)
+    
+              
+    //           const songsMetaMapping = await Promise.all(allSongs.map(async (i)=>{
+    //             let output = []
+                
+                
+    //             if(i[3].toUpperCase() === account.toUpperCase() && i[6] === true){
+    //                 output.push(i[0].toString()) // token id
+    //                 output.push(i[1]) // name
+    //                 output.push(i[2]) // collection name
+    //                 output.push(i[3]) // current owner
+    //                 output.push(i[4]) // token uri
+    //                 output.push(i[5].toString()) // price
+    //                 output.push(i[6]) // is for sale
+    //                 output.push(i[7]) // original producer
+    //                 output.push(await _getOriginalProducer(i[7])) // og producer image
+                    
+    //             } 
+                
+    //             return output
+    //           }))
+                
+    //           setSongsForSale(songsMetaMapping)
+             
+    //       }
+    
+    //       }catch(error){
+    //           console.log(error)
+    //       }
+    //   }
     
     const _getOriginalProducer = async (ogProducersAddress) =>{
 
@@ -135,6 +179,7 @@ const MyRecentSongs = () => {
                 console.log("Song List Successful!")
                 
                 
+                
               } else {
                 alert("Transaction failed, please try again")
               }
@@ -144,6 +189,7 @@ const MyRecentSongs = () => {
           }catch (error){
             console.log(error)
           }
+         
          
     }
 
@@ -190,10 +236,11 @@ const MyRecentSongs = () => {
         setIsLoading(false)
     }
 
-    useEffect(()=>{
-        
+
+    useEffect(()=>{ 
         checkIfWalletIsConnected()
         getSongData()
+        // getSongForSaleData()
     }, [isLoading])
 
 
@@ -208,7 +255,7 @@ const MyRecentSongs = () => {
                 recentSongs.map((i)=>{
                    if(i[0]){
                     return(
-                    <div className="song-card-mapping2" key={i[0]}> {console.log(recentSongs)}
+                    <div className="song-card-mapping2" key={i[0]}> {console.log(songsForSale)}
                         <h3>Name: {i[1]} </h3>
                         <img className="song-producer-image2" src={i[8]} />                  
                             
@@ -219,7 +266,7 @@ const MyRecentSongs = () => {
                         
                         <div className="play-btn-container"> 
                         <button className="play-buy-btn">Play</button>
-                        {!i[6] ? <button value={i[0]} onClick={handleCancelClick} className="play-buy-btn" >Cancel Listing</button> : (
+                        {i[6] ? <button value={i[0]} onClick={handleCancelClick} className="play-buy-btn" >Cancel Listing</button> : (
                             <div>
                                 <button className="play-buy-btn" value={i[0]} onClick={handleSetSongButton} >List for Sale</button>
                                 <input type="number" onChange={e=>setListingPrice(e.target.value)} placeholder="listing price" />

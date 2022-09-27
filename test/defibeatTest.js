@@ -111,6 +111,12 @@ describe("Defi Beats V2", () =>{
 
       expect(await ethers.provider.getBalance(user1.address)).to.equal(initialBalance + BigInt(1))
     })
+    it("checks the listing song struct was updated", async () =>{
+     const song = await DefiBeats.songs(1)
+
+     expect(song.isForSale).to.equal(true)
+     
+    })
   })
   describe("update listing functions", ()=>{
 
@@ -146,6 +152,7 @@ describe("Defi Beats V2", () =>{
       // 2 songs made?
       console.log(await DefiBeats.returnAllSongs())
     })
+   
 
   })
 
