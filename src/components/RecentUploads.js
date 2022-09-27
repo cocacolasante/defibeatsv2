@@ -119,7 +119,7 @@ const RecentUploads = () => {
   }, [])
 
   return (
-    <div className='recent-upload-container'>
+    <div id="content-wrapper">
         <h2>Recent Uploads</h2>
         <div className='recent-upload-card-container'>
            
@@ -128,19 +128,19 @@ const RecentUploads = () => {
                 : 
                 songMeta.map((i)=>{
                 return(
-                    <div key={i}>
+                    <div className="song-card-mapping" key={i}>
                         <h3>Name: {i[1]} </h3>
-                        <img className="img-thumbnail" src={i[8]} />                  
+                        <img className="song-producer-image" src={i[8]} />                  
                             
-                        <p>Original Producer: {i[7]}</p>
+                        <p>Original Producer: {i[7].slice(0, 6)}...{i[7].slice(-6)}</p>
                         <div>
                           <h5>Collection Name: {i[2]} </h5>
                           
                         </div>
                         
-                        <div>
-                        {i[6] ? <button>buy</button> : <button>not for sale</button>}
-                        <button>Play</button>
+                        <div className="play-btn-container">
+                        <button className="play-buy-btn">Play</button>
+                        {i[6] ? <button className="play-buy-btn" >buy</button> : <button className="play-buy-btn" >not for sale</button>}
                         </div>
                   </div>
                 )

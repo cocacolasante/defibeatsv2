@@ -173,3 +173,18 @@
   padding-right: 25px;
   padding-top: 5px;
 }
+
+.song-producer-image {
+  max-height: 200px;
+  max-width: 200px;
+}
+
+.song-card-mapping{
+  border: 1px solid black;
+  width: 300px;
+  height: auto;
+}
+
+.play-btn-container{
+  padding-bottom: 5px;
+}
