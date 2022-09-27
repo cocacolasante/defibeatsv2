@@ -188,3 +188,13 @@
 .play-btn-container{
   padding-bottom: 5px;
 }
+
+.song-card-mapping2{
+  border: 1px solid black;
+  width: 150px;
+  height: auto;
+}
+.song-producer-image2 {
+  max-height: 100px;
+  max-width: 100px;
+}

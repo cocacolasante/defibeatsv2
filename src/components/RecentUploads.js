@@ -1,5 +1,4 @@
 import { Alchemy, Network } from "alchemy-sdk";
-import SongListing from './SongListing'
 import env from "react-dotenv";
 import { ethers } from "ethers";
 import { DEFIBEATS_ADDRESS } from "../config";
@@ -14,8 +13,6 @@ const RecentUploads = () => {
 
   const [recentSongs, setRecentSongs] = useState()
   const [songMeta, setSongMeta] = useState([])
-  const [songImage, setSongImage] = useState([])
-  const [isLoadingPicture, setIsLoadingPicture ] = useState(false)
 
     const fetchRecentMints = async () => {
         const config = {
@@ -46,10 +43,10 @@ const RecentUploads = () => {
           const allSongs = await DefiBeatsContract.returnAllSongs()
           // console.log(allSongs)
 
-          let output = []
-          let imageOut = []
+         
           const songsMetaMapping = await Promise.all(allSongs.map(async (i)=>{
-            
+            let output = []
+    
             output.push(i[0].toString()) // token id
             output.push(i[1]) // name
             output.push(i[2]) // collection name
@@ -128,7 +125,7 @@ const RecentUploads = () => {
                 : 
                 songMeta.map((i)=>{
                 return(
-                    <div className="song-card-mapping" key={i}>
+                    <div className="song-card-mapping" key={i[0]}>
                         <h3>Name: {i[1]} </h3>
                         <img className="song-producer-image" src={i[8]} />                  
                             
