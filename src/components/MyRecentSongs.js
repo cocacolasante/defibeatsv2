@@ -1,6 +1,4 @@
-import { Alchemy, Network } from "alchemy-sdk";
 import { useEffect, useState } from 'react';
-import env from "react-dotenv";
 import {DEFIBEATS_ADDRESS} from "../config"
 import defibeatsAbi from "../assets/defibeats.json"
 import { ethers } from "ethers";
@@ -14,6 +12,8 @@ const MyRecentSongs = () => {
 
     const [recentSongs, setRecentSongs] = useState()
     const [activeAccount, setActiveAccount] = useState()
+    const [listingPrice, setListingPrice] = useState()
+    const [isLoading, setIsLoading] = useState(false)
 
     const checkIfWalletIsConnected = async () => {
 
@@ -57,7 +57,7 @@ const MyRecentSongs = () => {
                 let output = []
                 
                 
-                if(i[3].toUpperCase() == account.toUpperCase()){
+                if(i[3].toUpperCase() === account.toUpperCase()){
                     output.push(i[0].toString()) // token id
                     output.push(i[1]) // name
                     output.push(i[2]) // collection name
@@ -72,11 +72,9 @@ const MyRecentSongs = () => {
                 
                 return output
               }))
-              
-    
+                
               setRecentSongs(songsMetaMapping)
-           
-              
+             
           }
     
           }catch(error){
@@ -116,11 +114,87 @@ const MyRecentSongs = () => {
 
     }
 
+    const setSongForSale = async (songNum) =>{
+        
+        try{
+            const {ethereum} = window;
+      
+            if(ethereum){
+              const provider = new ethers.providers.Web3Provider(ethereum)
+              const signer = provider.getSigner()
+              const DefiBeats = new ethers.Contract(DEFIBEATS_ADDRESS, defibeatsAbi.abi, signer)
+      
+              console.log("Loading Metamask to pay for gas")
+              
+      
+              let txn = await DefiBeats.listSong(songNum, listingPrice)
+              const receipt = await txn.wait()
+                
+              
+              if(receipt.status === 1){
+                console.log("Song List Successful!")
+                
+                
+              } else {
+                alert("Transaction failed, please try again")
+              }
+            }
+
+      
+          }catch (error){
+            console.log(error)
+          }
+         
+    }
+
+    const handleSetSongButton = (e) =>{
+        e.preventDefault()
+        setIsLoading(true)
+        setSongForSale(e.target.value)
+        setIsLoading(false)
+    }
+
+    const cancelListing = async (songNum)=>{
+        try{
+            const {ethereum} = window;
+      
+            if(ethereum){
+              const provider = new ethers.providers.Web3Provider(ethereum)
+              const signer = provider.getSigner()
+              const DefiBeats = new ethers.Contract(DEFIBEATS_ADDRESS, defibeatsAbi.abi, signer)
+      
+              console.log("Loading Metamask to pay for gas")
+              
+      
+              let txn = await DefiBeats.cancelListing(songNum)
+              const receipt = await txn.wait()
+                
+              
+              if(receipt.status === 1){
+                console.log("Song cancel Successful!")
+                console.log(recentSongs[songNum][6])
+              } else {
+                alert("Transaction failed, please try again")
+              }
+            }
+      
+          }catch (error){
+            console.log(error)
+          }
+    }
+
+    const handleCancelClick = (e) =>{
+        e.preventDefault()
+        setIsLoading(true)
+        cancelListing(e.target.value)
+        setIsLoading(false)
+    }
 
     useEffect(()=>{
-        getSongData()
+        
         checkIfWalletIsConnected()
-    }, [])
+        getSongData()
+    }, [isLoading])
 
 
   return (
@@ -134,7 +208,7 @@ const MyRecentSongs = () => {
                 recentSongs.map((i)=>{
                    if(i[0]){
                     return(
-                    <div className="song-card-mapping2" key={i[0]}>
+                    <div className="song-card-mapping2" key={i[0]}> {console.log(recentSongs)}
                         <h3>Name: {i[1]} </h3>
                         <img className="song-producer-image2" src={i[8]} />                  
                             
@@ -143,9 +217,13 @@ const MyRecentSongs = () => {
                           <h5>Collection Name: {i[2]} </h5>
                         </div>
                         
-                        <div className="play-btn-container">
+                        <div className="play-btn-container"> 
                         <button className="play-buy-btn">Play</button>
-                        {i[6] ? <button className="play-buy-btn" >Cancel Listing</button> : <button className="play-buy-btn" >List for Sale</button>}
+                        {!i[6] ? <button value={i[0]} onClick={handleCancelClick} className="play-buy-btn" >Cancel Listing</button> : (
+                            <div>
+                                <button className="play-buy-btn" value={i[0]} onClick={handleSetSongButton} >List for Sale</button>
+                                <input type="number" onChange={e=>setListingPrice(e.target.value)} placeholder="listing price" />
+                                </div> )}
                         </div>
                   </div>
                 )
