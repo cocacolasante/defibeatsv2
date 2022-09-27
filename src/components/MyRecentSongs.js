@@ -75,11 +75,7 @@ const MyRecentSongs = () => {
               
     
               setRecentSongs(songsMetaMapping)
-    
-              console.log(songsMetaMapping)
-              console.log(typeof account)
-              
-             
+           
               
           }
     
@@ -142,7 +138,7 @@ const MyRecentSongs = () => {
                         <h3>Name: {i[1]} </h3>
                         <img className="song-producer-image2" src={i[8]} />                  
                             
-                        {/* <p>Original Producer: {i[7].slice(0, 6)}...{i[7].slice(-6)}</p> */}
+                        <p>Original Producer: {i[7].slice(0, 6)}...{i[7].slice(-6)}</p>
                         <div>
                           <h5>Collection Name: {i[2]} </h5>
                         </div>

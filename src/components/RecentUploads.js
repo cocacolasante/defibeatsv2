@@ -58,7 +58,7 @@ const RecentUploads = () => {
             output.push(await _getOriginalProducer(i[7])) // og producer image
             return output
           }))
-
+          songsMetaMapping.reverse()
           setSongMeta(songsMetaMapping)
 
           console.log(songsMetaMapping)
