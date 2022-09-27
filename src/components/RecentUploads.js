@@ -5,12 +5,17 @@ import { ethers } from "ethers";
 import { DEFIBEATS_ADDRESS } from "../config";
 import { useEffect, useState } from "react";
 import defibeatsAbi from "../assets/defibeats.json"
+import profileNftAbi from "../assets/profilenft.json"
+import {PROFILENFT_ADDRESS} from "../config"
+
 
 
 const RecentUploads = () => {
 
   const [recentSongs, setRecentSongs] = useState()
   const [songMeta, setSongMeta] = useState([])
+  const [songImage, setSongImage] = useState([])
+  const [isLoadingPicture, setIsLoadingPicture ] = useState(false)
 
     const fetchRecentMints = async () => {
         const config = {
@@ -41,8 +46,10 @@ const RecentUploads = () => {
           const allSongs = await DefiBeatsContract.returnAllSongs()
           // console.log(allSongs)
 
-          const songsMetaMapping = allSongs.map((i)=>{
-            let output = []
+          let output = []
+          let imageOut = []
+          const songsMetaMapping = await Promise.all(allSongs.map(async (i)=>{
+            
             output.push(i[0].toString()) // token id
             output.push(i[1]) // name
             output.push(i[2]) // collection name
@@ -51,25 +58,58 @@ const RecentUploads = () => {
             output.push(i[5].toString()) // price
             output.push(i[6]) // is for sale
             output.push(i[7]) // original producer
+            output.push(await _getOriginalProducer(i[7])) // og producer image
             return output
-          })
+          }))
 
           setSongMeta(songsMetaMapping)
 
-          // const userTokenPicURI = await ProfileNFTContract.tokenURI(userTokenPicId)
-          // let response = await fetch(userTokenPicURI)
-          // const jsonResponse = await response.json()
-          
-          // const userTokenImage = jsonResponse["image"]
-
-          // load current profile picture from blockchain
-         
+          console.log(songsMetaMapping)
           
       }
 
-  }catch(error){
-      console.log(error)
+      }catch(error){
+          console.log(error)
+      }
   }
+
+  const getSongFromIPFS = async (_tokenUri) =>{ // use i[4] in the mapping
+    const response = await fetch(_tokenUri)
+    const jsonResponse = await response.json()
+    console.log(jsonResponse)
+
+  }
+
+  const _getOriginalProducer = async (ogProducersAddress) =>{
+
+    let ogProdIm
+
+    const {ethereum} = window;
+
+    const provider = new ethers.providers.Web3Provider(ethereum)
+    
+    const ProfileNFTContract = new ethers.Contract(PROFILENFT_ADDRESS, profileNftAbi.abi, provider)
+
+    // get orginal producers profile from nft profile contract
+    let originalProducerProfile = await ProfileNFTContract.creatorsProfile(ogProducersAddress)
+    
+    // get current token id
+    const ogProdUri = originalProducerProfile[3].toString()
+
+    // get current token uri
+    const userTokenPicURI = await ProfileNFTContract.tokenURI(ogProdUri)
+    let response = await fetch(userTokenPicURI)
+    const jsonResponse = await response.json()
+
+    // parse json data for image uri
+    ogProdIm = jsonResponse["image"]
+
+    console.log(ogProdIm)
+    
+    //return image uri for img src link
+    return (ogProdIm)
+
+
 
   }
 
@@ -83,25 +123,29 @@ const RecentUploads = () => {
         <h2>Recent Uploads</h2>
         <div className='recent-upload-card-container'>
            
-           {!songMeta ? <p>loading</p> : songMeta.map((i)=>{
+           {!songMeta ? 
+                (<p>loading</p>) 
+                : 
+                songMeta.map((i)=>{
                 return(
-              <div key={i}>
-              <h3>{i[1]} </h3>
-              <img />
-              <div>
-                <h5>{i[2]} </h5>
-                <p>Descriptions</p>
-              </div>
-              <div>
-              <button>Buy</button>
-              <button>Play</button>
-              </div>
-            </div>
-            )
+                    <div key={i}>
+                        <h3>Name: {i[1]} </h3>
+                        <img className="img-thumbnail" src={i[8]} />                  
+                            
+                        <p>Original Producer: {i[7]}</p>
+                        <div>
+                          <h5>Collection Name: {i[2]} </h5>
+                          
+                        </div>
+                        
+                        <div>
+                        {i[6] ? <button>buy</button> : <button>not for sale</button>}
+                        <button>Play</button>
+                        </div>
+                  </div>
+                )
            }) }
            
-            
-
         </div>
     </div>
   )
