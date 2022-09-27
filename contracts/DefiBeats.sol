@@ -182,5 +182,13 @@ contract DefiBeats is ERC721URIStorage, Ownable{
     function changeFeeAccount(address newFeeAddress) public onlyAdmin returns(address){
         return feeAccount = payable(newFeeAddress);
     }
+
+    function returnAllSongs() external view returns(Song[] memory){
+        Song[] memory _allSongs = new Song[](tokenCount);
+        for(uint i = 0; i < allSongs.length; i++){
+            _allSongs[i] = allSongs[i];
+        }
+        return _allSongs;
+    }
   
 }

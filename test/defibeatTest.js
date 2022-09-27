@@ -142,8 +142,14 @@ describe("Defi Beats V2", () =>{
 
       expect(await DefiBeats.feeAccount()).to.equal(user2.address)
     })
+    it("checks the return all songs function", async () =>{
+      // 2 songs made?
+      console.log(await DefiBeats.returnAllSongs())
+    })
 
   })
+
+
   describe("Profile NFT contract", () => {
     let ProfileNFT
     beforeEach(async () =>{
