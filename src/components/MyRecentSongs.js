@@ -17,6 +17,7 @@ const MyRecentSongs = () => {
     const [songsForSale, setSongsForSale] = useState([])
 
 
+
     const checkIfWalletIsConnected = async () => {
 
         const {ethereum} = window;
@@ -84,47 +85,44 @@ const MyRecentSongs = () => {
           }
       }
 
-    // const getSongForSaleData = async () => {
-    //     try {
-    //       const {ethereum} = window;
-    //       if(ethereum){
-    //           const provider = new ethers.providers.Web3Provider(ethereum)
+      // work on getting the for sale songs from the blockchain owned by current user
+    const getSongForSaleData = async () => {
+        try {
+          const {ethereum} = window;
+          if(ethereum){
+              const provider = new ethers.providers.Web3Provider(ethereum)
               
-    //           const DefiBeatsContract = new ethers.Contract(DEFIBEATS_ADDRESS, defibeatsAbi.abi, provider)
+              const DefiBeatsContract = new ethers.Contract(DEFIBEATS_ADDRESS, defibeatsAbi.abi, provider)
               
+              const allSongs = await DefiBeatsContract.returnAllSongsForSale()
+              console.log(allSongs)
     
-    //           const allSongs = await DefiBeatsContract.returnAllSongs()
-    //           // console.log(allSongs)
-    
               
-    //           const songsMetaMapping = await Promise.all(allSongs.map(async (i)=>{
-    //             let output = []
+              const songsMetaMapping = await Promise.all(allSongs.map(async (i)=>{
+                let output = []              
+                // if(i[3].toUpperCase() === account.toUpperCase()){               
+                    output.push(i[0].toString()) // token id
+                    output.push(i[1]) // name
+                    output.push(i[2]) // collection name
+                    output.push(i[3]) // current owner
+                    output.push(i[4]) // token uri
+                    output.push(i[5].toString()) // price
+                    output.push(i[6]) // is for sale
+                    output.push(i[7]) // original producer
+                    output.push(await _getOriginalProducer(i[7])) // og producer image               
+                // }            
+                return output
+              }))
                 
-                
-    //             if(i[3].toUpperCase() === account.toUpperCase() && i[6] === true){
-    //                 output.push(i[0].toString()) // token id
-    //                 output.push(i[1]) // name
-    //                 output.push(i[2]) // collection name
-    //                 output.push(i[3]) // current owner
-    //                 output.push(i[4]) // token uri
-    //                 output.push(i[5].toString()) // price
-    //                 output.push(i[6]) // is for sale
-    //                 output.push(i[7]) // original producer
-    //                 output.push(await _getOriginalProducer(i[7])) // og producer image
-                    
-    //             } 
-                
-    //             return output
-    //           }))
-                
-    //           setSongsForSale(songsMetaMapping)
+              setSongsForSale(songsMetaMapping)
+
              
-    //       }
+          }
     
-    //       }catch(error){
-    //           console.log(error)
-    //       }
-    //   }
+          }catch(error){
+              console.log(error)
+          }
+      }
     
     const _getOriginalProducer = async (ogProducersAddress) =>{
 
@@ -158,8 +156,7 @@ const MyRecentSongs = () => {
 
     }
 
-    const setSongForSale = async (songNum) =>{
-        
+    const setSongForSale = async (songNum) =>{       
         try{
             const {ethereum} = window;
       
@@ -170,16 +167,12 @@ const MyRecentSongs = () => {
       
               console.log("Loading Metamask to pay for gas")
               
-      
               let txn = await DefiBeats.listSong(songNum, listingPrice)
               const receipt = await txn.wait()
-                
-              
+             
               if(receipt.status === 1){
                 console.log("Song List Successful!")
-                
-                
-                
+               
               } else {
                 alert("Transaction failed, please try again")
               }
@@ -242,6 +235,8 @@ const MyRecentSongs = () => {
         getSongData()
         // getSongForSaleData()
     }, [isLoading])
+
+    
 
 
   return (

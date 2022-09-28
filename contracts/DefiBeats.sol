@@ -164,8 +164,6 @@ contract DefiBeats is ERC721URIStorage, Ownable{
 
     }
 
-    // add "remix" function to add remixes of song to the nft and ipfs
-
     // update contract functions
     function updateFee(uint _newFeeAmount) public onlyAdmin returns(uint) {
         return transactionFee = _newFeeAmount;
@@ -187,6 +185,19 @@ contract DefiBeats is ERC721URIStorage, Ownable{
         Song[] memory _allSongs = new Song[](tokenCount);
         for(uint i = 0; i < allSongs.length; i++){
             _allSongs[i] = allSongs[i];
+        }
+        return _allSongs;
+    }
+    
+    function returnAllSongsForSale() external view returns(Song[] memory){
+        Song[] memory _allSongs = new Song[](tokenCount);
+        uint counter;
+        for(uint i = 0; i < allSongs.length; i++){
+            if(allSongs[i].isForSale == true){
+                _allSongs[counter] = allSongs[i];
+                counter++;
+            }
+            
         }
         return _allSongs;
     }
