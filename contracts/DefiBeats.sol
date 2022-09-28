@@ -97,15 +97,22 @@ contract DefiBeats is ERC721URIStorage, Ownable{
     }
 
     // song number is tokenId
-    function listSong(uint songNumber, uint songPrice) external returns(Song memory){
+    function listSong(uint songNumber, uint songPrice) external{
         require(msg.sender == ownerOf(songNumber), "cannot list songs you do not own");
 
+        // updating mapping
         Song storage song = songs[songNumber];
-
 
         song.isForSale = true;
         song.price = songPrice;
         song.currentOwner = payable(msg.sender);
+
+        // updating array
+        // Song storage songArr = allSongs[songNumber];
+
+        // songArr.isForSale = true;
+        // songArr.price = songPrice;
+        // songArr.currentOwner = payable(msg.sender);
 
         setApprovalForAll(address(this), true);
 
@@ -115,7 +122,7 @@ contract DefiBeats is ERC721URIStorage, Ownable{
         
         emit SongListed(song.tokenId , msg.sender, song.tokenUri);
 
-        return song;
+       
 
     }
 
@@ -183,20 +190,21 @@ contract DefiBeats is ERC721URIStorage, Ownable{
     }
 
     function returnAllSongs() external view returns(Song[] memory){
-        Song[] memory _allSongs = new Song[](tokenCount);
-        for(uint i = 0; i < allSongs.length; i++){
-            _allSongs[i] = allSongs[i];
+        uint iterateCount = _tokenIds.current() + 1;
+        Song[] memory _allSongs = new Song[](iterateCount);
+        for(uint i = 0; i < iterateCount; i++){
+            _allSongs[i] = songs[i];
         }
         return _allSongs;
     }
 
     function returnAllSongsForSale() external view returns(Song[] memory){
-        uint forSaleTokenCount = balanceOf(address(this));
-        Song[] memory _allSongs = new Song[](forSaleTokenCount);
+        uint iterateCount = _tokenIds.current() + 1;
+        Song[] memory _allSongs = new Song[](iterateCount);
         uint counterIndex;
-        for(uint i = 0; i < allSongs.length; i++){
-            if(allSongs[i].isForSale != false){
-                _allSongs[counterIndex] = allSongs[i];
+        for(uint i = 0; i < iterateCount; i++){
+            if(songs[i].isForSale != false){
+                _allSongs[counterIndex] = songs[i];
                 counterIndex++;
             }
             

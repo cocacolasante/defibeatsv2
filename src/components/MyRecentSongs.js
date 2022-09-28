@@ -14,7 +14,6 @@ const MyRecentSongs = () => {
     const [activeAccount, setActiveAccount] = useState()
     const [listingPrice, setListingPrice] = useState()
     const [isLoading, setIsLoading] = useState(false)
-    const [songsForSale, setSongsForSale] = useState([])
 
 
 
@@ -85,44 +84,6 @@ const MyRecentSongs = () => {
           }
       }
 
-      // work on getting the for sale songs from the blockchain owned by current user
-    const getSongForSaleData = async () => {
-        try {
-          const {ethereum} = window;
-          if(ethereum){
-              const provider = new ethers.providers.Web3Provider(ethereum)
-              
-              const DefiBeatsContract = new ethers.Contract(DEFIBEATS_ADDRESS, defibeatsAbi.abi, provider)
-              
-              const allSongs = await DefiBeatsContract.returnAllSongsForSale()
-              console.log(allSongs)
-    
-              
-              const songsMetaMapping = await Promise.all(allSongs.map(async (i)=>{
-                let output = []              
-                // if(i[3].toUpperCase() === account.toUpperCase()){               
-                    output.push(i[0].toString()) // token id
-                    output.push(i[1]) // name
-                    output.push(i[2]) // collection name
-                    output.push(i[3]) // current owner
-                    output.push(i[4]) // token uri
-                    output.push(i[5].toString()) // price
-                    output.push(i[6]) // is for sale
-                    output.push(i[7]) // original producer
-                    output.push(await _getOriginalProducer(i[7])) // og producer image               
-                // }            
-                return output
-              }))
-                
-              setSongsForSale(songsMetaMapping)
-
-             
-          }
-    
-          }catch(error){
-              console.log(error)
-          }
-      }
     
     const _getOriginalProducer = async (ogProducersAddress) =>{
 
@@ -171,7 +132,9 @@ const MyRecentSongs = () => {
               const receipt = await txn.wait()
              
               if(receipt.status === 1){
+                setIsLoading(true)
                 console.log("Song List Successful!")
+                setIsLoading(false)
                
               } else {
                 alert("Transaction failed, please try again")
@@ -188,9 +151,8 @@ const MyRecentSongs = () => {
 
     const handleSetSongButton = (e) =>{
         e.preventDefault()
-        setIsLoading(true)
         setSongForSale(e.target.value)
-        setIsLoading(false)
+        
     }
 
     const cancelListing = async (songNum)=>{
@@ -210,8 +172,9 @@ const MyRecentSongs = () => {
                 
               
               if(receipt.status === 1){
+                setIsLoading(true)
                 console.log("Song cancel Successful!")
-                console.log(recentSongs[songNum][6])
+                setIsLoading(false)
               } else {
                 alert("Transaction failed, please try again")
               }
@@ -233,7 +196,7 @@ const MyRecentSongs = () => {
     useEffect(()=>{ 
         checkIfWalletIsConnected()
         getSongData()
-        // getSongForSaleData()
+       
     }, [isLoading])
 
     
@@ -250,7 +213,7 @@ const MyRecentSongs = () => {
                 recentSongs.map((i)=>{
                    if(i[0]){
                     return(
-                    <div className="song-card-mapping2" key={i[0]}> {console.log(songsForSale)}
+                    <div className="song-card-mapping2" key={i[0]}> {console.log(recentSongs)}
                         <h3>Name: {i[1]} </h3>
                         <img className="song-producer-image2" src={i[8]} />                  
                             
