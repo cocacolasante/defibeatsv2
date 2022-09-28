@@ -97,7 +97,7 @@ contract DefiBeats is ERC721URIStorage, Ownable{
     }
 
     // song number is tokenId
-    function listSong(uint songNumber, uint songPrice) external {
+    function listSong(uint songNumber, uint songPrice) external returns(Song memory){
         require(msg.sender == ownerOf(songNumber), "cannot list songs you do not own");
 
         Song storage song = songs[songNumber];
@@ -112,9 +112,10 @@ contract DefiBeats is ERC721URIStorage, Ownable{
         // transfer nft from owner to contract
         transferFrom(msg.sender, address(this), song.tokenId);
 
-
+        
         emit SongListed(song.tokenId , msg.sender, song.tokenUri);
 
+        return song;
 
     }
 
@@ -188,18 +189,19 @@ contract DefiBeats is ERC721URIStorage, Ownable{
         }
         return _allSongs;
     }
-    
+
     function returnAllSongsForSale() external view returns(Song[] memory){
-        Song[] memory _allSongs = new Song[](tokenCount);
-        uint counter;
+        uint forSaleTokenCount = balanceOf(address(this));
+        Song[] memory _allSongs = new Song[](forSaleTokenCount);
+        uint counterIndex;
         for(uint i = 0; i < allSongs.length; i++){
-            if(allSongs[i].isForSale == true){
-                _allSongs[counter] = allSongs[i];
-                counter++;
+            if(allSongs[i].isForSale != false){
+                _allSongs[counterIndex] = allSongs[i];
+                counterIndex++;
             }
             
         }
-        return _allSongs;
+        return (_allSongs);
     }
   
 }
