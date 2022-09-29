@@ -6,30 +6,15 @@ import { useEffect, useState } from "react";
 import defibeatsAbi from "../assets/defibeats.json"
 import profileNftAbi from "../assets/profilenft.json"
 import {PROFILENFT_ADDRESS} from "../config"
+import { useSelector } from "react-redux";
 
 
 
 const RecentUploads = () => {
-
+  
+  const account = useSelector(state=>state.provider.account)
   const [recentSongs, setRecentSongs] = useState()
-  const [songMeta, setSongMeta] = useState([])
 
-    const fetchRecentMints = async () => {
-        const config = {
-          apiKey: env.REACT_APP_ALCHEMY_API_KEY,
-          network: Network.MATIC_MUMBAI,
-      };
-
-      const omitMetadata = false;
-
-      const alchemy = new Alchemy(config);
-      const allNftSongs = await alchemy.nft.getNftsForContract(DEFIBEATS_ADDRESS, {
-          omitMetadata: omitMetadata,
-      });
-      setRecentSongs(allNftSongs)
-      console.log(JSON.stringify(allNftSongs, null, 2));
-
-  }
 
   const getSongData = async () => {
     try {
@@ -43,26 +28,29 @@ const RecentUploads = () => {
           const allSongs = await DefiBeatsContract.returnAllSongs()
           // console.log(allSongs)
 
-         
+          
           const songsMetaMapping = await Promise.all(allSongs.map(async (i)=>{
             let output = []
-    
-            output.push(i[0].toString()) // token id
-            output.push(i[1]) // name
-            output.push(i[2]) // collection name
-            output.push(i[3]) // current owner
-            output.push(i[4]) // token uri
-            output.push(i[5].toString()) // price
-            output.push(i[6]) // is for sale
-            output.push(i[7]) // original producer
-            output.push(await _getOriginalProducer(i[7])) // og producer image
+            
+            
+            if(i[0].toString() > 0){
+                output.push(i[0].toString()) // token id
+                output.push(i[1]) // name
+                output.push(i[2]) // collection name
+                output.push(i[3]) // current owner
+                output.push(i[4]) // token uri
+                output.push(i[5].toString()) // price
+                output.push(i[6]) // is for sale
+                output.push(i[7]) // original producer
+                output.push(await _getOriginalProducer(i[7])) // og producer image
+                
+            } 
+            
             return output
           }))
-          songsMetaMapping.reverse()
-          setSongMeta(songsMetaMapping)
-
-          console.log(songsMetaMapping)
-          
+            songsMetaMapping.reverse()
+          setRecentSongs(songsMetaMapping)
+         
       }
 
       }catch(error){
@@ -70,12 +58,7 @@ const RecentUploads = () => {
       }
   }
 
-  const getSongFromIPFS = async (_tokenUri) =>{ // use i[4] in the mapping
-    const response = await fetch(_tokenUri)
-    const jsonResponse = await response.json()
-    console.log(jsonResponse)
 
-  }
 
   const _getOriginalProducer = async (ogProducersAddress) =>{
 
@@ -111,6 +94,7 @@ const RecentUploads = () => {
   }
 
   useEffect(()=>{
+    
     getSongData();
     
   }, [])
@@ -120,27 +104,29 @@ const RecentUploads = () => {
         <h2>Recent Uploads</h2>
         <div className='recent-upload-card-container'>
            
-           {!songMeta ? 
+           {!recentSongs ? 
                 (<p>loading</p>) 
                 : 
-                songMeta.map((i)=>{
-                return(
-                    <div className="song-card-mapping" key={i[0]}>
+                recentSongs.map((i)=>{
+                   if(i[0]){
+                    return(
+                    <div className="song-card-mapping2" key={i[0]}> {console.log(recentSongs)}
                         <h3>Name: {i[1]} </h3>
-                        <img className="song-producer-image" src={i[8]} />                  
+                        <img className="song-producer-image2" src={i[8]} />                  
                             
                         <p>Original Producer: {i[7].slice(0, 6)}...{i[7].slice(-6)}</p>
                         <div>
                           <h5>Collection Name: {i[2]} </h5>
-                          
                         </div>
                         
-                        <div className="play-btn-container">
+                        <div className="play-btn-container"> 
                         <button className="play-buy-btn">Play</button>
-                        {i[6] ? <button className="play-buy-btn" >buy</button> : <button className="play-buy-btn" >not for sale</button>}
+                        
                         </div>
                   </div>
                 )
+                   }
+                
            }) }
            
         </div>
