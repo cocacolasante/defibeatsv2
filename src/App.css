@@ -198,3 +198,16 @@
   max-height: 100px;
   max-width: 100px;
 }
+
+.featured-song-container{
+  text-align: center;
+}
+
+.home-featured-song{
+  align-content: center;
+}
+
+.featured-card{
+  border: 1px solid black;
+  background-color: white;
+}

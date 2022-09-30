@@ -1,6 +1,6 @@
 import React from 'react'
 import UploadForm from '../components/UploadForm'
-import MyRecentUploads from '../components/MyRecentUploads'
+import MyRecentSongs from '../components/MyRecentSongs'
 
 
 
@@ -9,7 +9,7 @@ const Upload = () => {
     <div id='content'>
       <UploadForm />
       <div className='myrecent-uploads'>
-        
+        <MyRecentSongs />
       </div>
     </div>
   )

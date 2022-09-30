@@ -1,19 +1,30 @@
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
+
 
 function FeaturedSong() {
+
   return (
-    <Card className="text-center">
-      <h2>Top Featured Song</h2>
-      <Card.Body>
-        <img className='song-listing-card' src="https://i.seadn.io/gae/oo6bKqCDQFRD839UmX82upGBkUyPoubPmmhdTkavo8behTMDIJUQFNPjXfURI57k7JtP-x-yoGLqRDwd2INW8y7U_4szibDDE5acow?w=500&auto=format" />
-        <Card.Title>Special title</Card.Title>
-        <Card.Text>
-          Artist name, collection name, descriptions, price
-        </Card.Text>
-        <Button variant="primary">Buy Now</Button>
-      </Card.Body>
-    </Card>
+    <div className="featured-song-container" >
+    <h2>Featured Song</h2>
+      <div className="" > 
+        <div className="featured-card">
+          <h3>Name:</h3>
+          <img className="song-producer-image2" src="https://i.seadn.io/gae/oo6bKqCDQFRD839UmX82upGBkUyPoubPmmhdTkavo8behTMDIJUQFNPjXfURI57k7JtP-x-yoGLqRDwd2INW8y7U_4szibDDE5acow?auto=format&w=1000" />                  
+              <p>Original Producer</p>
+          {/* <p>Original Producer: {i[7].slice(0, 6)}...{i[7].slice(-6)}</p> */}
+          <div>
+            <h5>Collection Name: </h5>
+          </div>
+          
+          <div className="play-btn-container"> 
+            <button className="play-buy-btn">Play</button>
+            <button className="play-buy-btn" >Buy Song</button>
+          
+            
+
+          </div>
+          </div>
+    </div>
+  </div>
   );
 }
 

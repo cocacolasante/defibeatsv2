@@ -6,17 +6,15 @@ const Home = () =>{
 
     return(
         <div id="content">
-        <div className="content-wrapper">
-            <div className="row" >
+            <div className="content-wrapper">
                 <FeaturedSong />
+                <div className="home-recent-upload" >
+                    <RecentUploads />
+                </div>
+                <div className="home-recent-upload" >
+                    <TopPurchases />
+                </div>
             </div>
-            <div className="home-recent-upload" >
-                <RecentUploads />
-            </div>
-            <div className="home-recent-upload" >
-                <TopPurchases />
-            </div>
-        </div>
         </div>
     )
 }
