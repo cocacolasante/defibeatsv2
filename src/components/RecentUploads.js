@@ -1,5 +1,3 @@
-import { Alchemy, Network } from "alchemy-sdk";
-import env from "react-dotenv";
 import { ethers } from "ethers";
 import { DEFIBEATS_ADDRESS } from "../config";
 import { useEffect, useState } from "react";
@@ -33,7 +31,7 @@ const RecentUploads = () => {
             let output = []
             
             
-            if(i[0].toString() > 0){
+            if(i[6]){
                 output.push(i[0].toString()) // token id
                 output.push(i[1]) // name
                 output.push(i[2]) // collection name
@@ -121,7 +119,7 @@ const RecentUploads = () => {
                         
                         <div className="play-btn-container"> 
                         <button className="play-buy-btn">Play</button>
-                        
+                        <button>Buy</button>
                         </div>
                   </div>
                 )

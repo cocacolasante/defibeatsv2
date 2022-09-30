@@ -1,9 +1,6 @@
 TO DO:
 set like function for other users profile
-add in listing function
-cancel listing function
 buy function 
-for sale section on home page
 recently listed on home page
 
 BROWSE
