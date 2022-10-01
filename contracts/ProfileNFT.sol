@@ -38,6 +38,10 @@ contract ProfileNFT is ERC721URIStorage {
         uint newTokenId = _tokenIds.current();
 
         _mint(msg.sender, newTokenId);
+        
+        if(creatorsProfile[msg.sender].creatorAddress == address(0)){
+            users.push(msg.sender);
+        }
 
         numberToCreator[newTokenId] = Creator(
             payable(msg.sender),
@@ -59,7 +63,9 @@ contract ProfileNFT is ERC721URIStorage {
             ""
         );
 
-        users.push(msg.sender);
+        
+
+        
 
 
         setProfile(newTokenId);
