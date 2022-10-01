@@ -25,6 +25,7 @@ const TopProducers = () => {
                 const profileMetaMapping = await Promise.all(allProfiles.map(async (i)=>{
                     let output = []
                     // REMINDER -- FILTER OUT DUPLICATE ADDED CREATORS 
+                    
                         output.push(i[0]) // address
                         output.push(i[1]) // user status
                         output.push(i[2].toString()) // tips received
@@ -32,10 +33,11 @@ const TopProducers = () => {
                         output.push(i[4].toString()) // number of likes
                         output.push(i[5]) // user name
                         output.push(await _getOriginalProducer(i[0]))
+                        
                     
                     return output
                 }))
-
+                console.log(profileMetaMapping)
                 setUserProfiles(profileMetaMapping)
                 
                 
