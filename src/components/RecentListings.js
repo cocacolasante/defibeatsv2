@@ -12,6 +12,7 @@ const RecentListings = () => {
   
   const account = useSelector(state=>state.provider.account)
   const [recentSongs, setRecentSongs] = useState()
+  const[allFees, setAllFees] = useState()
 
 
   const getSongData = async () => {
@@ -58,17 +59,19 @@ const RecentListings = () => {
       }
   }
 
-  const buySong = async (songNumber) =>{
+  const buySong = async (songNumber, price) =>{
     try{
       const {ethereum} = window;
       if(ethereum){
-        const provider = await ethers.providers.Web3Provider(ethereum)
+        const provider = new ethers.providers.Web3Provider(ethereum)
         const signer = provider.getSigner()
         const DefiBeats = new ethers.Contract(DEFIBEATS_ADDRESS, defibeatsAbi.abi, signer)
 
         console.log("loading metamask to pay for gas")
 
-        let txn = await DefiBeats.buySong(songNumber)
+        const totalValueSent = price + allFees;
+
+        let txn = await DefiBeats.buySong(songNumber, {value: totalValueSent})
         let receipt = await txn.wait()
 
         if(receipt.status === 1){
@@ -84,9 +87,9 @@ const RecentListings = () => {
     }
   }
 
-  const handleBuyclick = (e, price) =>{
-    e.preventDefault()
-    buySong(e.target.value, price)
+  const handleBuyclick = (songNum, price) =>{
+    
+    buySong(songNum, price)
   }
 
   const _getOriginalProducer = async (ogProducersAddress) =>{
@@ -122,9 +125,30 @@ const RecentListings = () => {
 
   }
 
+  const getFeeAmounts = async () =>{
+    try{
+      const {ethereum} = window;
+      if(ethereum){
+        const provider = new ethers.providers.Web3Provider(ethereum)
+        const DefiBeatsContract = new ethers.Contract(DEFIBEATS_ADDRESS, defibeatsAbi.abi, provider)
+
+        const transactionFee = await DefiBeatsContract.transactionFee()
+        const royaltyFee = await DefiBeatsContract.royaltyFee()
+
+        const totalFees = transactionFee + royaltyFee
+        setAllFees(totalFees)
+
+      }
+
+    }catch(error){
+      console.log(error)
+    }
+  }
+
   useEffect(()=>{
     
     getSongData();
+    getFeeAmounts()
     
   }, [])
 
@@ -153,7 +177,7 @@ const RecentListings = () => {
                         
                         <div className="play-btn-container"> 
                         <button className="play-buy-btn">Play</button>
-                        <button value={i[0]} onChange={e=>buySong(e.target.value, i[5])} >Buy</button>
+                        <button value={i[0]} onClick={e=>buySong(e.target.value, i[5])} >Buy</button>
                         </div>
                   </div>
                 )
