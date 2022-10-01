@@ -1,5 +1,5 @@
 import FeaturedSong from "../components/FeaturedSong";
-import RecentUploads from "../components/RecentUploads";
+import RecentListings from "../components/RecentListings";
 import TopPurchases from "../components/TopPurchases";
 import TopProducers from "../components/TopProducers";
 
@@ -10,7 +10,7 @@ const Home = () =>{
             <div className="content-wrapper">
                 <FeaturedSong />
                 <div className="home-recent-upload" >
-                    <RecentUploads />
+                    <RecentListings />
                 </div>
                 <div className="home-recent-upload" >
                     <TopPurchases />

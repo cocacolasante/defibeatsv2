@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 
 
 
-const RecentUploads = () => {
+const RecentListings = () => {
   
   const account = useSelector(state=>state.provider.account)
   const [recentSongs, setRecentSongs] = useState()
@@ -58,7 +58,36 @@ const RecentUploads = () => {
       }
   }
 
+  const buySong = async (songNumber) =>{
+    try{
+      const {ethereum} = window;
+      if(ethereum){
+        const provider = await ethers.providers.Web3Provider(ethereum)
+        const signer = provider.getSigner()
+        const DefiBeats = new ethers.Contract(DEFIBEATS_ADDRESS, defibeatsAbi.abi, signer)
 
+        console.log("loading metamask to pay for gas")
+
+        let txn = await DefiBeats.buySong(songNumber)
+        let receipt = await txn.wait()
+
+        if(receipt.status === 1){
+          alert("Song Purchase Successful!")
+        } else {
+          alert("Transaction failed, please try again")
+        }
+        
+      }
+
+    }catch(error){
+      console.log(error)
+    }
+  }
+
+  const handleBuyclick = (e, price) =>{
+    e.preventDefault()
+    buySong(e.target.value, price)
+  }
 
   const _getOriginalProducer = async (ogProducersAddress) =>{
 
@@ -101,7 +130,7 @@ const RecentUploads = () => {
 
   return (
     <div id="content-wrapper">
-        <h2>Recent Uploads</h2>
+        <h2>Recent Listings</h2>
         <div className='recent-upload-card-container'>
            
            {!recentSongs ? 
@@ -118,10 +147,13 @@ const RecentUploads = () => {
                         <div>
                           <h5>Collection Name: {i[2]} </h5>
                         </div>
+                        <div>
+                          <p>Price: {i[5]} Matic </p>
+                        </div>
                         
                         <div className="play-btn-container"> 
                         <button className="play-buy-btn">Play</button>
-                        <button>Buy</button>
+                        <button value={i[0]} onChange={e=>buySong(e.target.value, i[5])} >Buy</button>
                         </div>
                   </div>
                 )
@@ -134,4 +166,4 @@ const RecentUploads = () => {
   )
 }
 
-export default RecentUploads
+export default RecentListings
