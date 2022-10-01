@@ -166,6 +166,7 @@ describe("Defi Beats V2", () =>{
 
       // expect(listedSongs.length).to.equal(3)
     })
+
    
 
   })
@@ -279,6 +280,14 @@ describe("Defi Beats V2", () =>{
         profile = await ProfileNFT.creatorsProfile(user1.address)
         expect(profile.username).to.equal("cocacolasante")
         
+      })
+      it("checks the addresses were added to the users array", async () =>{
+        console.log(await ProfileNFT.users(0))
+      })
+      it("checks the return all creators profile", async () => {
+        await ProfileNFT.connect(user2).mint(SAMPLE_URI2);
+
+        console.log(await ProfileNFT.returnAllProfiles())
       })
     })
   })

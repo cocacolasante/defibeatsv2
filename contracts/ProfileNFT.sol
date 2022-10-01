@@ -18,6 +18,8 @@ contract ProfileNFT is ERC721URIStorage {
     
     mapping(address=>mapping(address=>bool)) public hasLikeProfile;
 
+    address[] public users;
+
     struct Creator{
         address payable creatorAddress;
         string profileMessage;
@@ -56,6 +58,7 @@ contract ProfileNFT is ERC721URIStorage {
             0,
             ""
         );
+        users.push(msg.sender);
         setProfile(newTokenId);
 
         return(newTokenId);
@@ -116,6 +119,16 @@ contract ProfileNFT is ERC721URIStorage {
         return creator.username = _username;
         
     }
+
+    // uses the users address array and i iterator as the key in the creators profile to map through address=>struct mapping
     
+    function returnAllProfiles() external view returns(Creator[] memory){
+        uint iterateCount = users.length;
+        Creator[] memory allCreators = new Creator[](iterateCount);
+        for(uint i = 0; i < iterateCount; i++){
+            allCreators[i] = creatorsProfile[users[i]];
+        }
+        return(allCreators);
+    }
 
 }

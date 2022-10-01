@@ -46,7 +46,9 @@ const RecentUploads = () => {
             
             return output
           }))
-            songsMetaMapping.reverse()
+          
+          songsMetaMapping.reverse()
+          
           setRecentSongs(songsMetaMapping)
          
       }
