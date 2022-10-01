@@ -8,3 +8,5 @@ set browse page with recent songs and liked songs
 set browse routes to user profiles and producers profiles
 for sale section
 recently listed section
+
+REDEPLOY PROFILE CONTRACT WITH NEW RETURN ALL CREATORS FUNCTION

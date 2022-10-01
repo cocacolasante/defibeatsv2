@@ -1,6 +1,7 @@
 import FeaturedSong from "../components/FeaturedSong";
 import RecentUploads from "../components/RecentUploads";
 import TopPurchases from "../components/TopPurchases";
+import TopProducers from "../components/TopProducers";
 
 const Home = () =>{
 
@@ -13,6 +14,9 @@ const Home = () =>{
                 </div>
                 <div className="home-recent-upload" >
                     <TopPurchases />
+                </div>
+                <div className="home-recent-upload" >
+                    <TopProducers />
                 </div>
             </div>
         </div>

@@ -286,6 +286,7 @@ describe("Defi Beats V2", () =>{
       })
       it("checks the return all creators profile", async () => {
         await ProfileNFT.connect(user2).mint(SAMPLE_URI2);
+        await ProfileNFT.connect(user2).mint(SAMPLE_URI2);
 
         console.log(await ProfileNFT.returnAllProfiles())
       })

@@ -58,7 +58,10 @@ contract ProfileNFT is ERC721URIStorage {
             0,
             ""
         );
+
         users.push(msg.sender);
+
+
         setProfile(newTokenId);
 
         return(newTokenId);
