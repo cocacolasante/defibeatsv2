@@ -19,6 +19,9 @@ contract DefiBeats is ERC721URIStorage, Ownable{
     address payable public feeAccount;
     address public admin;
 
+    // featured song token id
+    Song public featuredSong;
+
     uint public mintFee = 1;
 
     mapping(uint=>address) public ownerOfNft; // mapping of original minters
@@ -216,5 +219,11 @@ contract DefiBeats is ERC721URIStorage, Ownable{
         }
         return (_allSongs);
     }
+
+    function setFavoriteSong(uint songNumber) external onlyAdmin returns(Song memory) {
+        Song storage song = songs[songNumber];
+        return featuredSong = song;
+    }
+    
   
 }

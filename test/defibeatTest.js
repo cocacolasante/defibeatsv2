@@ -177,6 +177,16 @@ describe("Defi Beats V2", () =>{
 
       // expect(listedSongs.length).to.equal(3)
     })
+    it("checks the featured song function", async () =>{
+      await DefiBeats.connect(user1).makeSong(SAMPLE_URI, "list song test", "list song collection", {value: "1"})
+
+      await DefiBeats.connect(deployer).setFavoriteSong(1)
+
+      const featSong = await DefiBeats.featuredSong()
+
+      expect(featSong.tokenId).to.equal(1)
+
+    })
 
    
 
