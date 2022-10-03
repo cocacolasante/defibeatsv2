@@ -11,7 +11,6 @@ const ProducersProfile = () => {
 
   const [producersSongs, setProducersSongs] = useState()
 
-  // use alchemy api to pull meta data
   // use balanceOf to pull nfts created by producer
 
   const fetchUsersProfile = async () =>{
@@ -22,9 +21,11 @@ const ProducersProfile = () => {
         const signer = provider.getSigner()
         const ProfileNFT = new ethers.Contract(PROFILENFT_ADDRESS, profileNftAbi.abi, signer)
 
-        const ArtistProfile = await ProfileNFT.creatorsProfile(producerAddress)
+        const allProfiles = await ProfileNFT.
         console.log(ArtistProfile)
         setProducersProfile(ArtistProfile)
+
+        const ArtistsSongs = await ProfileNFT.balancesOf(producerAddress)
 
       }
 
@@ -33,21 +34,19 @@ const ProducersProfile = () => {
     }
   }
 
-  useEffect(()=>{
-    fetchUsersProfile()
-  }, [])
+
 
   return (
     <div id='content'>
         <h1>Test</h1>
         <div id='content-wrapper'>
               <div>
-                  <h2>Producer Address: {producersProfile[0]}</h2>
+                  <h2>Producer Address: </h2>
               </div>
               <div>
                   <h3>UserName</h3>
                   <h4>Profile Picture: </h4>
-                  <p>Message: {producersProfile[1]}</p>
+                  <p>Message: </p>
                   <p>Likes</p>
                   <button>Click here to like artist</button>
                   <p>Tips</p>
