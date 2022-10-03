@@ -180,7 +180,7 @@ describe("Defi Beats V2", () =>{
     it("checks the featured song function", async () =>{
       await DefiBeats.connect(user1).makeSong(SAMPLE_URI, "list song test", "list song collection", {value: "1"})
 
-      await DefiBeats.connect(deployer).setFavoriteSong(1)
+      await DefiBeats.connect(deployer).setFeaturedSong(1)
 
       const featSong = await DefiBeats.featuredSong()
 
@@ -323,6 +323,15 @@ describe("Defi Beats V2", () =>{
         await ProfileNFT.connect(user2).sendLike(user3.address)
 
         console.log(await ProfileNFT.returnLikedCreatorsList(user2.address))
+        
+      })
+      it("checks the set featured producer function", async () =>{
+        
+        await ProfileNFT.connect(deployer).setFeaturedCreator(user1.address);
+        const featCreator = await ProfileNFT.featuredCreator()
+
+        expect(featCreator.creatorAddress).to.equal(user1.address)
+        
         
       })
     })

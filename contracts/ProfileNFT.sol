@@ -10,7 +10,11 @@ contract ProfileNFT is ERC721URIStorage {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
+    address public admin;
+
     uint public tokenCount;
+
+    Creator public featuredCreator;
 
     mapping(address=>uint)public nftProfileOwners;
     mapping(uint=>Creator) public numberToCreator;
@@ -32,7 +36,9 @@ contract ProfileNFT is ERC721URIStorage {
         string username;
     }
 
-    constructor()ERC721("DefiBeats Profile", "DFBP"){}
+    constructor()ERC721("DefiBeats Profile", "DFBP"){
+        admin = msg.sender;
+    }
 
     function mint(string memory _tokenUri) external returns(uint){
         _tokenIds.increment();
@@ -152,6 +158,13 @@ contract ProfileNFT is ERC721URIStorage {
         }
         return(likedCreators);
 
+    }
+
+    function setFeaturedCreator(address _featCreator) external returns(Creator memory){
+        require(msg.sender == admin, "only contract admin can set featured creator");
+        Creator storage creator = creatorsProfile[_featCreator];
+
+        return featuredCreator = creator;
     }
 
 }

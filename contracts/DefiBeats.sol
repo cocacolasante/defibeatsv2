@@ -220,10 +220,10 @@ contract DefiBeats is ERC721URIStorage, Ownable{
         return (_allSongs);
     }
 
-    function setFavoriteSong(uint songNumber) external onlyAdmin returns(Song memory) {
+    function setFeaturedSong(uint songNumber) external onlyAdmin returns(Song memory) {
         Song storage song = songs[songNumber];
         return featuredSong = song;
     }
-    
+
   
 }
