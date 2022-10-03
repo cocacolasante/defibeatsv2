@@ -18,6 +18,9 @@ contract ProfileNFT is ERC721URIStorage {
     
     mapping(address=>mapping(address=>bool)) public hasLikeProfile;
 
+    // mapping of users likes to creators profiles
+    mapping(address=>Creator[]) public usersLikedList;
+
     address[] public users;
 
     struct Creator{
@@ -113,6 +116,9 @@ contract ProfileNFT is ERC721URIStorage {
         hasLikeProfile[msg.sender][creatorAddress] = true;
         
         Creator storage creator = creatorsProfile[creatorAddress];
+
+        usersLikedList[msg.sender].push(creator);
+
 
         return creator.numOfLikes++;
     }

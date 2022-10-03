@@ -10,7 +10,6 @@ import {PROFILENFT_ADDRESS} from "../config"
 const TopProducers = () => {
 
     const[userProfiles, setUserProfiles] = useState()
-    const [filteredProfiles, setFilteredProfiles] = useState()
 
 
     const getProfileData = async () => {
@@ -32,7 +31,7 @@ const TopProducers = () => {
                         output.push(i[3].toString()) // profile token id
                         output.push(i[4].toString()) // number of likes
                         output.push(i[5]) // user name
-                        output.push(await _getOriginalProducer(i[0]))
+                        output.push(await _getOriginalProducer(i[0])) // profile image
                         
                     
                     return output
@@ -99,7 +98,7 @@ const TopProducers = () => {
                    userProfiles.map((i)=>{
                     return(
                         <div className="song-card-mapping" key={i[0]}>
-                            <h3>Original Producer: {i[0].slice(0, 6)}...{i[0].slice(-6)}</h3>
+                            <h3>Producer: {i[0].slice(0, 6)}...{i[0].slice(-6)}</h3>
                             {!i[5] ? <p></p> : <p>{i[5]}</p>}
                             <img className="song-producer-image" src={i[6]} /> 
                             <div>

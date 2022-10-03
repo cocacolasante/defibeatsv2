@@ -291,6 +291,11 @@ describe("Defi Beats V2", () =>{
 
         console.log(await ProfileNFT.returnAllProfiles())
       })
+
+      it("checks the users liked profile list", async () =>{
+        await ProfileNFT.connect(user2).sendLike(user1.address)
+        console.log(await ProfileNFT.usersLikedList(user2.address)[0])
+      })
     })
   })
 })
