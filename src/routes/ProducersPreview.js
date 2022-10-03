@@ -1,8 +1,14 @@
 import React from 'react'
+import { ethers } from 'ethers';
+import { PROFILENFT_ADDRESS } from '../config';
+import profileNftAbi from "../assets/profilenft.json"
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import ProducersCard from '../components/ProducersCard';
 
 const ProducersPreview = () => {
     let params = useParams();
+
 
     const[userProfiles, setUserProfiles] = useState()
 
@@ -77,7 +83,20 @@ const ProducersPreview = () => {
 
     
   return (
-    <div>ProducersPreview</div>
+    <div>
+        <p>ProducersPreview</p>
+        {userProfiles.map((i)=>{
+            return (
+                <ProducersCard 
+                    userAddress={i[0]}
+                    username={i[5]}
+                    userStatus={i[1]}
+                    userslikes={i[4]}
+                />
+            )
+
+        })}
+    </div>
   )
 }
 

@@ -21,11 +21,8 @@ const ProducersProfile = () => {
         const signer = provider.getSigner()
         const ProfileNFT = new ethers.Contract(PROFILENFT_ADDRESS, profileNftAbi.abi, signer)
 
-        const allProfiles = await ProfileNFT.
-        console.log(ArtistProfile)
-        setProducersProfile(ArtistProfile)
+       
 
-        const ArtistsSongs = await ProfileNFT.balancesOf(producerAddress)
 
       }
 
