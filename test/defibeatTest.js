@@ -55,11 +55,6 @@ describe("Defi Beats V2", () =>{
 
     expect(await DefiBeats.mintFee()).to.equal(BigInt(2))
   })
-  // it("checks the transfer nft function", async () => {
-  //   await DefiBeats.connect(user1).transferFrom(user1.address, user2.address, 1);
-
-  //   expect(await DefiBeats.ownerOf(1)).to.equal(user2.address)
-  // })
   it("checks the listing function and event", async () => {
     expect(await DefiBeats.ownerOf(1)).to.equal(DefiBeats.address).to.emit(DefiBeats, "SongListed")
   })
@@ -311,6 +306,14 @@ describe("Defi Beats V2", () =>{
       it("checks the users liked profile list", async () =>{
         await ProfileNFT.connect(user2).sendLike(user1.address)
         console.log(await ProfileNFT.usersLikedList(user2.address)[0])
+      })
+      it("checks the returns users liked profiles function", async () =>{
+        await ProfileNFT.connect(user3).mint(SAMPLE_URI2);
+        await ProfileNFT.connect(user2).sendLike(user1.address)
+        await ProfileNFT.connect(user2).sendLike(user3.address)
+
+        console.log(await ProfileNFT.connect(user2).returnLikedCreatorsList())
+        
       })
     })
   })
