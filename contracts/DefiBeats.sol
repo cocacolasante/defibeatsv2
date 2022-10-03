@@ -19,6 +19,8 @@ contract DefiBeats is ERC721URIStorage, Ownable{
     address payable public feeAccount;
     address public admin;
 
+    uint public mintFee = 1;
+
     mapping(uint=>address) public ownerOfNft; // mapping of original minters
 
     mapping(uint=>Song) public songs;
@@ -57,6 +59,11 @@ contract DefiBeats is ERC721URIStorage, Ownable{
 
     // make song / mint function
     function makeSong(string memory _tokenUri, string memory songName, string memory collection) external payable returns(uint){
+        require(msg.value >= mintFee, "Please pay the minting fee");
+
+        // transfer minting fee
+        feeAccount.transfer(msg.value);
+
         _tokenIds.increment();
         tokenCount++;
 
@@ -107,13 +114,7 @@ contract DefiBeats is ERC721URIStorage, Ownable{
         song.price = songPrice;
         song.currentOwner = payable(msg.sender);
 
-        // updating array
-        // Song storage songArr = allSongs[songNumber];
-
-        // songArr.isForSale = true;
-        // songArr.price = songPrice;
-        // songArr.currentOwner = payable(msg.sender);
-
+        
         setApprovalForAll(address(this), true);
 
         // transfer nft from owner to contract
@@ -187,6 +188,10 @@ contract DefiBeats is ERC721URIStorage, Ownable{
 
     function changeFeeAccount(address newFeeAddress) public onlyAdmin returns(address){
         return feeAccount = payable(newFeeAddress);
+    }
+
+    function setMintFeeAmount(uint newMintFee) public onlyAdmin returns(uint){
+        return mintFee = newMintFee;
     }
 
     function returnAllSongs() external view returns(Song[] memory){

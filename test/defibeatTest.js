@@ -25,7 +25,7 @@ describe("Defi Beats V2", () =>{
  
 
 
-    await DefiBeats.connect(user1).makeSong(SAMPLE_URI, "testnamebeat", "testcollectionname")
+    await DefiBeats.connect(user1).makeSong(SAMPLE_URI, "testnamebeat", "testcollectionname", {value: "1"})
     await DefiBeats.connect(user1).listSong(1, 10)
     
 
@@ -38,6 +38,22 @@ describe("Defi Beats V2", () =>{
   })
   it("checks the mint function", async()=>{
     expect(await DefiBeats.ownerOfNft(1)).to.equal(user1.address)
+  })
+  it("checks the mint fee was sent to fee account", async () => {
+    let intialBalance = await ethers.provider.getBalance(deployer.address);
+    intialBalance = BigInt(intialBalance)
+
+    await DefiBeats.connect(user1).makeSong(SAMPLE_URI, "testnamebeat2", "testcollectionname2", {value: "1"})
+
+    expect(await ethers.provider.getBalance(deployer.address)).to.equal(intialBalance + BigInt(1))
+  })
+  it("checks the song minting fee changing function ", async () =>{
+    let initialMintFee = await DefiBeats.mintFee()
+    console.log(initialMintFee)
+
+    await DefiBeats.connect(deployer).setMintFeeAmount(2)
+
+    expect(await DefiBeats.mintFee()).to.equal(BigInt(2))
   })
   // it("checks the transfer nft function", async () => {
   //   await DefiBeats.connect(user1).transferFrom(user1.address, user2.address, 1);
@@ -122,7 +138,7 @@ describe("Defi Beats V2", () =>{
   describe("update listing functions", ()=>{
 
     beforeEach(async () => {
-      await DefiBeats.connect(user1).makeSong(SAMPLE_URI, "user1 song", "user1 collection")
+      await DefiBeats.connect(user1).makeSong(SAMPLE_URI, "user1 song", "user1 collection", {value: "1"})
       await DefiBeats.connect(user1).listSong(2, 100)
 
       await DefiBeats.connect(user2).buySong(2, {value: "102"})
@@ -150,7 +166,7 @@ describe("Defi Beats V2", () =>{
       expect(await DefiBeats.feeAccount()).to.equal(user2.address)
     })
     it("checks the return all songs function", async () =>{
-      // await DefiBeats.connect(user1).makeSong(SAMPLE_URI, "list song test", "list song collection")
+      // await DefiBeats.connect(user1).makeSong(SAMPLE_URI, "list song test", "list song collection", {value: "1"})
       // await DefiBeats.connect(user1).listSong(3, 100)
       // 2 songs made?
       // console.log(await DefiBeats.tokenCount())
@@ -159,7 +175,7 @@ describe("Defi Beats V2", () =>{
       // console.log(await DefiBeats.returnAllSongs())
     })
     it("checks the return all for sale songs function", async () =>{
-      await DefiBeats.connect(user1).makeSong(SAMPLE_URI, "list song test", "list song collection")
+      await DefiBeats.connect(user1).makeSong(SAMPLE_URI, "list song test", "list song collection", {value: "1"})
       await DefiBeats.connect(user1).listSong(3, 100)
       // const listedSongs = await DefiBeats.returnAllSongsForSale()
       console.log(await DefiBeats.returnAllSongsForSale())
