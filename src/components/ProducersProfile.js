@@ -9,6 +9,8 @@ const ProducersProfile = () => {
   const [producersProfile, setProducersProfile] = useState([])
   const producerAddress = useSelector(state=>state.provider.account)
 
+  const [producersSongs, setProducersSongs] = useState()
+
   // use alchemy api to pull meta data
   // use balanceOf to pull nfts created by producer
 
@@ -52,6 +54,37 @@ const ProducersProfile = () => {
                   <input placeholder='enter tip amount in ether' type='number' />
 
               </div>
+          </div>
+          <div>
+            <h2>Producers Songs</h2>
+          </div>
+          <div>
+          {!producersSongs ? 
+                (<p>loading</p>) 
+                : 
+                producersSongs.map((i)=>{
+                   if(i[0]){
+                    return(
+                    <div className="song-card-mapping" key={i[0]}> 
+                        <h3>Name: {i[1]} </h3>
+                        <img className="song-producer-image" src={i[8]} />                  
+                            
+                        <div>
+                          <h5>Collection Name: {i[2]} </h5>
+                        </div>
+                        <div>
+                          <p>Price: {i[5]} Matic </p>
+                        </div>
+                        
+                        <div className="play-btn-container"> 
+                        <button className="play-buy-btn">Play</button>
+                        {/* <button value={i[0]} onClick={e=>buySong(e.target.value, i[5])} >Buy</button> */}
+                        </div>
+                  </div>
+                )
+                   }
+                
+           }) }
           </div>
     </div>
   )

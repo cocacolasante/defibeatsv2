@@ -73,8 +73,9 @@ const UploadForm = () => {
 
         console.log("Loading Metamask to pay for gas")
         
+        const mintingFee = await DefiBeats.mintFee()
 
-        let txn = await DefiBeats.makeSong(_uri, _name, _collectionName)
+        let txn = await DefiBeats.makeSong(_uri, _name, _collectionName, {value: mintingFee} )
         const receipt = await txn.wait()
 
         if(receipt.status === 1){
