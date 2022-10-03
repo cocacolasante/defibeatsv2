@@ -144,11 +144,11 @@ contract ProfileNFT is ERC721URIStorage {
         return(allCreators);
     }
 
-    function returnLikedCreatorsList() external view returns(Creator[] memory){
-        uint iterateCount = usersLikedList[msg.sender].length;
+    function returnLikedCreatorsList(address _user) external view returns(Creator[] memory){
+        uint iterateCount = usersLikedList[_user].length;
         Creator[] memory likedCreators = new Creator[](iterateCount);
          for(uint i = 0; i < iterateCount; i++){
-            likedCreators[i] = usersLikedList[msg.sender][i];
+            likedCreators[i] = usersLikedList[_user][i];
         }
         return(likedCreators);
 

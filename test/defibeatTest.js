@@ -312,7 +312,7 @@ describe("Defi Beats V2", () =>{
         await ProfileNFT.connect(user2).sendLike(user1.address)
         await ProfileNFT.connect(user2).sendLike(user3.address)
 
-        console.log(await ProfileNFT.connect(user2).returnLikedCreatorsList())
+        console.log(await ProfileNFT.returnLikedCreatorsList(user2.address))
         
       })
     })
