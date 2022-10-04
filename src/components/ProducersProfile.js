@@ -14,7 +14,7 @@ const ProducersProfile = () => {
   const [profileAddress, setProfileAddress] = useState()
   const [profileImage, setProfileImage] = useState()
   const [hasLiked, setHasLiked] = useState(false)
-  
+
   const [producerProfile, setProducerProfile] = useState()
 
   const fetchUsersProfile = async () => {
@@ -118,6 +118,33 @@ const ProducersProfile = () => {
     }
   }
 
+  const unlikeProfile = async () =>{
+    try{
+      const {ethereum} = window;
+      if(ethereum){
+        const provider = new ethers.providers.Web3Provider(ethereum)
+        const signer = provider.getSigner()
+        const localProfileContract = new ethers.Contract(PROFILENFT_ADDRESS, profileNftAbi.abi, signer)
+
+        console.log("Popping metamask to pay for gas")
+
+        let txn = await localProfileContract.unLike(params.address)
+        const receipt = await txn.wait()
+
+        if(receipt.status === 1){
+          console.log("Profile Unliked Successful")
+        } else {
+          alert("Transaction failed, please try again")
+        }
+      }
+
+    }catch(error){
+      console.log(error)
+    }
+  }
+
+
+
   useEffect(()=>{
     fetchUsersProfile()
     setProfileAddress(params.address);
@@ -151,14 +178,19 @@ const ProducersProfile = () => {
           </div>
           <div>
           {!hasLiked ?<button onClick={likeProfile} >Like User's Profile</button> : 
-            <button>Liked</button> }
+            <button onClick={unlikeProfile} >Liked</button> }
+          </div>
+          <div>
+            <h2>Recent Uploads</h2>
+          </div>
+          <div>
             
           </div>
         </div>
       )
     }
       
-      {console.log(producerProfile)}
+     
     </div>
   )
 }

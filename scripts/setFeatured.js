@@ -3,7 +3,7 @@ const { ethers } = require("hardhat");
 const hre = require("hardhat");
 require("dotenv").config()
 
-const DEFIBEATS_ADDRESS = "0x13C4ae82Ad0AF06Cb0967F18EcFA32CCc548A549"
+const DEFIBEATS_ADDRESS = "0x213797144b722b81990bE8E48A8491F0E2af980E"
 
 async function main() {
   const DefiBeats = await ethers.getContractAt("DefiBeats", DEFIBEATS_ADDRESS)
