@@ -8,6 +8,7 @@ import ProducersCard from '../components/ProducersCard';
 
 const ProducersPreview = () => {
     let params = useParams();
+    console.log(params)
 
 
     const[userProfiles, setUserProfiles] = useState()

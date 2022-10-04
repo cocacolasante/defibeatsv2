@@ -3,23 +3,25 @@ import React from 'react'
 
 const ProducersCard = (props) => {
   return (
-    <div id='content'>
-        <h1>{props.userAddress}</h1>
-        <div id='content-wrapper'>
+    <div className='producer-card-container' >
+        <h6>{props.userAddress.slice(0, 6)}...{props.userAddress.slice(-6)}</h6>
+        <div className="song-card-mapping2">
+
+                <p>Producer Username: {props.username}</p>
+            
             <div>
-                <h2>Producer Username: {props.username} </h2>
-            </div>
-            <div>
-                <h3>UserName</h3>
-                <h4>Profile Picture: </h4>
-                <p>{props.userStatus} </p>
-                <p>{props.userslikes}</p>
-                <button>Click here to like artist</button>
-                <p>Tips</p>
-                <input placeholder='enter tip amount in ether' type='number' />
+                <p>UserName</p>
+                    <img className="song-producer-image2" alt='profile nft' src={props.profNft} />
+                    <p>{props.userStatus} </p>
+                    <p>{props.userslikes}</p>
+                <div className="play-btn-container" >
+                    <button >Click here to like artist</button>
+                </div>
+                    <input placeholder='enter tip amount in ether' type='number' />
 
             </div>
-      </div></div>
+      </div>
+      </div>
   )
 }
 

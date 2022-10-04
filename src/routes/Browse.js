@@ -9,7 +9,7 @@ const Browse = () => {
   return(
     <Routes>
             <Route index element={<SongBrowse />} />
-                <Route path=":address" element={<ProducersPreview />} />
+                <Route path="/:address" element={<ProducersPreview />} />
             </Routes>
     )
 }

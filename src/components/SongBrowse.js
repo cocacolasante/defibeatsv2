@@ -3,11 +3,17 @@ import { ethers } from 'ethers';
 import { PROFILENFT_ADDRESS } from '../config';
 import profileNftAbi from "../assets/profilenft.json"
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+
 import ProducersCard from '../components/ProducersCard';
 
 
 const SongBrowse = () => {
     const[userProfiles, setUserProfiles] = useState()
+    let params = useParams();
+
+    console.log(params)
+
 
 
     const getProfileData = async () => {
@@ -95,16 +101,21 @@ const SongBrowse = () => {
         </div>
         <div>
             <h2>Top Producers</h2>
-            {/* {userProfiles.map((i)=>{
-                return(
-                    <ProducersCard 
-                    userAddress={i[0]}
-                    username={i[5]}
-                    userStatus={i[1]}
-                    userslikes={i[4]}
-                />
-                )
-            })} */}
+            <div className='user-profile-container'>
+            {
+                !userProfiles ? <p>Loading</p> :
+                userProfiles.map((i)=>{
+                    return(
+                        <ProducersCard 
+                        userAddress={i[0]}
+                        profNft={i[6]}
+                        username={i[5]}
+                        userStatus={i[1]}
+                        userslikes={i[4]}
+                    />
+                    )
+            })}
+            </div>
         </div>
         <div>
             <h3>producer carosel</h3>
