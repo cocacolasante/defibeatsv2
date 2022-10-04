@@ -93,12 +93,7 @@ const SongBrowse = () => {
 
   return (
     <div>
-        <div>
-            <h2>Top Songs</h2>
-        </div>
-        <div>
-            <h2>Song carosel</h2>
-        </div>
+        
         <div>
             <h2>Top Producers</h2>
             <div className='user-profile-container'>

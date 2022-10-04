@@ -79,7 +79,7 @@ const TopProducers = () => {
     
     
     
-      }
+    }
 
 
 

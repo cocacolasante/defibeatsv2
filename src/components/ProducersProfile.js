@@ -1,28 +1,35 @@
-import { ethers } from 'ethers';
-import { PROFILENFT_ADDRESS } from '../config';
+import { ethers } from 'ethers'
+import React from 'react'
+import { useParams } from 'react-router-dom'
+import { PROFILENFT_ADDRESS } from '../config'
 import profileNftAbi from "../assets/profilenft.json"
-import { useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react'
 
 const ProducersProfile = () => {
+  let params = useParams()
 
-  const [producersProfile, setProducersProfile] = useState([])
-  const producerAddress = useSelector(state=>state.provider.account)
+  const [profileAddress, setProfileAddress] = useState()
+  const [profileImage, setProfileImage] = useState()
+  
+  const [producerProfile, setProducerProfile] = useState([])
 
-  const [producersSongs, setProducersSongs] = useState()
-
-  // use balanceOf to pull nfts created by producer
-
-  const fetchUsersProfile = async () =>{
+  const fetchUsersProfile = async () => {
     try{
-      const {ethereum } = window;
+      const {ethereum} = window;
       if(ethereum){
         const provider = new ethers.providers.Web3Provider(ethereum)
-        const signer = provider.getSigner()
-        const ProfileNFT = new ethers.Contract(PROFILENFT_ADDRESS, profileNftAbi.abi, signer)
+        const ProfileNFTContract = new ethers.Contract(PROFILENFT_ADDRESS, profileNftAbi.abi, provider)
 
-       
+        const profileData = await ProfileNFTContract.creatorsProfile(params.address)
 
+        const profileDataMapping = profileData.map((i)=>{
+          let output =[]
+            output.push(i)
+
+          return output
+        })
+        
+        setProducerProfile(profileDataMapping)
 
       }
 
@@ -31,57 +38,62 @@ const ProducersProfile = () => {
     }
   }
 
+  const _getOriginalProducerImage = async (ogProducersAddress) =>{
 
+    let ogProdIm
+
+    const {ethereum} = window;
+
+    const provider = new ethers.providers.Web3Provider(ethereum)
+    
+    const ProfileNFTContract = new ethers.Contract(PROFILENFT_ADDRESS, profileNftAbi.abi, provider)
+
+    // get orginal producers profile from nft profile contract
+    let originalProducerProfile = await ProfileNFTContract.creatorsProfile(ogProducersAddress)
+    
+    // get current token id
+    const ogProdUri = originalProducerProfile[3].toString()
+
+    // get current token uri
+    const userTokenPicURI = await ProfileNFTContract.tokenURI(ogProdUri)
+    let response = await fetch(userTokenPicURI)
+    const jsonResponse = await response.json()
+
+    // parse json data for image uri
+    ogProdIm = jsonResponse["image"]
+
+    setProfileImage(ogProdIm)
+    
+    //return image uri for img src link
+    return (ogProdIm)
+
+
+
+  }
+
+  useEffect(()=>{
+    fetchUsersProfile()
+    setProfileAddress(params.address);
+    _getOriginalProducerImage(params.address);
+    
+  },[])
 
   return (
-    <div id='content'>
-        <h1>Test</h1>
-        <div id='content-wrapper'>
-              <div>
-                  <h2>Producer Address: </h2>
-              </div>
-              <div>
-                  <h3>UserName</h3>
-                  <h4>Profile Picture: </h4>
-                  <p>Message: </p>
-                  <p>Likes</p>
-                  <button>Click here to like artist</button>
-                  <p>Tips</p>
-                  <input placeholder='enter tip amount in ether' type='number' />
-
-              </div>
-          </div>
-          <div>
-            <h2>Producers Songs</h2>
-          </div>
-          <div>
-          {!producersSongs ? 
-                (<p>loading</p>) 
-                : 
-                producersSongs.map((i)=>{
-                   if(i[0]){
-                    return(
-                    <div className="song-card-mapping" key={i[0]}> 
-                        <h3>Name: {i[1]} </h3>
-                        <img className="song-producer-image" src={i[8]} />                  
-                            
-                        <div>
-                          <h5>Collection Name: {i[2]} </h5>
-                        </div>
-                        <div>
-                          <p>Price: {i[5]} Matic </p>
-                        </div>
-                        
-                        <div className="play-btn-container"> 
-                        <button className="play-buy-btn">Play</button>
-                        {/* <button value={i[0]} onClick={e=>buySong(e.target.value, i[5])} >Buy</button> */}
-                        </div>
-                  </div>
-                )
-                   }
-                
-           }) }
-          </div>
+    <div> 
+    {
+      !producerProfile ? <p>Loading...</p>:
+      (
+        <div>
+          <h1>ProducersProfile {params.address} </h1>
+          <p>{producerProfile[1]}</p>
+          <img src={profileImage} className="song-producer-image2"  />
+          <p>Username: {producerProfile[5]}</p>
+          
+        </div>
+      )
+    }
+      
+      {console.log(producerProfile)}
     </div>
   )
 }

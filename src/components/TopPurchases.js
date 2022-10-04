@@ -54,8 +54,6 @@ const TopPurchases = () => {
       }
   }
 
-
-
   const _getOriginalProducer = async (ogProducersAddress) =>{
 
     let ogProdIm

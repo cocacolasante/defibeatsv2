@@ -1,5 +1,4 @@
-import React from 'react'
-
+import { Link } from "react-router-dom"
 
 const ProducersCard = (props) => {
   return (
@@ -17,8 +16,7 @@ const ProducersCard = (props) => {
                 <div className="play-btn-container" >
                     <button >Click here to like artist</button>
                 </div>
-                    <input placeholder='enter tip amount in ether' type='number' />
-
+                    <Link to={`/browse/${props.userAddress}`} >View Profile</Link>
             </div>
       </div>
       </div>
