@@ -71,7 +71,32 @@ const ProducersProfile = () => {
 
   }
 
+  const likeProfile = async () =>{
+    try{
+      const {ethereum} = window;
+      if(ethereum){
+        const provider = new ethers.providers.Web3Provider(ethereum)
+        const signer = provider.getSigner()
+        const localProfileContract = new ethers.Contract(PROFILENFT_ADDRESS, profileNftAbi.abi, signer)
 
+        console.log("Popping metamask to pay for gas now")
+        let txn = await localProfileContract.sendLike(params.address)
+        
+        const receipt = await txn.wait()
+
+        if(receipt.status === 1){
+          console.log("Profile Liked Successful!")
+        } else {
+          alert("Transaction failed, please try again")
+        }
+
+
+      }
+
+    }catch (error){
+      console.log(error)
+    }
+  }
 
   useEffect(()=>{
     fetchUsersProfile()
@@ -92,7 +117,19 @@ const ProducersProfile = () => {
           <img src={profileImage} className="song-producer-image2"  />
           <p>Current Status: {producerProfile[1]} </p>
           <div>
-            <h2></h2>
+            <h3>Users Likes</h3>
+            <p>{producerProfile[4].toString()}</p>
+          </div>
+          <div>
+            <h3>Total Users Tips</h3>
+            <p>{producerProfile[2].toString()}</p>
+          </div>
+          <div>
+            <input placeholder='Enter Tip Amount'/>
+            <button >Tip Producer</button>
+          </div>
+          <div>
+            <button onClick={likeProfile} >Like User's Profile</button>
           </div>
         </div>
       )
