@@ -213,7 +213,6 @@
 }
 
 .user-profile-container{
-  border: 1px solid black;
   text-align: center;
   display: inline-flex;
   flex-wrap: wrap;

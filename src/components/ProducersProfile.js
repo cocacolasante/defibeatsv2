@@ -11,7 +11,7 @@ const ProducersProfile = () => {
   const [profileAddress, setProfileAddress] = useState()
   const [profileImage, setProfileImage] = useState()
   
-  const [producerProfile, setProducerProfile] = useState([])
+  const [producerProfile, setProducerProfile] = useState()
 
   const fetchUsersProfile = async () => {
     try{
@@ -71,6 +71,8 @@ const ProducersProfile = () => {
 
   }
 
+
+
   useEffect(()=>{
     fetchUsersProfile()
     setProfileAddress(params.address);
@@ -84,11 +86,14 @@ const ProducersProfile = () => {
       !producerProfile ? <p>Loading...</p>:
       (
         <div>
-          <h1>ProducersProfile {params.address} </h1>
-          <p>{producerProfile[1]}</p>
+          <h1>Username: {producerProfile[5]} </h1>
+          <h2>ProducersProfile: {params.address.slice(0, 6)}...{params.address.slice(-6)} </h2>
+          <h3>{producerProfile[1]}</h3>
           <img src={profileImage} className="song-producer-image2"  />
-          <p>Username: {producerProfile[5]}</p>
-          
+          <p>Current Status: {producerProfile[1]} </p>
+          <div>
+            <h2></h2>
+          </div>
         </div>
       )
     }
