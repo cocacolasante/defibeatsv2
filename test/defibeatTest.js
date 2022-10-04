@@ -325,6 +325,16 @@ describe("Defi Beats V2", () =>{
         console.log(await ProfileNFT.returnLikedCreatorsList(user2.address))
         
       })
+      it("checks the unlike function", async () =>{
+        await ProfileNFT.connect(user3).mint(SAMPLE_URI2);
+        await ProfileNFT.connect(user2).sendLike(user1.address)
+        await ProfileNFT.connect(user2).sendLike(user3.address)
+
+        await ProfileNFT.connect(user2).unLike(user1.address)
+        // console.log(await ProfileNFT.usersLikedList(user2.address, 0))
+
+        console.log(await ProfileNFT.returnLikedCreatorsList(user2.address))
+      })
       it("checks the set featured producer function", async () =>{
         
         await ProfileNFT.connect(deployer).setFeaturedCreator(user1.address);

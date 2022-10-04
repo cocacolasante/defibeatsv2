@@ -4,12 +4,16 @@ import { useParams } from 'react-router-dom'
 import { PROFILENFT_ADDRESS } from '../config'
 import profileNftAbi from "../assets/profilenft.json"
 import { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
 const ProducersProfile = () => {
   let params = useParams()
 
+  const account = useSelector(state=>state.provider.account)
+
   const [profileAddress, setProfileAddress] = useState()
   const [profileImage, setProfileImage] = useState()
+  const [hasLiked, setHasLiked] = useState(false)
   
   const [producerProfile, setProducerProfile] = useState()
 
@@ -98,10 +102,27 @@ const ProducersProfile = () => {
     }
   }
 
+  const fetchHasLiked = async () =>{
+    try{
+      const {ethereum} = window;
+      if(ethereum){
+        const provider = new ethers.providers.Web3Provider(ethereum)
+        const ProfileNFTContract = new ethers.Contract(PROFILENFT_ADDRESS, profileNftAbi.abi, provider)
+
+        const hasLikedProfile = await ProfileNFTContract.hasLikeProfile(account, params.address)
+        setHasLiked(hasLikedProfile)
+      }
+
+    }catch(error){
+      console.log(error)
+    }
+  }
+
   useEffect(()=>{
     fetchUsersProfile()
     setProfileAddress(params.address);
     _getOriginalProducerImage(params.address);
+    fetchHasLiked();
     
   },[])
 
@@ -129,7 +150,9 @@ const ProducersProfile = () => {
             <button >Tip Producer</button>
           </div>
           <div>
-            <button onClick={likeProfile} >Like User's Profile</button>
+          {!hasLiked ?<button onClick={likeProfile} >Like User's Profile</button> : 
+            <button>Liked</button> }
+            
           </div>
         </div>
       )

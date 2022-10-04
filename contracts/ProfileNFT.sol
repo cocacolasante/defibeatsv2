@@ -129,6 +129,26 @@ contract ProfileNFT is ERC721URIStorage {
         return creator.numOfLikes++;
     }
 
+    function unLike(address creatorAddress) external returns(uint){
+        require(msg.sender !=creatorAddress, "cannot like your own profile");
+        require(hasLikeProfile[msg.sender][creatorAddress] == true, "have to like artist to unlike");
+
+        hasLikeProfile[msg.sender][creatorAddress] = false;
+        
+        Creator storage creator = creatorsProfile[creatorAddress];
+        
+        // find the index then remove the index
+        
+        for(uint i; i < usersLikedList[msg.sender].length; i++){
+            if(usersLikedList[msg.sender][i].creatorAddress == creator.creatorAddress){
+                delete usersLikedList[msg.sender][i];
+            }
+        }
+
+
+        return creator.numOfLikes--;
+    }
+
     function setUsername(address creatorAddress, string memory _username) external returns(string memory){
         require(msg.sender ==creatorAddress, "cannot like your own profile");
         // require(_username.length <= 15, "username is too long");
@@ -166,5 +186,7 @@ contract ProfileNFT is ERC721URIStorage {
 
         return featuredCreator = creator;
     }
+
+
 
 }
