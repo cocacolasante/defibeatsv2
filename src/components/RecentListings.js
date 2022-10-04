@@ -42,6 +42,7 @@ const RecentListings = () => {
                 output.push(i[6]) // is for sale
                 output.push(i[7]) // original producer
                 output.push(await _getOriginalProducer(i[7])) // og producer image
+                output.push(await getAudioFile(i[4])) // get song uri
                 
             } 
             
@@ -145,6 +146,15 @@ const RecentListings = () => {
     }
   }
 
+  const getAudioFile = async (ipfsUri) =>{
+    let response = await fetch(ipfsUri)
+    const jsonResponse = await response.json()
+    console.log(jsonResponse["song"])
+
+    return jsonResponse["song"]
+    
+  }
+
   useEffect(()=>{
     
     getSongData();
@@ -178,6 +188,11 @@ const RecentListings = () => {
                         <div className="play-btn-container"> 
                         <button className="play-buy-btn">Play</button>
                         <button value={i[0]} onClick={e=>buySong(e.target.value, i[5])} >Buy</button>
+                        </div>
+                        <div>
+                          <audio  controls>
+                            <source src={i[9]} />
+                          </audio>      
                         </div>
                   </div>
                 )

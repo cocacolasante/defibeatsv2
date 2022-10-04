@@ -5,11 +5,15 @@ import defibeatsAbi from "../assets/defibeats.json"
 import profileNftAbi from "../assets/profilenft.json"
 import {PROFILENFT_ADDRESS} from "../config"
 import { useSelector } from "react-redux";
+import { useRef } from "react";
 
 const TopPurchases = () => {
 
   const account = useSelector(state=>state.provider.account)
   const [topSongs, setTopSongs] = useState()
+  const [isPlaying, setIsPlaying] = useState(null)
+  const [currentIndexItem, setCurrentIndexItem] = useState(0)
+  const audioRef = useRef(null)
 
 
   const getSongData = async () => {
@@ -39,12 +43,14 @@ const TopPurchases = () => {
                 output.push(i[6]) // is for sale
                 output.push(i[7]) // original producer
                 output.push(await _getOriginalProducer(i[7])) // og producer image
+                output.push(await getAudioFile(i[4]))
                 
             } 
             
             return output
           }))
             songsMetaMapping.sort()
+            console.log(songsMetaMapping)
             setTopSongs(songsMetaMapping)
          
       }
@@ -78,7 +84,6 @@ const TopPurchases = () => {
     // parse json data for image uri
     ogProdIm = jsonResponse["image"]
 
-    console.log(ogProdIm)
     
     //return image uri for img src link
     return (ogProdIm)
@@ -87,15 +92,34 @@ const TopPurchases = () => {
 
   }
 
+  const getAudioFile = async (ipfsUri) =>{
+    let response = await fetch(ipfsUri)
+    const jsonResponse = await response.json()
+    console.log(jsonResponse["song"])
+
+    return jsonResponse["song"]
+    
+  }
+  
+
   useEffect(()=>{
     
     getSongData();
     
   }, [])
 
+  useEffect(()=>{
+    if(isPlaying){
+      audioRef.current.play()
+
+    } else if(isPlaying !== null){
+      audioRef.current.pause()
+    }
+  })
+
   return (
     <div className='recent-upload-container'>
-        <h2>Top Purchases</h2>
+        <h2>Recent Uploads</h2>
         <div className='recent-upload-card-container'>
         <div className='recent-upload-card-container'>
            
@@ -115,8 +139,10 @@ const TopPurchases = () => {
                         </div>
                         
                         <div className="play-btn-container"> 
-                        <button className="play-buy-btn">Play</button>
-                        
+                        <button onClick={null} className="play-buy-btn">Play</button>
+                        <audio  controls>
+                          <source src={i[9]} />
+                        </audio>                       
                         </div>
                   </div>
                 )

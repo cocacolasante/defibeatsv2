@@ -2,7 +2,9 @@ import { ethers } from 'ethers'
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import { PROFILENFT_ADDRESS } from '../config'
+import { DEFIBEATS_ADDRESS } from '../config'
 import profileNftAbi from "../assets/profilenft.json"
+import defibeatsAbi from "../assets/defibeats.json"
 import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
@@ -14,6 +16,10 @@ const ProducersProfile = () => {
   const [profileAddress, setProfileAddress] = useState()
   const [profileImage, setProfileImage] = useState()
   const [hasLiked, setHasLiked] = useState(false)
+
+  const [recentSongs, setRecentSongs] = useState()
+  const[allFees, setAllFees] = useState()
+
 
   const [producerProfile, setProducerProfile] = useState()
 
@@ -143,6 +149,97 @@ const ProducersProfile = () => {
     }
   }
 
+  const getSongData = async () => {
+    try {
+      const {ethereum} = window;
+      if(ethereum){
+          const provider = new ethers.providers.Web3Provider(ethereum)
+          
+          const DefiBeatsContract = new ethers.Contract(DEFIBEATS_ADDRESS, defibeatsAbi.abi, provider)
+          
+
+          const allSongs = await DefiBeatsContract.returnAllSongs()
+          // console.log(allSongs)
+
+          
+          const songsMetaMapping = await Promise.all(allSongs.map(async (i)=>{
+            let output = []
+            
+            
+            if(i[7] === params.address){
+                output.push(i[0].toString()) // token id
+                output.push(i[1]) // name
+                output.push(i[2]) // collection name
+                output.push(i[3]) // current owner
+                output.push(i[4]) // token uri
+                output.push(i[5].toString()) // price
+                output.push(i[6]) // is for sale
+                output.push(i[7]) // original producer
+                output.push(await _getOriginalProducerImage(i[7])) // og producer image
+                
+            } 
+            
+            return output
+          }))
+          
+          
+          songsMetaMapping.reverse()
+          
+          setRecentSongs(songsMetaMapping)
+         
+      }
+
+      }catch(error){
+          console.log(error)
+      }
+  }
+  const buySong = async (songNumber, price) =>{
+    try{
+      const {ethereum} = window;
+      if(ethereum){
+        const provider = new ethers.providers.Web3Provider(ethereum)
+        const signer = provider.getSigner()
+        const DefiBeats = new ethers.Contract(DEFIBEATS_ADDRESS, defibeatsAbi.abi, signer)
+
+        console.log("loading metamask to pay for gas")
+
+        const totalValueSent = price + allFees;
+
+        let txn = await DefiBeats.buySong(songNumber, {value: totalValueSent})
+        let receipt = await txn.wait()
+
+        if(receipt.status === 1){
+          alert("Song Purchase Successful!")
+        } else {
+          alert("Transaction failed, please try again")
+        }
+        
+      }
+
+    }catch(error){
+      console.log(error)
+    }
+  }
+  const getFeeAmounts = async () =>{
+    try{
+      const {ethereum} = window;
+      if(ethereum){
+        const provider = new ethers.providers.Web3Provider(ethereum)
+        const DefiBeatsContract = new ethers.Contract(DEFIBEATS_ADDRESS, defibeatsAbi.abi, provider)
+
+        const transactionFee = await DefiBeatsContract.transactionFee()
+        const royaltyFee = await DefiBeatsContract.royaltyFee()
+
+        const totalFees = transactionFee + royaltyFee
+        setAllFees(totalFees)
+
+      }
+
+    }catch(error){
+      console.log(error)
+    }
+  }
+
 
 
   useEffect(()=>{
@@ -150,11 +247,13 @@ const ProducersProfile = () => {
     setProfileAddress(params.address);
     _getOriginalProducerImage(params.address);
     fetchHasLiked();
-    
+    getSongData();
+    getFeeAmounts()
+
   },[])
 
   return (
-    <div> 
+    <div > 
     {
       !producerProfile ? <p>Loading...</p>:
       (
@@ -183,9 +282,42 @@ const ProducersProfile = () => {
           <div>
             <h2>Recent Uploads</h2>
           </div>
-          <div>
-            
-          </div>
+          <div className='recent-upload-card-container'>
+           
+           {!recentSongs ? 
+                (<p>loading</p>) 
+                : 
+                recentSongs.map((i)=>{
+                   if(i[0]){
+                    return(
+                    <div className="song-card-mapping" key={i[0]}> {console.log(recentSongs)}
+                        <h3>Name: {i[1]} </h3>
+                        <img className="song-producer-image" src={i[8]} />                  
+                            
+                        <p>Original Producer: {i[7].slice(0, 6)}...{i[7].slice(-6)}</p>
+                        <div>
+                          <h5>Collection Name: {i[2]} </h5>
+                        </div>
+                        <div>
+                        {!i[6] ? <p>Not For Sale</p> : <p>Price: {i[5]} Matic </p>}
+                          
+                        </div>
+                        
+                        <div className="play-btn-container"> 
+                        <button className="play-buy-btn">Play</button>
+                        {
+                          !i[6] ? <button>Not For Sale</button> :
+                          <button value={i[0]} onClick={e=>buySong(e.target.value, i[5])} >Buy</button>
+                        }
+                        
+                        </div>
+                  </div>
+                )
+                   }
+                
+                  }) }
+           
+        </div>
         </div>
       )
     }
