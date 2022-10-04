@@ -176,6 +176,8 @@ const ProducersProfile = () => {
                 output.push(i[6]) // is for sale
                 output.push(i[7]) // original producer
                 output.push(await _getOriginalProducerImage(i[7])) // og producer image
+                output.push(await getAudioFile(i[4])) // get song uri
+
                 
             } 
             
@@ -238,6 +240,15 @@ const ProducersProfile = () => {
     }catch(error){
       console.log(error)
     }
+  }
+
+  const getAudioFile = async (ipfsUri) =>{
+    let response = await fetch(ipfsUri)
+    const jsonResponse = await response.json()
+    console.log(jsonResponse["song"])
+
+    return jsonResponse["song"]
+    
   }
 
 
@@ -310,6 +321,11 @@ const ProducersProfile = () => {
                           <button value={i[0]} onClick={e=>buySong(e.target.value, i[5])} >Buy</button>
                         }
                         
+                        </div>
+                        <div className="audio-bar-container" >
+                          <audio className="audio-bar" controls>
+                            <source src={i[9]} />
+                          </audio>      
                         </div>
                   </div>
                 )

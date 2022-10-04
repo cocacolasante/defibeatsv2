@@ -138,12 +138,11 @@ const TopPurchases = () => {
                           <h5>Collection Name: {i[2]} </h5>
                         </div>
                         
-                        <div className="play-btn-container"> 
-                        <button onClick={null} className="play-buy-btn">Play</button>
-                        <audio  controls>
-                          <source src={i[9]} />
-                        </audio>                       
-                        </div>
+                        <div className="audio-bar-container" >
+                          <audio className="audio-bar" controls>
+                            <source src={i[9]} />
+                          </audio>      
+                        </div>                 
                   </div>
                 )
                    }

@@ -69,8 +69,9 @@ const MyRecentSongs = () => {
                     output.push(i[6]) // is for sale
                     output.push(i[7]) // original producer
                     output.push(await _getOriginalProducer(i[7])) // og producer image
-                    
-                } 
+                    output.push(await getAudioFile(i[4])) // get song uri
+
+                  } 
                 
                 return output
               }))
@@ -192,6 +193,15 @@ const MyRecentSongs = () => {
         setIsLoading(false)
     }
 
+    const getAudioFile = async (ipfsUri) =>{
+      let response = await fetch(ipfsUri)
+      const jsonResponse = await response.json()
+      console.log(jsonResponse["song"])
+  
+      return jsonResponse["song"]
+      
+    }
+
 
     useEffect(()=>{ 
         checkIfWalletIsConnected()
@@ -229,6 +239,11 @@ const MyRecentSongs = () => {
                                 <button className="play-buy-btn" value={i[0]} onClick={handleSetSongButton} >List for Sale</button>
                                 <input type="number" onChange={e=>setListingPrice(e.target.value)} placeholder="listing price" />
                                 </div> )}
+                        </div>
+                        <div className="audio-bar-container" >
+                          <audio className="audio-bar" controls>
+                            <source src={i[9]} />
+                          </audio>      
                         </div>
                   </div>
                 )
