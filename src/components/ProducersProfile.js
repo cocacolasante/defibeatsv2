@@ -343,7 +343,6 @@ const ProducersProfile = () => {
                         </div>
                         
                         <div className="play-btn-container"> 
-                        <button className="play-buy-btn">Play</button>
                         {
                           !i[6] ? <button>Not For Sale</button> :
                           <button value={i[0]} onClick={e=>buySong(e.target.value, i[5])} >Buy</button>
