@@ -92,6 +92,7 @@ const MyLikes = () => {
                 myCurrentLikes.map((i)=>{
                     return(
                 <ProducersCard 
+                    key={i[0]}
                     userAddress={ i[0]}
                     username={i[5]}
                     userStatus={i[1]}

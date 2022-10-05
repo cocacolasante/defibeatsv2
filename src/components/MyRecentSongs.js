@@ -213,9 +213,10 @@ const MyRecentSongs = () => {
 
 
   return (
-    <div id="content-wrapper">
+    <div >
+      <div>
         <h2>My Recent Songs</h2>
-        <div className='recent-upload-card-container'>
+        <div className='user-profile-container'>
            
            {!recentSongs ? 
                 (<p>loading</p>) 
@@ -223,17 +224,17 @@ const MyRecentSongs = () => {
                 recentSongs.map((i)=>{
                    if(i[0]){
                     return(
-                    <div className="song-card-mapping2" key={i[0]}> 
+                    <div className="producer-card-container layoutoutline-solid" key={i[0]}> 
                         <h3>Name: {i[1]} </h3>
                         <img className="song-producer-image2" src={i[8]} />                  
                             
                         <p>Original Producer: {i[7].slice(0, 6)}...{i[7].slice(-6)}</p>
-                        <div>
+                      
                           <h5>Collection Name: {i[2]} </h5>
-                        </div>
+                      
                         
                         <div className="play-btn-container"> 
-                        <button className="play-buy-btn">Play</button>
+                       
                         {i[6] ? <button value={i[0]} onClick={handleCancelClick} className="play-buy-btn" >Cancel Listing</button> : (
                             <div>
                                 <button className="play-buy-btn" value={i[0]} onClick={handleSetSongButton} >List for Sale</button>
@@ -251,6 +252,7 @@ const MyRecentSongs = () => {
                 
            }) }
            
+        </div>
         </div>
     </div>
   )

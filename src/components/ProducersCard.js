@@ -10,10 +10,10 @@ const ProducersCard = (props) => {
             
             <div>
                 
-                    <img className="song-producer-image2" alt='profile nft' src={props.profNft} />
-                    <p>Current Status: {props.userStatus} </p>
-                    <p>Likes: {props.userslikes}</p>
-                    <Link to={`/browse/${props.userAddress}`} >View Profile</Link>
+              <img className="song-producer-image2" alt='profile nft' src={props.profNft} />
+              <p>Current Status: {props.userStatus} </p>
+              <p>Likes: {props.userslikes}</p>
+              <Link to={`/browse/${props.userAddress}`} >View Profile</Link>
             </div>
       </div>
       </div>
