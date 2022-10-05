@@ -10,6 +10,8 @@ import { useSelector } from 'react-redux'
 
 const ProducersProfile = () => {
   let params = useParams()
+  const toWei = (num) => ethers.utils.parseEther(num.toString())
+  const fromWei = (num) => ethers.utils.formatEther(num)
 
   const account = useSelector(state=>state.provider.account)
 
@@ -250,8 +252,7 @@ const ProducersProfile = () => {
   const getAudioFile = async (ipfsUri) =>{
     let response = await fetch(ipfsUri)
     const jsonResponse = await response.json()
-    console.log(jsonResponse["song"])
-
+  
     return jsonResponse["song"]
     
   }
@@ -265,7 +266,14 @@ const ProducersProfile = () => {
         const ProfileNFTContract = new ethers.Contract(PROFILENFT_ADDRESS, profileNftAbi.abi, signer)
 
         console.log('Popping metamask to pay for gas fees')
-        let txn = await ProfileNFTContract.tipCreator(params.address, {value: tippingAmount})
+
+        let tippedAmount = ethers.utils.parseUnits(tippingAmount)
+
+        tippedAmount = tippedAmount.toString()
+       
+        
+
+        let txn = await ProfileNFTContract.tipCreator(params.address, {value: tippedAmount})
         let receipt = await txn.wait() 
 
         if(receipt.status === 1){
@@ -333,7 +341,7 @@ const ProducersProfile = () => {
                 recentSongs.map((i)=>{
                    if(i[0]){
                     return(
-                    <div className="song-card-mapping" key={i[0]}> {console.log(recentSongs)}
+                    <div className="song-card-mapping" key={i[0]}> 
                         <h3>Name: {i[1]} </h3>
                         <img className="song-producer-image" src={i[8]} />                  
                             
