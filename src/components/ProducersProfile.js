@@ -206,7 +206,11 @@ const ProducersProfile = () => {
 
         console.log("loading metamask to pay for gas")
 
-        const totalValueSent = price + allFees;
+        let currentPrice = ethers.BigNumber.from(price);
+
+        let totalValueSent = currentPrice.add(allFees) 
+
+        console.log(`Total Price Sent: ${totalValueSent}`)
 
         let txn = await DefiBeats.buySong(songNumber, {value: totalValueSent})
         let receipt = await txn.wait()

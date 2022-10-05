@@ -70,10 +70,19 @@ const RecentListings = () => {
         const provider = new ethers.providers.Web3Provider(ethereum)
         const signer = provider.getSigner()
         const DefiBeats = new ethers.Contract(DEFIBEATS_ADDRESS, defibeatsAbi.abi, signer)
+        
 
         console.log("loading metamask to pay for gas")
 
-        const totalValueSent = price + allFees;
+        //  price as an int not a string
+        let currentPrice = ethers.BigNumber.from(price);
+        
+        
+
+        let totalValueSent = currentPrice.add(allFees) 
+                
+
+        console.log(fromWei(totalValueSent))
 
         let txn = await DefiBeats.buySong(songNumber, {value: totalValueSent})
         let receipt = await txn.wait()
@@ -139,7 +148,7 @@ const RecentListings = () => {
         const transactionFee = await DefiBeatsContract.transactionFee()
         const royaltyFee = await DefiBeatsContract.royaltyFee()
 
-        const totalFees = transactionFee + royaltyFee
+        const totalFees = parseInt(transactionFee) + parseInt(royaltyFee)
         setAllFees(totalFees)
 
       }
@@ -169,6 +178,7 @@ const RecentListings = () => {
     <div id="content-wrapper">
         <h2>Recent Listings</h2>
         <div className='recent-upload-card-container'>
+        {console.log(fromWei("500000000000000000"))}
            
            {!recentSongs ? 
                 (<p>loading</p>) 
@@ -185,7 +195,9 @@ const RecentListings = () => {
                           <h5>Collection Name: {i[2]} </h5>
                         </div>
                         <div>
-                          <p>Price: {i[5]} Matic </p>
+                          <p>Price: {fromWei(i[5])} Matic </p>
+                          {console.log(i[5])}
+                          
                         </div>
                         
                         <div className="play-btn-container"> 
