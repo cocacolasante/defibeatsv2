@@ -4,6 +4,7 @@ import { PROFILENFT_ADDRESS } from '../config';
 import profileNftAbi from "../assets/profilenft.json"
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import RecentListings from './RecentListings';
 
 import ProducersCard from '../components/ProducersCard';
 
@@ -112,8 +113,8 @@ const SongBrowse = () => {
             })}
             </div>
         </div>
-        <div>
-            <h3>producer carosel</h3>
+        <div className="user-profile-container" >
+            <RecentListings />
         </div>
     </div>
   )
