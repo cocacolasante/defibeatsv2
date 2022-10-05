@@ -4,7 +4,7 @@ const ProducersCard = (props) => {
   return (
     <div className='producer-card-container' >
         <h6>{props.userAddress.slice(0, 6)}...{props.userAddress.slice(-6)}</h6>
-        <div className="song-card-mapping2">
+        <div className="song-card-mapping2 layoutoutline-solid">
 
                 <p>Username: {props.username}</p>
             

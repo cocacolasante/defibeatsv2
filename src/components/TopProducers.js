@@ -98,7 +98,7 @@ const TopProducers = () => {
                 : (
                    userProfiles.map((i)=>{
                     return(
-                        <div className="song-card-mapping" key={i[0]}>
+                        <div className="song-card-mapping layoutoutline-solid" key={i[0]}>
                             <h3>Producer: {i[0].slice(0, 6)}...{i[0].slice(-6)}</h3>
                             {!i[5] ? <p></p> : <p>{i[5]}</p>}
                             <img className="song-producer-image" src={i[6]} /> 

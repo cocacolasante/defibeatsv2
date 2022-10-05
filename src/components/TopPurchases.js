@@ -4,12 +4,14 @@ import { useEffect, useState } from "react";
 import defibeatsAbi from "../assets/defibeats.json"
 import profileNftAbi from "../assets/profilenft.json"
 import {PROFILENFT_ADDRESS} from "../config"
+import { Link } from "react-router-dom"
+
 
 
 const TopPurchases = () => {
 
   const [topSongs, setTopSongs] = useState()
-
+  const[allFees, setAllFees] = useState()
 
   const getSongData = async () => {
     try {
@@ -95,11 +97,60 @@ const TopPurchases = () => {
     return jsonResponse["song"]
     
   }
+
+  const buySong = async (songNumber, price) =>{
+    try{
+      const {ethereum} = window;
+      if(ethereum){
+        const provider = new ethers.providers.Web3Provider(ethereum)
+        const signer = provider.getSigner()
+        const DefiBeats = new ethers.Contract(DEFIBEATS_ADDRESS, defibeatsAbi.abi, signer)
+
+        console.log("loading metamask to pay for gas")
+
+        const totalValueSent = price + allFees;
+
+        let txn = await DefiBeats.buySong(songNumber, {value: totalValueSent})
+        let receipt = await txn.wait()
+
+        if(receipt.status === 1){
+          alert("Song Purchase Successful!")
+        } else {
+          alert("Transaction failed, please try again")
+        }
+        
+      }
+
+    }catch(error){
+      console.log(error)
+    }
+  }
+
+  const getFeeAmounts = async () =>{
+    try{
+      const {ethereum} = window;
+      if(ethereum){
+        const provider = new ethers.providers.Web3Provider(ethereum)
+        const DefiBeatsContract = new ethers.Contract(DEFIBEATS_ADDRESS, defibeatsAbi.abi, provider)
+
+        const transactionFee = await DefiBeatsContract.transactionFee()
+        const royaltyFee = await DefiBeatsContract.royaltyFee()
+
+        const totalFees = transactionFee + royaltyFee
+        setAllFees(totalFees)
+
+      }
+
+    }catch(error){
+      console.log(error)
+    }
+  }
   
 
   useEffect(()=>{
     
     getSongData();
+    getFeeAmounts()
     
   }, [])
 
@@ -117,7 +168,7 @@ const TopPurchases = () => {
                 topSongs.map((i)=>{
                    if(i[0]){
                     return(
-                    <div className="song-card-mapping" key={i[0]}> 
+                    <div className="song-card-mapping layoutoutline-solid" key={i[0]}> 
                         <h3>Name: {i[1]} </h3>
                         <img className="song-producer-image" src={i[8]} />                  
                             
@@ -125,12 +176,18 @@ const TopPurchases = () => {
                         <div>
                           <h5>Collection Name: {i[2]} </h5>
                         </div>
+                        <div>
+                          {!i[6] ?<p>Not for sale</p> :<button value={i[0]} onClick={e=>buySong(e.target.value, i[5])} >Buy</button>}
+                        </div>
                         
                         <div className="audio-bar-container" >
                           <audio className="audio-bar" controls>
                             <source src={i[9]} />
                           </audio>      
-                        </div>                 
+                        </div>
+                        <div>
+                          <Link to={`/browse/${i[0]}`} >View Profile</Link>
+                        </div>         
                   </div>
                 )
                    }

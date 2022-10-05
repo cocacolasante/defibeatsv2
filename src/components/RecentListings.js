@@ -14,6 +14,9 @@ const RecentListings = () => {
   const [recentSongs, setRecentSongs] = useState()
   const[allFees, setAllFees] = useState()
 
+  const toWei = (num) => ethers.utils.parseEther(num.toString())
+  const fromWei = (num) => ethers.utils.formatEther(num)
+  
 
   const getSongData = async () => {
     try {
