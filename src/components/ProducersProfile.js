@@ -16,6 +16,7 @@ const ProducersProfile = () => {
   const [profileAddress, setProfileAddress] = useState()
   const [profileImage, setProfileImage] = useState()
   const [hasLiked, setHasLiked] = useState(false)
+  const [tippingAmount, setTippingAmount] = useState()
 
   const [recentSongs, setRecentSongs] = useState()
   const[allFees, setAllFees] = useState()
@@ -251,6 +252,33 @@ const ProducersProfile = () => {
     
   }
 
+  const tipProducer = async () => {
+    try {
+      const {ethereum} = window;
+      if(ethereum){
+        const provider = new ethers.providers.Web3Provider(ethereum)
+        const signer =  provider.getSigner()
+        const ProfileNFTContract = new ethers.Contract(PROFILENFT_ADDRESS, profileNftAbi.abi, signer)
+
+        console.log('Popping metamask to pay for gas fees')
+        let txn = await ProfileNFTContract.tipCreator(params.address, {value: tippingAmount})
+        let receipt = await txn.wait() 
+
+        if(receipt.status === 1){
+          console.log("Tipped Producer Successful")
+        } else {
+          alert("Transaction failed, please try again")
+        }
+        
+      }
+
+    }catch (error){
+      console.log(error)
+    }
+  }
+
+ 
+
 
 
   useEffect(()=>{
@@ -283,8 +311,8 @@ const ProducersProfile = () => {
             <p>{producerProfile[2].toString()}</p>
           </div>
           <div>
-            <input placeholder='Enter Tip Amount'/>
-            <button >Tip Producer</button>
+            <input onChange={e=>setTippingAmount(e.target.value)} placeholder='Enter Tip Amount'/>
+            <button onClick={tipProducer}>Tip Producer</button>
           </div>
           <div>
           {!hasLiked ?<button onClick={likeProfile} >Like User's Profile</button> : 

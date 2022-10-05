@@ -94,7 +94,7 @@ const MyLikes = () => {
                 <ProducersCard 
                     userAddress={ i[0]}
                     username={i[5]}
-                    userStatus={i[2]}
+                    userStatus={i[1]}
                     profNft={i[6]}
                 />)
             })}

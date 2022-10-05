@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import defibeatsAbi from "../assets/defibeats.json"
 import profileNftAbi from "../assets/profilenft.json"
 import {PROFILENFT_ADDRESS} from "../config"
+import { Link } from "react-router-dom"
 
 
 
@@ -103,10 +104,12 @@ const TopProducers = () => {
                             <img className="song-producer-image" src={i[6]} /> 
                             <div>
                                 {!i[1] ? <p>No status...</p> : <p>{i[1]}</p>}
+                                <p>Total Likes: {i[4]}</p>
                             </div>
-                            <div className="play-btn-container"> 
-                                <button className="play-buy-btn">Click to Like</button>
-                                <button className="play-buy-btn">Click to View Profile</button>
+                            
+                            <div>
+
+                                <Link to={`/browse/${i[0]}`} >View Profile</Link>
                             </div>
                         </div>
                     )
