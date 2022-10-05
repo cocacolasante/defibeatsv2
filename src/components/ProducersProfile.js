@@ -320,7 +320,7 @@ const ProducersProfile = () => {
           </div>
           <div>
             <h3>Total Users Tips</h3>
-            <p>{producerProfile[2].toString()}</p>
+            <p>{fromWei(producerProfile[2].toString())}</p>
           </div>
           <div>
             <input onChange={e=>setTippingAmount(e.target.value)} placeholder='Enter Tip Amount'/>

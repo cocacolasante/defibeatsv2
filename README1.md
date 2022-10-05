@@ -1,8 +1,5 @@
 TO DO:
 
-WEI TO MATIC CONVERTER FOR BUY FUNCTION AND VIEW PRICE FUNCTION
-
-featured song component
 clean up css
 
 SEARCH BOX
