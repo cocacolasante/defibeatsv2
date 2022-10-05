@@ -13,6 +13,9 @@ const TopPurchases = () => {
   const [topSongs, setTopSongs] = useState()
   const[allFees, setAllFees] = useState()
 
+  const toWei = (num) => ethers.utils.parseEther(num.toString())
+  const fromWei = (num) => ethers.utils.formatEther(num)
+
   const getSongData = async () => {
     try {
       const {ethereum} = window;
@@ -108,7 +111,11 @@ const TopPurchases = () => {
 
         console.log("loading metamask to pay for gas")
 
-        const totalValueSent = price + allFees;
+        let currentPrice = ethers.BigNumber.from(price);
+
+        let totalValueSent = currentPrice.add(allFees) 
+
+        console.log(`Total Price Sent: ${fromWei(totalValueSent)}`)
 
         let txn = await DefiBeats.buySong(songNumber, {value: totalValueSent})
         let receipt = await txn.wait()
@@ -175,6 +182,7 @@ const TopPurchases = () => {
                         <p>Original Producer: {i[7].slice(0, 6)}...{i[7].slice(-6)}</p>
                         <div>
                           <h5>Collection Name: {i[2]} </h5>
+                          <p>Price: {fromWei(i[5])} Matic</p>
                         </div>
                         <div>
                           {!i[6] ?<p>Not for sale</p> :<button value={i[0]} onClick={e=>buySong(e.target.value, i[5])} >Buy</button>}

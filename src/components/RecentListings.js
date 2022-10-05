@@ -76,13 +76,10 @@ const RecentListings = () => {
 
         //  price as an int not a string
         let currentPrice = ethers.BigNumber.from(price);
-        
-        
 
         let totalValueSent = currentPrice.add(allFees) 
-                
 
-        console.log(fromWei(totalValueSent))
+        console.log(`Total Price Sent: ${fromWei(totalValueSent)}`)
 
         let txn = await DefiBeats.buySong(songNumber, {value: totalValueSent})
         let receipt = await txn.wait()
@@ -186,7 +183,7 @@ const RecentListings = () => {
                 recentSongs.map((i)=>{
                    if(i[0]){
                     return(
-                    <div className="song-card-mapping" key={i[0]}> 
+                    <div className="song-card-mapping layoutoutline-solid" key={i[0]}> 
                         <h3>Name: {i[1]} </h3>
                         <img className="song-producer-image" src={i[8]} />                  
                             
