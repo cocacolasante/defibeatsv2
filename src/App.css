@@ -223,3 +223,16 @@
 .producer-card-container{
   padding: 10px;
 }
+
+.song-card-side-container{
+  padding-top: 25px;
+  color: whitesmoke;
+}
+.song-producer-image3{
+  max-width: 175px;
+}
+
+.side-user-container{
+  text-align: center;
+
+}

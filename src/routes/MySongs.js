@@ -1,7 +1,7 @@
 
+import MyLikes from "../components/MyLikes"
 
 import MyRecentSongs from "../components/MyRecentSongs"
-import MyLikes from "../components/MyLikes"
 
 const MySongs = () => {
 
