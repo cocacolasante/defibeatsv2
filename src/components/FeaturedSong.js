@@ -16,12 +16,16 @@ function FeaturedSong() {
           </div>
           
           <div className="play-btn-container"> 
-            <button className="play-buy-btn">Play</button>
+            
             <button className="play-buy-btn" >Buy Song</button>
-          
+          </div>
+          <div className="audio-bar-container" >
+            <audio className="audio-bar" controls>
+              <source src={null} />
+            </audio>      
+          </div>
             
 
-          </div>
           </div>
     </div>
   </div>

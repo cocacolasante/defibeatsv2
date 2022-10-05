@@ -186,7 +186,6 @@ const RecentListings = () => {
                         </div>
                         
                         <div className="play-btn-container"> 
-                        <button className="play-buy-btn">Play</button>
                         <button value={i[0]} onClick={e=>buySong(e.target.value, i[5])} >Buy</button>
                         </div>
                         <div className="audio-bar-container" >

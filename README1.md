@@ -1,12 +1,9 @@
 TO DO:
-set like function for other users profile
-buy function 
-recently listed on home page
 
-BROWSE
-set browse page with recent songs and liked songs
-set browse routes to user profiles and producers profiles
-for sale section
-recently listed section
+featured song component
+linking pages
+clean up css
 
-REDEPLOY PROFILE CONTRACT WITH NEW RETURN ALL CREATORS FUNCTION
+HOME PAGE FUNCTIONS FOR USERS PROFILE
+
+RETURNING LIST OF LIKED PRODUCERS

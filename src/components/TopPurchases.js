@@ -4,16 +4,11 @@ import { useEffect, useState } from "react";
 import defibeatsAbi from "../assets/defibeats.json"
 import profileNftAbi from "../assets/profilenft.json"
 import {PROFILENFT_ADDRESS} from "../config"
-import { useSelector } from "react-redux";
-import { useRef } from "react";
+
 
 const TopPurchases = () => {
 
-  const account = useSelector(state=>state.provider.account)
   const [topSongs, setTopSongs] = useState()
-  const [isPlaying, setIsPlaying] = useState(null)
-  const [currentIndexItem, setCurrentIndexItem] = useState(0)
-  const audioRef = useRef(null)
 
 
   const getSongData = async () => {
@@ -108,14 +103,7 @@ const TopPurchases = () => {
     
   }, [])
 
-  useEffect(()=>{
-    if(isPlaying){
-      audioRef.current.play()
-
-    } else if(isPlaying !== null){
-      audioRef.current.pause()
-    }
-  })
+ 
 
   return (
     <div className='recent-upload-container'>
