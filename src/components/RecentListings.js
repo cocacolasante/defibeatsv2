@@ -126,7 +126,6 @@ const RecentListings = () => {
     // parse json data for image uri
     ogProdIm = jsonResponse["image"]
 
-    console.log(ogProdIm)
     
     //return image uri for img src link
     return (ogProdIm)
@@ -158,7 +157,7 @@ const RecentListings = () => {
   const getAudioFile = async (ipfsUri) =>{
     let response = await fetch(ipfsUri)
     const jsonResponse = await response.json()
-    console.log(jsonResponse["song"])
+    
 
     return jsonResponse["song"]
     
@@ -175,7 +174,7 @@ const RecentListings = () => {
     <div id="content-wrapper">
         <h2>Recent Listings</h2>
         <div className='recent-upload-card-container'>
-        {console.log(fromWei("500000000000000000"))}
+  
            
            {!recentSongs ? 
                 (<p>loading</p>) 
@@ -193,7 +192,6 @@ const RecentListings = () => {
                         </div>
                         <div>
                           <p>Price: {fromWei(i[5])} Matic </p>
-                          {console.log(i[5])}
                           
                         </div>
                         

@@ -50,7 +50,7 @@ const TopPurchases = () => {
             return output
           }))
             songsMetaMapping.sort()
-            console.log(songsMetaMapping)
+            
             setTopSongs(songsMetaMapping)
          
       }
@@ -95,7 +95,7 @@ const TopPurchases = () => {
   const getAudioFile = async (ipfsUri) =>{
     let response = await fetch(ipfsUri)
     const jsonResponse = await response.json()
-    console.log(jsonResponse["song"])
+    
 
     return jsonResponse["song"]
     

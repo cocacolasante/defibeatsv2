@@ -10,5 +10,10 @@ module.exports = {
       url: process.env.POLYGON_MUMBAI_URL,
       accounts: [process.env.PRIVATE_KEY_DEPLOYER]
     }
-  }
+    
+  },
+  etherscan: {
+    apiKey: process.env.POLYGONSCAN_API_KEY,
+ }
+
 };

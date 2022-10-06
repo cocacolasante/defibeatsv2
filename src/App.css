@@ -201,11 +201,14 @@
 }
 
 .featured-song-container{
-  text-align: center;
+  background-color: #ABB0B8;
+  color: whitesmoke;
+  
 }
 
 .home-featured-song{
   align-content: center;
+  text-align: center;
 }
 
 .featured-card{
