@@ -1,4 +1,4 @@
-import {useState} from "react"
+import {useEffect, useState} from "react"
 import { create as ipfsClient} from "ipfs-http-client"
 import { ethers } from "ethers"
 import env from "react-dotenv";
@@ -19,11 +19,15 @@ const client = ipfsClient({
 
 
 const UploadForm = () => {
+
+  const toWei = (num) => ethers.utils.parseEther(num.toString())
+  const fromWei = (num) => ethers.utils.formatEther(num)
       
   const [name, setName] = useState()
   const [songFile, setSongFile] = useState()
   const [collectionName, setCollectionName] = useState()
   const [description, setDescription] = useState("")
+  const [viewMintFee, setViewMintFee] = useState()
 
   const uploadToIpfs = async (event) =>{
     event.preventDefault()
@@ -74,6 +78,7 @@ const UploadForm = () => {
         console.log("Loading Metamask to pay for gas")
         
         const mintingFee = await DefiBeats.mintFee()
+        
 
         let txn = await DefiBeats.makeSong(_uri, _name, _collectionName, {value: mintingFee} )
         const receipt = await txn.wait()
@@ -91,11 +96,37 @@ const UploadForm = () => {
 
   }
 
+  const fetchMintFee = async () =>{
+    try{
+      const {ethereum} = window;
+      if(ethereum){
+        const provider = new ethers.providers.Web3Provider(ethereum)
+        const DefiBeatsContract = new ethers.Contract(DEFIBEATS_ADDRESS, defibeatsAbi.abi, provider)
+
+        const liveMintFee = await DefiBeatsContract.mintFee()
+        
+        const mintFeeString = fromWei(liveMintFee.toString())
+       
+
+        setViewMintFee(mintFeeString)
+
+      }
+
+    }catch (error){
+      console.log(error)
+    }
+  }
+
+  useEffect(()=>{
+    fetchMintFee()
+  }, [])
+
   
   return (
     <div id='content-wrapper'>
       <div className="title-container-upload">
         <h2>Create song</h2>
+        <p>Mint your song to the blockchain for {viewMintFee} Matic per song</p>
       </div>
       <div className="upload-form-container">
         <form onSubmit={createSong} className="form">
