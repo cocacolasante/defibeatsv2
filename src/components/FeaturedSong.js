@@ -16,6 +16,8 @@ function FeaturedSong() {
   const [songAudio, setSongAudio] = useState()
   const [ogProdAddy, setOgProdAddy]  = useState()
   const [ipfsLink, setIpfsLink] = useState()
+  const [allFees, setAllFees] = useState()
+
 
   const getFeaturedSong = async () =>{
     try {
@@ -25,12 +27,18 @@ function FeaturedSong() {
         const DefiBeatsContract = new ethers.Contract(DEFIBEATS_ADDRESS, defibeatsAbi.abi, provider)
 
         const featSongData = await DefiBeatsContract.featuredSong()
+        const token = featSongData[0].toString()
+        
 
-        const featSongMapping = featSongData.map((i)=>{
+        const featureSongStatus = await DefiBeatsContract.songs(token)
+
+        const featSongMapping = featureSongStatus.map((i)=>{
           let output = []
           output.push(i)
           return output
         })
+                
+
         setIpfsLink(featSongMapping[4][0])
         setOgProdAddy(featSongMapping[7][0])
         setFeaturedSong(featSongMapping)
@@ -80,14 +88,72 @@ function FeaturedSong() {
 
   const getAudioFile = async (ipfsUri) =>{
     let response = await fetch(ipfsUri)
+
     const jsonResponse = await response.json()
-    setSongAudio(jsonResponse["song"])
+
+    const songuri = jsonResponse["song"]
+
+    setSongAudio(songuri)
+
     return jsonResponse["song"]
     
   }
 
+  const buySong = async (songNumber, price) =>{
+    try{
+      const {ethereum} = window;
+      if(ethereum){
+        const provider = new ethers.providers.Web3Provider(ethereum)
+        const signer = provider.getSigner()
+        const DefiBeats = new ethers.Contract(DEFIBEATS_ADDRESS, defibeatsAbi.abi, signer)
+
+        console.log("loading metamask to pay for gas")
+
+        let currentPrice = ethers.BigNumber.from(price);
+
+        let totalValueSent = currentPrice.add(allFees) 
+
+        console.log(`Total Price Sent: ${fromWei(totalValueSent)}`)
+
+        let txn = await DefiBeats.buySong(songNumber, {value: totalValueSent})
+        let receipt = await txn.wait()
+
+        if(receipt.status === 1){
+          alert("Song Purchase Successful!")
+        } else {
+          alert("Transaction failed, please try again")
+        }
+        
+      }
+
+    }catch(error){
+      console.log(error)
+    }
+  }
+
+  const getFeeAmounts = async () =>{
+    try{
+      const {ethereum} = window;
+      if(ethereum){
+        const provider = new ethers.providers.Web3Provider(ethereum)
+        const DefiBeatsContract = new ethers.Contract(DEFIBEATS_ADDRESS, defibeatsAbi.abi, provider)
+
+        const transactionFee = await DefiBeatsContract.transactionFee()
+        const royaltyFee = await DefiBeatsContract.royaltyFee()
+
+        const totalFees = transactionFee + royaltyFee
+        setAllFees(totalFees)
+
+      }
+
+    }catch(error){
+      console.log(error)
+    }
+  }
+
   useEffect(()=>{
     getFeaturedSong()
+    getFeeAmounts()
     
   },[])
 
@@ -104,8 +170,7 @@ function FeaturedSong() {
     <div id="content">
         <h2>Featured Song</h2>
         <div className='home-featured-song'>
-        {console.log(featuredSong)}
-        {console.log(songAudio)}
+        
            
            {!featuredSong ? 
                 (<p>loading</p>) 
@@ -113,17 +178,17 @@ function FeaturedSong() {
                   <div className="featured-song-container layoutoutline-solid"> 
                         <h3>Name: {featuredSong[1]}  </h3>
                         <img className="song-producer-image" alt="producer nft" src={producerNft} />                  
-                        <p>Original Producer: </p>
+                        <p>Original Producer: {featuredSong[7][0].slice(0, 6)}...{featuredSong[7][0].slice(-6)} </p>
                         <div>
                           <h5>Collection Name: {featuredSong[2]} </h5>
                         </div>
                         <div>
-                        {!featuredSong[6] ? <p>Not For Sale</p> : <p>Price: {fromWei(featuredSong[5].toString())} Matic </p> }
+                        {!featuredSong[6][0] ? <p>Last Sold For: {fromWei(featuredSong[5].toString())} </p> : <p>Price: {fromWei(featuredSong[5].toString())} Matic </p> }
                           
                         </div>
                         
                         <div className="play-btn-container"> 
-                        {!featuredSong[6] ? <p>Not For Sale</p> : <button value={featuredSong[0]} onClick={null} >Buy</button>  }
+                        {!featuredSong[6][0] ? <p>Not For Sale</p> : <button value={featuredSong[0]} onClick={e=>buySong(e.target.value, featuredSong[5].toString())} >Buy</button>  }
                         {/* <button value={featuredSong[0]} onClick={e=>buySong(e.target.value, featuredSong[5])} >Buy</button> */}
                         </div>
 
