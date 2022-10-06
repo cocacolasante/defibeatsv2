@@ -5,6 +5,7 @@ import defibeatsAbi from "../assets/defibeats.json"
 import profileNftAbi from "../assets/profilenft.json"
 import {PROFILENFT_ADDRESS} from "../config"
 import { Link } from "react-router-dom"
+import SearchComponent from "./SearchComponent"
 
 
 
@@ -12,6 +13,9 @@ const AllSongs = () => {
 
   const [topSongs, setTopSongs] = useState()
   const[allFees, setAllFees] = useState()
+
+  const [search, setSearch] = useState("")
+
 
   const toWei = (num) => ethers.utils.parseEther(num.toString())
   const fromWei = (num) => ethers.utils.formatEther(num)
@@ -153,6 +157,15 @@ const AllSongs = () => {
       console.log(error)
     }
   }
+
+  const onSearchChange = (e) =>{
+    const searchString = e.target.value.toUpperCase()
+    console.log(searchString)
+    setSearch(searchString)
+
+  }
+
+
   
 
   useEffect(()=>{
@@ -167,16 +180,20 @@ const AllSongs = () => {
   return (
     <div className='recent-upload-container'>
         <h2>All Songs</h2>
+       
         <div className='recent-upload-card-container'>
+        <div className="search-bar-form">
+            <input className="search-bar" type="text" onChange={onSearchChange} placeholder="Search For a Song.." />
+        </div>
         <div className='recent-upload-card-container'>
            
            {!topSongs ? 
                 (<p>loading</p>) 
                 : 
                 topSongs.map((i)=>{
-                   if(i[0]){
+                   if(i[0] && i[1].toUpperCase().includes(search)){
                     return(
-                    <div className="song-card-mapping layoutoutline-solid" key={i[0]}> 
+                    <div className="song-card-mapping layoutoutline-solid" key={i[4]}> 
                         <h3>Name: {i[1]} </h3>
                         <img className="song-producer-image" src={i[8]} />                  
                             
