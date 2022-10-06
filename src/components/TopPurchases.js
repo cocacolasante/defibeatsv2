@@ -195,7 +195,7 @@ const TopPurchases = () => {
                           </audio>      
                         </div>
                         <div>
-                          <Link to={`/browse/${i[0]}`} >View Profile</Link>
+                          <Link to={`/browse/${i[7]}`} >View Profile</Link>
                         </div>         
                   </div>
                 )

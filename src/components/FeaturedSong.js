@@ -201,6 +201,9 @@ function FeaturedSong() {
                           }
                               
                         </div>
+                        <div>
+                          <Link to={`/browse/${featuredSong[7]}`} >View Profile</Link>
+                        </div>  
                   </div>
            }
            

@@ -37,6 +37,7 @@ const TopProducers = () => {
                     
                     return output
                 }))
+                profileMetaMapping.length = 8
                 
                 setUserProfiles(profileMetaMapping)
                 

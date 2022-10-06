@@ -5,7 +5,7 @@ import defibeatsAbi from "../assets/defibeats.json"
 import profileNftAbi from "../assets/profilenft.json"
 import {PROFILENFT_ADDRESS} from "../config"
 import { useSelector } from "react-redux";
-
+import { Link } from "react-router-dom"
 
 
 const RecentListings = () => {
@@ -204,6 +204,9 @@ const RecentListings = () => {
                             <source src={i[9]} />
                           </audio>      
                         </div>
+                        <div>
+                          <Link to={`/browse/${i[7]}`} >View Profile</Link>
+                        </div>    
                   </div>
                 )
                    }
