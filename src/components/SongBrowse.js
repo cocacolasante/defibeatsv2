@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import RecentListings from './RecentListings';
 import SearchComponent from "./SearchComponent"
+import AllSongs from './AllSongs';
 
 import ProducersCard from '../components/ProducersCard';
 
@@ -115,6 +116,9 @@ const SongBrowse = () => {
         </div>
         <div className="user-profile-container" >
             <RecentListings />
+        </div>
+        <div className="user-profile-container" >
+            <AllSongs />
         </div>
     </div>
   )
