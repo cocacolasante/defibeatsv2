@@ -53,6 +53,7 @@ const RecentListings = () => {
           }))
           
           songsMetaMapping.reverse()
+          songsMetaMapping.length = 6
           
           setRecentSongs(songsMetaMapping)
          

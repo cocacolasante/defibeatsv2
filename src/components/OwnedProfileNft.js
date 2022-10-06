@@ -71,8 +71,10 @@ const OwnedProfileNft = () => {
         const nfts = await alchemy.nft.getNftsForOwner(account, {
             contractAddresses: [PROFILENFT_ADDRESS]
         });
+
         // assigning meta data to variable
         const nftOwned = nfts.ownedNfts
+        console.log(nftOwned)
 
 
         const nftMeta = nftOwned.map(i=>{
@@ -148,6 +150,7 @@ const OwnedProfileNft = () => {
         setDisplayStatus(status)
         
     }
+
     const getUsername = async () => {
         let _username = await blockchainProfile["username"]
         setDisplayUsername(_username)
@@ -192,7 +195,7 @@ const OwnedProfileNft = () => {
 
   return (
     <div>
-        <div className="header-container" >
+        <div className="header-container" > 
             <h2>User Account: {useSelector(state=>state.provider.account)} </h2>
             
         </div>

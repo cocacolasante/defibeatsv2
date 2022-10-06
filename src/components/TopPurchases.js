@@ -50,6 +50,7 @@ const TopPurchases = () => {
             return output
           }))
             songsMetaMapping.sort()
+            songsMetaMapping.length = 8
             
             setTopSongs(songsMetaMapping)
          

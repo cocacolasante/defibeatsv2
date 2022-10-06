@@ -5,7 +5,6 @@ import profileNftAbi from "../assets/profilenft.json"
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import RecentListings from './RecentListings';
-import SearchComponent from "./SearchComponent"
 import AllSongs from './AllSongs';
 
 import ProducersCard from '../components/ProducersCard';
@@ -39,14 +38,20 @@ const SongBrowse = () => {
                         output.push(i[5]) // user name
                         output.push(await _getOriginalProducer(i[0])) // profile image
                         
+                        
                     
                     return output
                 }))
-                console.log(profileMetaMapping)
+
+                profileMetaMapping.sort((a, b)=>{
+                    return b[4][0] - a[4][0]
+                })
+                profileMetaMapping.length = 8;
+
+                
                 setUserProfiles(profileMetaMapping)
                 
                 
-
             }
 
         }catch(error){
@@ -96,7 +101,6 @@ const SongBrowse = () => {
   return (
     <div>
         <div>
-            <SearchComponent />
             <h2>Top Producers</h2>
             <div className='user-profile-container'>
             {
