@@ -8,10 +8,8 @@ import { loadProfileNftContract } from "../redux/actions";
 const SearchBar = () => {
 
     const [activeAccount, setActiveAccount] = useState()
-    const [search, setSearch] = useState("")
     const dispatch = useDispatch();
     const provider = useSelector(state=>state.provider.connection)
-    const profileContract = useSelector(state=>state.profileNft.ProfileContract)
     
 
     
@@ -42,7 +40,6 @@ const SearchBar = () => {
         
                     
     }
-    
 
     const checkIfWalletIsConnected = async () => {
 
@@ -76,6 +73,10 @@ const SearchBar = () => {
         }
         
     }
+
+    const onSearchHandler = (e) =>{
+        
+    }
    
 
     useEffect(()=>{
@@ -103,9 +104,7 @@ const SearchBar = () => {
                                      
                 </ul>      
             
-            <div className="search-bar-form">
-                <input className="search-bar" type="text" onChange={(e)=>setSearch(e.target.value)} placeholder="Search For a Song.." />
-            </div>
+
         
             
         

@@ -202,8 +202,6 @@ function FeaturedSong() {
                               
                         </div>
                   </div>
-                
-                   
            }
            
         </div>

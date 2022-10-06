@@ -5,6 +5,7 @@ import profileNftAbi from "../assets/profilenft.json"
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import RecentListings from './RecentListings';
+import SearchComponent from "./SearchComponent"
 
 import ProducersCard from '../components/ProducersCard';
 
@@ -13,7 +14,6 @@ const SongBrowse = () => {
     const[userProfiles, setUserProfiles] = useState()
     let params = useParams();
 
-    console.log(params)
 
 
 
@@ -95,6 +95,7 @@ const SongBrowse = () => {
   return (
     <div>
         <div>
+            <SearchComponent />
             <h2>Top Producers</h2>
             <div className='user-profile-container'>
             {
