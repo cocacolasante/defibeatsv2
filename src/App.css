@@ -256,3 +256,15 @@
   border-radius: 5px;
   
 }
+
+/* .backgroundcolor-container{
+  background: rgb(2,0,36);
+  background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);
+} */
+
+.link-button{
+  border: 1px solid black;
+}
+.heading2{
+  padding-top: 20px;
+}

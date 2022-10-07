@@ -173,7 +173,7 @@ const RecentListings = () => {
 
   return (
     <div id="content-wrapper">
-        <h2>Recent Listings</h2>
+        <h2 className="heading2">Recent Listings</h2>
         <div className='recent-upload-card-container'>
   
            
@@ -204,8 +204,8 @@ const RecentListings = () => {
                             <source src={i[9]} />
                           </audio>      
                         </div>
-                        <div>
-                          <Link to={`/browse/${i[7]}`} >View Profile</Link>
+                        <div >
+                          <Link  to={`/browse/${i[7]}`} >View Profile</Link>
                         </div>    
                   </div>
                 )
