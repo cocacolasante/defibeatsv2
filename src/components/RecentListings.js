@@ -176,7 +176,6 @@ const RecentListings = () => {
         <h2 className="heading2">Recent Listings</h2>
         <div className='recent-upload-card-container'>
   
-           
            {!recentSongs ? 
                 (<p>loading</p>) 
                 : 
