@@ -188,7 +188,7 @@ function FeaturedSong() {
                         </div>
                         
                         <div className="play-btn-container"> 
-                        {!featuredSong[6][0] ? <p>Not For Sale</p> : <button value={featuredSong[0]} onClick={e=>buySong(e.target.value, featuredSong[5].toString())} >Buy</button>  }
+                        {!featuredSong[6][0] ? <p>Not For Sale</p> : <button className="yellowButton" value={featuredSong[0]} onClick={e=>buySong(e.target.value, featuredSong[5].toString())} >Buy</button>  }
                         {/* <button value={featuredSong[0]} onClick={e=>buySong(e.target.value, featuredSong[5])} >Buy</button> */}
                         </div>
 
@@ -201,8 +201,8 @@ function FeaturedSong() {
                           }
                               
                         </div>
-                        <div>
-                          <Link to={`/browse/${featuredSong[7]}`} >View Profile</Link>
+                        <div className="link-profile-div">
+                          <Link className="blue-button-thin" to={`/browse/${featuredSong[7]}`} >View Profile</Link>
                         </div>  
                   </div>
            }

@@ -186,7 +186,7 @@ const TopPurchases = () => {
                           <p>Price: {fromWei(i[5])} Matic</p>
                         </div>
                         <div>
-                          {!i[6] ?<p>Not for sale</p> :<button value={i[0]} onClick={e=>buySong(e.target.value, i[5])} >Buy</button>}
+                          {!i[6] ?<p>Not for sale</p> :<button className="yellowButton" value={i[0]} onClick={e=>buySong(e.target.value, i[5])} >Buy</button>}
                         </div>
                         
                         <div className="audio-bar-container" >
@@ -194,8 +194,8 @@ const TopPurchases = () => {
                             <source src={i[9]} />
                           </audio>      
                         </div>
-                        <div>
-                          <Link to={`/browse/${i[7]}`} >View Profile</Link>
+                        <div className="link-profile-div">
+                          <Link className="blue-button-thin" to={`/browse/${i[7]}`} >View Profile</Link>
                         </div>         
                   </div>
                 )

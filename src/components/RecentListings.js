@@ -196,15 +196,15 @@ const RecentListings = () => {
                         </div>
                         
                         <div className="play-btn-container"> 
-                        <button value={i[0]} onClick={e=>buySong(e.target.value, i[5])} >Buy</button>
+                        <button className="yellowButton" value={i[0]} onClick={e=>buySong(e.target.value, i[5])} >Buy</button>
                         </div>
                         <div className="audio-bar-container" >
                           <audio className="audio-bar" controls>
                             <source src={i[9]} />
                           </audio>      
                         </div>
-                        <div >
-                          <Link  to={`/browse/${i[7]}`} >View Profile</Link>
+                        <div className="link-profile-div" >
+                          <Link className="blue-button-thin"  to={`/browse/${i[7]}`} >View Profile</Link>
                         </div>    
                   </div>
                 )

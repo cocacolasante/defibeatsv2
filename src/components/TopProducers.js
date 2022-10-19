@@ -102,15 +102,15 @@ const TopProducers = () => {
                         <div className="song-card-mapping layoutoutline-solid" key={i[0]}>
                             <h3>Producer: {i[0].slice(0, 6)}...{i[0].slice(-6)}</h3>
                             {!i[5] ? <p></p> : <p>{i[5]}</p>}
-                            <img className="song-producer-image" src={i[6]} /> 
+                            <img className="song-producer-image" alt="song-producer" src={i[6]} /> 
                             <div>
                                 {!i[1] ? <p>No status...</p> : <p>{i[1]}</p>}
                                 <p>Total Likes: {i[4]}</p>
                             </div>
                             
-                            <div>
+                            <div className="link-profile-div">
 
-                                <Link to={`/browse/${i[0]}`} >View Profile</Link>
+                                <Link className="blue-button-thin" to={`/browse/${i[0]}`} >View Profile</Link>
                             </div>
                         </div>
                     )

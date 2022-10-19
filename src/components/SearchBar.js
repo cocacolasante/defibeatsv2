@@ -2,7 +2,7 @@ import { ethers } from "ethers"
 import {Link } from "react-router-dom"
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux'
-import { loadAccount, loadProfile } from "../redux/actions";
+import { loadAccount } from "../redux/actions";
 import { loadProfileNftContract } from "../redux/actions";
 import { networks } from "../utils/networks";
 
@@ -106,7 +106,7 @@ const SearchBar = () => {
         {network !== "Polygon Mumbai Testnet" ? <h1>Connect to Mumbai Testnet</h1> :(
             <>
                 <div className="button-container">
-                    {!activeAccount ? <button onClick={connectWallet} className="button">connect</button> : <button onClick={null} className='button'>Wallet: {activeAccount.slice(0, 6)}...{activeAccount.slice(-4)}</button> }
+                    {!activeAccount ? <button onClick={connectWallet} className="blue-button">connect</button> : <button onClick={null} className='blue-button'>Wallet: {activeAccount.slice(0, 6)}...{activeAccount.slice(-4)}</button> }
                 </div>
             
 

@@ -105,11 +105,11 @@ const SongCard = () => {
     <div className='song-card-side-container layoutoutline-solid'>
       {!currentProfile ? <p>Loading Blockchain Data</p>:
         <div className='side-user-container'>
-        <img className="song-producer-image3" src={profileImage} alt="profile image" />
-          <p>Signed In As: {currentProfile[0].toString().slice(0, 6)}...{currentProfile[0].toString().slice(-6)}</p>
-          <p>Username: {currentProfile[5]} </p>
-          <p>Current Status: {currentProfile[1]}</p>
-          <p>Current Status: {currentProfile[1]} </p>
+        <img className="song-producer-image3" src={profileImage} alt="profile" />
+          <p><strong>Signed In As:</strong> {currentProfile[0].toString().slice(0, 6)}...{currentProfile[0].toString().slice(-6)}</p>
+          <p><strong>Username:</strong> {currentProfile[5]} </p>
+          <p><strong>Current Status:</strong> {currentProfile[1]}</p>
+          <p><strong>Current Status:</strong> {currentProfile[1]} </p>
         </div>
       }
     </div>

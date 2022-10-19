@@ -203,12 +203,15 @@
 .featured-song-container{
   background-color: #ABB0B8;
   color: whitesmoke;
+  max-width: 700px;
+  margin: auto;
   
 }
 
 .home-featured-song{
   align-content: center;
   text-align: center;
+  margin: auto;
 }
 
 .featured-card{
@@ -254,6 +257,8 @@
 .layoutoutline-solid{
   border: 1px solid #E6EEF7;
   border-radius: 5px;
+  box-shadow: 1px 1px 6px 3px #E6EEF7;
+
   
 }
 
@@ -268,3 +273,75 @@
 .heading2{
   padding-top: 20px;
 }
+
+.blue-button {
+	box-shadow: 1px 1px 6px 3px #1564ad;
+	background-color:#79bbff;
+	border-radius:28px;
+	border:1px solid #337bc4;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:1rem;
+	padding:10px 31px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #528ecc;
+}
+.blue-button:hover {
+	background-color:#378de5;
+}
+.blue-button:active {
+	position:relative;
+	top:1px;
+}
+.blue-button-thin {
+	box-shadow: 1px 1px 6px 3px #1564ad;
+	background-color:#79bbff;
+	border-radius:28px;
+	border:1px solid #337bc4;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:1rem;
+	padding:2px 15px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #528ecc;
+}
+.blue-button-thin:hover {
+	background-color:#378de5;
+}
+.blue-button-thin:active {
+	position:relative;
+	top:1px;
+}
+
+.yellowButton {
+	box-shadow: 1px 1px 6px 3px #fff6af;
+	background-color:#ffec64;
+	border-radius:28px;
+	border:1px solid #ffaa22;
+	display:inline-block;
+	cursor:pointer;
+	color:#333333;
+	font-family:Arial;
+	font-size:1rem;
+	padding:10px 40px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffee66;
+}
+.yellowButton:hover {
+	background-color:#ffab23;
+}
+.yellowButton:active {
+	position:relative;
+	top:1px;
+}
+
+
+.link-profile-div{
+  padding-bottom: 12px;
+  padding-top: 6px;
+}
+
