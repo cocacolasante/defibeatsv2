@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux'
 import { ethers } from 'ethers'
 import profileNftAbi from "../assets/profilenft.json"
 import { PROFILENFT_ADDRESS } from '../config'
@@ -36,6 +35,7 @@ const SongCard = () => {
     
 }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchCurrentUser = async () => {
     try{
       const {ethereum} =window;
@@ -99,7 +99,7 @@ const SongCard = () => {
   useEffect(()=>{
     fetchCurrentUser()
     _getOriginalProducerImage(activeAccount)
-  },[activeAccount])
+  },[activeAccount, fetchCurrentUser])
 
   return (
     <div className='song-card-side-container layoutoutline-solid'>

@@ -4,20 +4,18 @@ import { useEffect, useState } from "react";
 import defibeatsAbi from "../assets/defibeats.json"
 import profileNftAbi from "../assets/profilenft.json"
 import {PROFILENFT_ADDRESS} from "../config"
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom"
 
 
 const RecentListings = () => {
   
-  const account = useSelector(state=>state.provider.account)
   const [recentSongs, setRecentSongs] = useState()
   const[allFees, setAllFees] = useState()
 
-  const toWei = (num) => ethers.utils.parseEther(num.toString())
   const fromWei = (num) => ethers.utils.formatEther(num)
   
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const getSongData = async () => {
     try {
       const {ethereum} = window;
@@ -98,10 +96,6 @@ const RecentListings = () => {
     }
   }
 
-  const handleBuyclick = (songNum, price) =>{
-    
-    buySong(songNum, price)
-  }
 
   const _getOriginalProducer = async (ogProducersAddress) =>{
 
@@ -169,7 +163,7 @@ const RecentListings = () => {
     getSongData();
     getFeeAmounts()
     
-  }, [])
+  }, [getSongData])
 
   return (
     <div id="content-wrapper">
@@ -179,12 +173,13 @@ const RecentListings = () => {
            {!recentSongs ? 
                 (<p>loading</p>) 
                 : 
+                // eslint-disable-next-line array-callback-return
                 recentSongs.map((i)=>{
                    if(i[0]){
                     return(
                     <div className="song-card-mapping layoutoutline-solid" key={i[0]}> 
                         <h3>Name: {i[1]} </h3>
-                        <img className="song-producer-image" src={i[8]} />                  
+                        <img className="song-producer-image" alt="song producer" src={i[8]} />                  
                             
                         <p>Original Producer: {i[7].slice(0, 6)}...{i[7].slice(-6)}</p>
                         <div>

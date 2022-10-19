@@ -13,9 +13,9 @@ const TopPurchases = () => {
   const [topSongs, setTopSongs] = useState()
   const[allFees, setAllFees] = useState()
 
-  const toWei = (num) => ethers.utils.parseEther(num.toString())
   const fromWei = (num) => ethers.utils.formatEther(num)
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const getSongData = async () => {
     try {
       const {ethereum} = window;
@@ -160,7 +160,7 @@ const TopPurchases = () => {
     getSongData();
     getFeeAmounts()
     
-  }, [])
+  }, [getSongData])
 
  
 
@@ -173,12 +173,13 @@ const TopPurchases = () => {
            {!topSongs ? 
                 (<p>loading</p>) 
                 : 
+                // eslint-disable-next-line array-callback-return
                 topSongs.map((i)=>{
                    if(i[0]){
                     return(
                     <div className="song-card-mapping layoutoutline-solid" key={i[0]}> 
                         <h3>Name: {i[1]} </h3>
-                        <img className="song-producer-image" src={i[8]} />                  
+                        <img className="song-producer-image" alt="song producer" src={i[8]} />                  
                             
                         <p>Original Producer: {i[7].slice(0, 6)}...{i[7].slice(-6)}</p>
                         <div>

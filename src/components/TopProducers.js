@@ -1,6 +1,5 @@
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
-import defibeatsAbi from "../assets/defibeats.json"
 import profileNftAbi from "../assets/profilenft.json"
 import {PROFILENFT_ADDRESS} from "../config"
 import { Link } from "react-router-dom"
@@ -13,6 +12,7 @@ const TopProducers = () => {
     const[userProfiles, setUserProfiles] = useState()
 
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const getProfileData = async () => {
         try {
             const {ethereum} = window;
@@ -87,7 +87,7 @@ const TopProducers = () => {
 
     useEffect(()=>{
         getProfileData();
-    }, [])
+    }, [getProfileData])
 
 
     return (

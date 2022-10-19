@@ -8,7 +8,6 @@ import { Link } from "react-router-dom"
 
 function FeaturedSong() {
 
-  const toWei = (num) => ethers.utils.parseEther(num.toString())
   const fromWei = (num) => ethers.utils.formatEther(num)
 
   const [featuredSong, setFeaturedSong] = useState()
