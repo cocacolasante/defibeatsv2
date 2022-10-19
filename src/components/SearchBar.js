@@ -4,13 +4,14 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux'
 import { loadAccount, loadProfile } from "../redux/actions";
 import { loadProfileNftContract } from "../redux/actions";
+import { networks } from "../utils/networks";
 
 const SearchBar = () => {
 
     const [activeAccount, setActiveAccount] = useState()
     const dispatch = useDispatch();
     const provider = useSelector(state=>state.provider.connection)
-    
+    const [network, setNetwork] = useState("")
 
     
     const connectWallet = async () => {
@@ -41,6 +42,7 @@ const SearchBar = () => {
                     
     }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const checkIfWalletIsConnected = async () => {
 
         const {ethereum} = window;
@@ -54,6 +56,16 @@ const SearchBar = () => {
 
         const accounts = await ethereum.request({method: "eth_accounts"})
 
+        const chainId = await ethereum.request({method: "eth_chainId"})
+
+            setNetwork(networks[chainId])
+
+            ethereum.on('chainChanged', handleChainChanged);
+
+            function handleChainChanged(_chainId) {
+                window.location.reload();
+            }
+
         if(accounts.length !== 0){
             const currentAccount = accounts[0]
             setActiveAccount(currentAccount)
@@ -66,6 +78,9 @@ const SearchBar = () => {
             const connection = new ethers.providers.Web3Provider(ethereum)
 
             dispatch({ type: 'PROVIDER_LOADED', connection }) // causes bug in console, still have to figure out
+
+            
+
             
 
         } else{
@@ -74,9 +89,6 @@ const SearchBar = () => {
         
     }
 
-    const onSearchHandler = (e) =>{
-        
-    }
    
 
     useEffect(()=>{
@@ -85,29 +97,31 @@ const SearchBar = () => {
         loadProfileNftContract(provider, dispatch)
         
 
-    },[])
+    },[checkIfWalletIsConnected, setNetwork, network, dispatch, provider])
     
 
   return (
     <div className="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top ">
-        <div className="button-container">
-            {!activeAccount ? <button onClick={connectWallet} className="button">connect</button> : <button onClick={null} className='button'>Wallet: {activeAccount.slice(0, 6)}...{activeAccount.slice(-4)}</button> }
-        </div>
-    
-
-                <ul className="navbar-links">
-                    <Link className="nav-bar-links-link" to='profile'>Profile</Link>
-                    <Link className="nav-bar-links-link" to='/upload'>Upload</Link>
-                    <Link className="nav-bar-links-link" to='/mysongs'>My Songs</Link>
-                    <Link className="nav-bar-links-link" to='/browse'>Browse</Link>
-                    <Link className="nav-bar-links-link" to='/'>Home</Link> 
-                                     
-                </ul>      
+    {console.log(network)}
+        {network !== "Polygon Mumbai Testnet" ? <h1>Connect to Mumbai Testnet</h1> :(
+            <>
+                <div className="button-container">
+                    {!activeAccount ? <button onClick={connectWallet} className="button">connect</button> : <button onClick={null} className='button'>Wallet: {activeAccount.slice(0, 6)}...{activeAccount.slice(-4)}</button> }
+                </div>
             
 
-        
-            
-        
+                        <ul className="navbar-links">
+                            <Link className="nav-bar-links-link" to='profile'>Profile</Link>
+                            <Link className="nav-bar-links-link" to='/upload'>Upload</Link>
+                            <Link className="nav-bar-links-link" to='/mysongs'>My Songs</Link>
+                            <Link className="nav-bar-links-link" to='/browse'>Browse</Link>
+                            <Link className="nav-bar-links-link" to='/'>Home</Link> 
+                                            
+                        </ul>      
+
+            </>
+        ) }
+         
 
 
     </div>
