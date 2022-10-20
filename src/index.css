@@ -17,6 +17,5 @@ code {
 }
 
 html{
-  background: rgb(19,18,18);
-  background: linear-gradient(90deg, rgba(19,18,18,1) 16%, rgba(16,46,71,1) 60%, rgba(0,76,139,1) 100%);
+  background: rgb(0, 0, 0);
 }

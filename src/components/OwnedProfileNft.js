@@ -194,7 +194,7 @@ const OwnedProfileNft = () => {
 
 
   return (
-    <div>
+    <div className="text-bg-dark p-3">
         <div className="header-container" > 
             <h2>User Account: {useSelector(state=>state.provider.account)} </h2>
             
@@ -208,7 +208,7 @@ const OwnedProfileNft = () => {
           
         </div>
         <h3 className="profile-headers">Current Profile Picture</h3>
-        <div id="content" className="profile-picture prof-pic-container">
+        <div id="content" className="text-bg-dark p-3 profile-picture prof-pic-container">
             <img className="img-thumbnail" src={currentProfile} />
             </div>
             <div className="header-container">

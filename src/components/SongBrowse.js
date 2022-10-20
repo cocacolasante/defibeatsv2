@@ -99,7 +99,7 @@ const SongBrowse = () => {
     }, [])
 
   return (
-    <div>
+    <div className="text-bg-dark p-3">
         <div>
             <h2>Top Producers</h2>
             <div className='user-profile-container'>

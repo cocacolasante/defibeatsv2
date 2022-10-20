@@ -96,7 +96,7 @@ const client = ipfsClient({
 
 
   return (
-    <div >
+    <div className="text-bg-dark p-3" >
         
         <div className='profile-upload'>
             <h3 className="profile-headers">Upload New Profile Photo</h3>

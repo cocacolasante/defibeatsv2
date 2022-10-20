@@ -91,7 +91,7 @@ const TopProducers = () => {
 
 
     return (
-        <div id="content-wrapper">
+        <div id="content-wrapper" className="text-bg-dark p-3">
             <h3>TopProducers</h3>
             <div className='recent-upload-card-container'> 
             {

@@ -304,7 +304,7 @@ const ProducersProfile = () => {
   },[])
 
   return (
-    <div > 
+    <div className="text-bg-dark p-3"> 
     {
       !producerProfile ? <p>Loading...</p>:
       (

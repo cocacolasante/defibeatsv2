@@ -101,7 +101,7 @@ const SearchBar = () => {
     
 
   return (
-    <div className="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top ">
+    <div className=" text-bg-dark p-3 navbar navbar-dark navbar-expand bg-dark shadow mb-4 topbar static-top mrgin-bottom">
         {network !== "Polygon Mumbai Testnet" ? <h1>Connect to Mumbai Testnet</h1> :(
             <>
                 <div className="button-container">

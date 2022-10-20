@@ -6,8 +6,8 @@ import TopProducers from "../components/TopProducers";
 const Home = () =>{
 
     return(
-        <div id="content backgroundcolor-container" className="backgroundcolor-container">
-            <div className="content-wrapper">
+        <div id="content backgroundcolor-container" className="text-bg-dark p-3">
+            
                 <FeaturedSong />
                 <div className="home-recent-upload" >
                     <RecentListings />
@@ -19,7 +19,7 @@ const Home = () =>{
                     <TopProducers />
                 </div>
             </div>
-        </div>
+       
     )
 }
 

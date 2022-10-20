@@ -7,6 +7,9 @@
   background-color: grey;
   z-index: 1;
 }
+.mrgin-bottom{
+  margin-bottom: 0px;
+}
 
 .nav-bar-links-link {
   float: right;
@@ -155,9 +158,6 @@
 
 }
 
-.profile-container{
-  padding-left: 20px;
-}
 
 .profile-headers{
   padding-top: 15px;
@@ -184,6 +184,7 @@
   border: 1px solid black;
   width: 300px;
   height: auto;
+  background-color: lightgray;
 }
 
 .play-btn-container{
@@ -194,6 +195,7 @@
   border: 1px solid black;
   width: 150px;
   height: auto;
+  background-color: lightgray;
 }
 .song-producer-image2 {
   max-height: 100px;
@@ -227,9 +229,11 @@
   padding-left: 10px;
   padding-right: 10px;
   padding-bottom: 15px;
+  
 }
 .producer-card-container{
   padding: 10px;
+  
 }
 
 .song-card-side-container{

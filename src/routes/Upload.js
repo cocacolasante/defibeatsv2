@@ -6,7 +6,7 @@ import MyRecentSongs from '../components/MyRecentSongs'
 
 const Upload = () => {
   return (
-    <div id='content'>
+    <div id='content' >
       <UploadForm />
       <div className='myrecent-uploads'>
         <MyRecentSongs />

@@ -7,7 +7,7 @@ const MySongs = () => {
 
 
   return (
-    <div id="content">
+    <div id="content" className="text-bg-dark p-3">
       <div>
         <h2>MySongs</h2>
       </div>
