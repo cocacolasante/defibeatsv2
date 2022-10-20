@@ -125,6 +125,7 @@
 
 .upload-form-container{
   text-align: left;
+  padding-bottom: 10px;
 }
 
 .form{
@@ -385,4 +386,13 @@
   justify-content:space-between;
   background-color: black;
   
+}
+
+
+.logo-header-text{
+  color: white;
+}
+
+.input-border{
+  border-radius: 10px;
 }

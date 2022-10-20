@@ -208,17 +208,17 @@ const OwnedProfileNft = () => {
           
         </div>
         <h3 className="profile-headers">Current Profile Picture</h3>
-        <div id="content" className="text-bg-dark p-3 profile-picture prof-pic-container">
+        <div id="content" className="profile-picture prof-pic-container">
             <img className="img-thumbnail" src={currentProfile} />
             </div>
             <div className="header-container">
                 <h3 className="profile-headers">Set User Name: </h3>
-                <input type='text' placeholder="New Username" onSubmit={setCurrentUsername} onChange={e=>setUsername(e.target.value)} />
+                <input className='input-border' type='text' placeholder="New Username" onSubmit={setCurrentUsername} onChange={e=>setUsername(e.target.value)} />
                 <button type="button" className="blue-button-thin" onClick={setCurrentUsername} >Set Username</button>
             </div>
             <div className="header-container">
                 <h3 className="profile-headers">Set Status Message: </h3>
-                <input type='text' placeholder="New Status" onSubmit={setProfileMessage} onChange={e=>setStatusMessage(e.target.value)} />
+                <input className='input-border' type='text' placeholder="New Status" onSubmit={setProfileMessage} onChange={e=>setStatusMessage(e.target.value)} />
                 <button type='button' className="blue-button-thin" onClick={setProfileMessage} placeholder="submit" >Set Status</button>
             </div>
             <h3 className="profile-headers">Set Profile Picture</h3>

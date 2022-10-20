@@ -324,11 +324,11 @@ const ProducersProfile = () => {
           </div>
           <div>
             <input onChange={e=>setTippingAmount(e.target.value)} placeholder='Enter Tip Amount'/>
-            <button onClick={tipProducer}>Tip Producer</button>
+            <button className='blue-button-thin ' onClick={tipProducer}>Tip Producer</button>
           </div>
           <div>
-          {!hasLiked ?<button onClick={likeProfile} >Like User's Profile</button> : 
-            <button onClick={unlikeProfile} >Liked</button> }
+          {!hasLiked ?<button className='blue-button-thin ' onClick={likeProfile} >Like User's Profile</button> : 
+            <button className='blue-button-thin ' onClick={unlikeProfile} >Liked</button> }
           </div>
           <div>
             <h2>Recent Uploads</h2>
@@ -356,8 +356,8 @@ const ProducersProfile = () => {
                         
                         <div className="play-btn-container"> 
                         {
-                          !i[6] ? <button>Not For Sale</button> :
-                          <button value={i[0]} onClick={e=>buySong(e.target.value, i[5])} >Buy</button>
+                          !i[6] ? <button className='blue-button-thin '>Not For Sale</button> :
+                          <button className='blue-button-thin ' value={i[0]} onClick={e=>buySong(e.target.value, i[5])} >Buy</button>
                         }
                         
                         </div>

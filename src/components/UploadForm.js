@@ -138,7 +138,7 @@ const UploadForm = () => {
             <label >Collection Name</label>
             <input type='text' onChange={(e)=>setCollectionName(e.target.value)} placeholder="Enter Collection Name..." />
           </div>
-          <div>
+          <div className="">
             <label for='description'>Enter short song description or message about song</label>
             <br />
             <textarea maxLength="100" placeholder='description' onChange={(e)=>setDescription(e.target.value)} />   

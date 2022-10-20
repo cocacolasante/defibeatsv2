@@ -239,7 +239,7 @@ const MyRecentSongs = () => {
                         {i[6] ? <button value={i[0]} onClick={handleCancelClick} className="play-buy-btn yellowButton" >Cancel Listing</button> : (
                             <div>
                                 <button className="play-buy-btn yellowButton" value={i[0]} onClick={handleSetSongButton} >List for Sale</button>
-                                <input type="number" onChange={e=>setListingPrice(toWei(e.target.value))} placeholder="listing price" />
+                                <input className='input-border' type="number" onChange={e=>setListingPrice(toWei(e.target.value))} placeholder="listing price" />
                                 </div> )}
                         </div>
                         <div className="audio-bar-container" >
