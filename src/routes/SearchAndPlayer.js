@@ -1,6 +1,7 @@
 import SearchBar from "../components/SearchBar";
 import MusicPlayer from "../components/MusicPlayer";
 import { Outlet } from 'react-router-dom';
+import Footer from "../components/Footer.compon";
 
 
 const SearchAndPlayer = () =>{
@@ -15,6 +16,9 @@ const SearchAndPlayer = () =>{
             <SearchBar />
             <Outlet />
             </div>
+           
+            <Footer />
+            
       </div>
     )
 }
