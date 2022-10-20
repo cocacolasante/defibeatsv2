@@ -13,7 +13,7 @@
 
 .nav-bar-links-link {
   float: right;
-  color: black;
+  color: whitesmoke;
   padding: 14px 16px;
   text-decoration: none;
   font-size: 17px;
@@ -26,6 +26,7 @@
 
 .navbar-links{
   float: left;
+  
 }
 
 .search-bar-form{
@@ -43,9 +44,8 @@
 
 }
 .button-container{
-  position: absolute;
-  top: 15%;
-  left: 80%;
+  padding-top: 10px;
+  padding-right: 8px;
 }
 
 
@@ -236,7 +236,7 @@
 
 .song-card-side-container{
   padding-top: 25px;
-  color: black;
+  color: whitesmoke;
 }
 .logo-text{
   color: black;
@@ -368,4 +368,21 @@
   text-align: center;
   padding-top: 20px;
   padding-bottom: 5px;
+}
+
+.side-bar-container{
+  display: grid;
+  float: left;
+  min-height: auto;
+  width: 300px;
+  background-color: black;
+ 
+  
+}
+
+.top--div--{
+  display: flex;
+  justify-content:space-between;
+  background-color: black;
+  
 }

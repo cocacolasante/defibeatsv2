@@ -123,7 +123,7 @@ const UploadForm = () => {
 
   
   return (
-    <div id='content-wrapper' className="text-bg-dark p-3">
+    <div id='content-wrapper' className="">
       <div className="title-container-upload">
         <h2>Create song</h2>
         <p>Mint your song to the blockchain for {viewMintFee} Matic per song</p>

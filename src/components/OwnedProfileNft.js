@@ -194,7 +194,7 @@ const OwnedProfileNft = () => {
 
 
   return (
-    <div className="text-bg-dark p-3">
+    <div >
         <div className="header-container" > 
             <h2>User Account: {useSelector(state=>state.provider.account)} </h2>
             

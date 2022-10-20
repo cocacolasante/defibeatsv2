@@ -6,7 +6,7 @@ import TopProducers from "../components/TopProducers";
 const Home = () =>{
 
     return(
-        <div id="content backgroundcolor-container" className="text-bg-dark p-3">
+        <div id="content backgroundcolor-container" >
             
                 <FeaturedSong />
                 <div className="home-recent-upload" >

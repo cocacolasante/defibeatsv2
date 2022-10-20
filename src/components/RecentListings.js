@@ -166,7 +166,7 @@ const RecentListings = () => {
   }, [getSongData])
 
   return (
-    <div id="content-wrapper" className="text-bg-dark p-3">
+    <div id="content-wrapper" >
         <h2 className="heading2">Recent Listings</h2>
         <div className='recent-upload-card-container'>
   

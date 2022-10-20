@@ -101,13 +101,10 @@ const SearchBar = () => {
     
 
   return (
-    <div className=" text-bg-dark p-3 navbar navbar-expand bg-dark topbar  mrgin-bottom">
+    <div className="top--div--">
         {network !== "Polygon Mumbai Testnet" ? <h1>Connect to Mumbai Testnet</h1> :(
             <>
-                <div className="button-container">
-                    {!activeAccount ? <button onClick={connectWallet} className="blue-button">connect</button> : <button onClick={null} className='blue-button'>Wallet: {activeAccount.slice(0, 6)}...{activeAccount.slice(-4)}</button> }
-                </div>
-            
+               
 
                         <ul className="navbar-links">
                             <Link className="nav-bar-links-link" to='profile'>Profile</Link>
@@ -117,7 +114,10 @@ const SearchBar = () => {
                             <Link className="nav-bar-links-link" to='/'>Home</Link> 
                                             
                         </ul>      
-
+                <div className="button-container">
+                    {!activeAccount ? <button onClick={connectWallet} className="blue-button">connect</button> : <button onClick={null} className='blue-button'>Wallet: {activeAccount.slice(0, 6)}...{activeAccount.slice(-4)}</button> }
+                </div>
+            
             </>
         ) }
          

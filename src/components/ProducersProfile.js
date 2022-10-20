@@ -304,7 +304,7 @@ const ProducersProfile = () => {
   },[])
 
   return (
-    <div className="text-bg-dark p-3"> 
+    <div > 
     {
       !producerProfile ? <p>Loading...</p>:
       (
@@ -341,7 +341,7 @@ const ProducersProfile = () => {
                 recentSongs.map((i)=>{
                    if(i[0]){
                     return(
-                    <div className="song-card-mapping" key={i[0]}> 
+                    <div className="song-card-mapping layoutoutline-solid" key={i[0]}> 
                         <h3>Name: {i[1]} </h3>
                         <img className="song-producer-image" src={i[8]} />                  
                             

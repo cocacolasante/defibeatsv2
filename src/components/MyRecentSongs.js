@@ -214,7 +214,7 @@ const MyRecentSongs = () => {
 
 
   return (
-    <div className="text-bg-dark p-3" >
+    <div  >
       <div>
         <h2>My Recent Songs</h2>
         <div className='user-profile-container'>
