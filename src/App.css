@@ -114,9 +114,7 @@
   display: inline-flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding-left: 100px;
-  padding-right: 100px;
-  padding-bottom: 50px;
+  
 }
 
 
@@ -182,9 +180,10 @@
 
 .song-card-mapping{
   border: 1px solid black;
-  width: 300px;
+  width: 295px;
   height: auto;
   background-color: lightgray;
+  padding-bottom: 10px;
 }
 
 .play-btn-container{
@@ -203,9 +202,8 @@
 }
 
 .featured-song-container{
-  background: rgb(52,48,50);
-  background: radial-gradient(circle, rgba(52,48,50,1) 29%, rgba(52,48,50,1) 62%, rgba(103,103,103,1) 100%);
-  color: whitesmoke;
+  background: rgb(30,32,33);
+  background: radial-gradient(circle, rgba(30,32,33,1) 46%, rgba(251,253,255,1) 100%);  color: whitesmoke;
   max-width: 700px;
   margin: auto;
   
@@ -214,7 +212,7 @@
 .home-featured-song{
   align-content: center;
   text-align: center;
-  margin: auto;
+  
 }
 
 .featured-card{
@@ -238,7 +236,10 @@
 
 .song-card-side-container{
   padding-top: 25px;
-  color: whitesmoke;
+  color: black;
+}
+.logo-text{
+  color: black;
 }
 .song-producer-image3{
   max-width: 175px;
@@ -264,13 +265,16 @@
   border-radius: 5px;
   box-shadow: 1px 1px 6px 3px #E6EEF7;
 
+}
+
+.layoutoutline-reversed{
+  border: 1px solid black;
+  border-radius: 5px;
+  box-shadow: 1px 1px 6px 3px black;
+
   
 }
 
-/* .backgroundcolor-container{
-  background: rgb(2,0,36);
-  background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);
-} */
 
 .link-button{
   border: 1px solid black;
@@ -332,7 +336,7 @@
 	color:#333333;
 	font-family:Arial;
 	font-size:1rem;
-	padding:10px 40px;
+	padding:5px 40px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #ffee66;
 }
@@ -348,5 +352,9 @@
 .link-profile-div{
   padding-bottom: 12px;
   padding-top: 6px;
+}
+
+.blackfont{
+  color: black;
 }
 

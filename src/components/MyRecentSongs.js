@@ -225,7 +225,7 @@ const MyRecentSongs = () => {
                 recentSongs.map((i)=>{
                    if(i[0]){
                     return(
-                    <div className="producer-card-container layoutoutline-solid" key={i[0]}> 
+                    <div className="producer-card-container song-card-mapping layoutoutline-solid" key={i[0]}> 
                         <h3>Name: {i[1]} </h3>
                         <img className="song-producer-image2" src={i[8]} />                  
                             

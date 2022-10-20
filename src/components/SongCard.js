@@ -102,7 +102,7 @@ const SongCard = () => {
   },[activeAccount, fetchCurrentUser])
 
   return (
-    <div className='song-card-side-container layoutoutline-solid'>
+    <div className='song-card-side-container layoutoutline-reversed'>
       {!currentProfile ? <p>Loading Blockchain Data</p>:
         <div className='side-user-container'>
         <img className="song-producer-image3" src={profileImage} alt="profile" />
