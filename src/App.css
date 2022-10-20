@@ -13,7 +13,7 @@
 
 .nav-bar-links-link {
   float: right;
-  color: whitesmoke;
+  color: lightgray;
   padding: 14px 16px;
   text-decoration: none;
   font-size: 17px;
@@ -26,7 +26,7 @@
 
 .navbar-links{
   float: left;
-  
+
 }
 
 .search-bar-form{
@@ -39,7 +39,7 @@
 .button{
   z-index: 2;
   float: right;
-  background-color: whitesmoke;
+  color: lightgray;
   
 
 }
@@ -236,7 +236,7 @@
 
 .song-card-side-container{
   padding-top: 25px;
-  color: whitesmoke;
+  color: lightgray;
 }
 .logo-text{
   color: black;

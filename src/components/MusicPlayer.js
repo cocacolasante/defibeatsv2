@@ -8,7 +8,7 @@ const MusicPlayer = () =>{
     return (
         <div  className="side-bar-container">
            <div class=" "><a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
-                <div class=""><span>DeFi Beats</span></div>
+                <div class=""><h1>DeFi Beats</h1></div>
                 </a>      
             <SongCard />
             </div>
