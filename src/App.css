@@ -391,8 +391,15 @@
 
 .logo-header-text{
   color: white;
+  padding-top: 13px;
+  padding-bottom: 36px;
 }
 
 .input-border{
   border-radius: 10px;
+}
+
+.top-producer-header{
+  padding-top: 72px;
+  padding-bottom: 36px;
 }

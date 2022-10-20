@@ -166,7 +166,7 @@ const TopPurchases = () => {
 
   return (
     <div className='recent-upload-container'>
-        <h2>Recent Uploads</h2>
+        <h2 className="top-producer-header">Recent Uploads</h2>
         <div className='recent-upload-card-container'>
         <div className='recent-upload-card-container'>
            

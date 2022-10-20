@@ -58,6 +58,7 @@ const OwnedProfileNft = () => {
         }
     }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const getAllProfileNfts = async () =>{
         
 
@@ -145,14 +146,17 @@ const OwnedProfileNft = () => {
         }
     }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const getStatus = async () =>{
-        let status = await blockchainProfile["profileMessage"]
+        let status = await blockchainProfile[1]
         setDisplayStatus(status)
         
     }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const getUsername = async () => {
-        let _username = await blockchainProfile["username"]
+        let _username = await blockchainProfile[5]
+       
         setDisplayUsername(_username)
     }
 
@@ -186,10 +190,15 @@ const OwnedProfileNft = () => {
     useEffect(()=>{
         profileContract();
         getAllProfileNfts();
+        
+           
+    },[])
+    useEffect(()=>{
+        
         getStatus()
         getUsername()
            
-    },[currentProfile, statusMessage, displayStatus, username, displayUsername])
+    },[getAllProfileNfts, getStatus, getUsername])
 
 
 

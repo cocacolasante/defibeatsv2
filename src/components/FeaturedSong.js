@@ -167,7 +167,7 @@ function FeaturedSong() {
 
   return (
     <div id="content">
-        <h2>Featured Song</h2>
+        <h2 className="top-producer-header">Featured Song</h2>
         <div className='home-featured-song'>
         
            

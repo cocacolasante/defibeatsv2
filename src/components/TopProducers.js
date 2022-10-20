@@ -92,7 +92,7 @@ const TopProducers = () => {
 
     return (
         <div id="content-wrapper" >
-            <h3>TopProducers</h3>
+            <h3 className="top-producer-header">TopProducers</h3>
             <div className='recent-upload-card-container'> 
             {
                 !userProfiles ? (<p>Loading...</p>)

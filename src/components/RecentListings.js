@@ -167,7 +167,7 @@ const RecentListings = () => {
 
   return (
     <div id="content-wrapper" >
-        <h2 className="heading2">Recent Listings</h2>
+        <h2 className="top-producer-header">Recent Listings</h2>
         <div className='recent-upload-card-container'>
   
            {!recentSongs ? 
