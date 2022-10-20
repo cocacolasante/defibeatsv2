@@ -83,7 +83,6 @@ const SongBrowse = () => {
         // parse json data for image uri
         ogProdIm = jsonResponse["image"]
     
-        console.log(ogProdIm)
         
         //return image uri for img src link
         return (ogProdIm)

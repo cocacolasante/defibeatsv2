@@ -197,7 +197,6 @@ const MyRecentSongs = () => {
     const getAudioFile = async (ipfsUri) =>{
       let response = await fetch(ipfsUri)
       const jsonResponse = await response.json()
-      console.log(jsonResponse["song"])
   
       return jsonResponse["song"]
       

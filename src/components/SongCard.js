@@ -93,11 +93,11 @@ const SongCard = () => {
 
   useEffect(()=>{
     checkIfWalletIsConnected()
-    
-  },[])
+    fetchCurrentUser()
+  },[activeAccount])
 
   useEffect(()=>{
-    fetchCurrentUser()
+    
     _getOriginalProducerImage(activeAccount)
   },[activeAccount, fetchCurrentUser])
 
