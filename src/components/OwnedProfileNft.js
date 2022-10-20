@@ -214,12 +214,12 @@ const OwnedProfileNft = () => {
             <div className="header-container">
                 <h3 className="profile-headers">Set User Name: </h3>
                 <input type='text' placeholder="New Username" onSubmit={setCurrentUsername} onChange={e=>setUsername(e.target.value)} />
-                <button type="button" onClick={setCurrentUsername} >Set Username</button>
+                <button type="button" className="blue-button-thin" onClick={setCurrentUsername} >Set Username</button>
             </div>
             <div className="header-container">
                 <h3 className="profile-headers">Set Status Message: </h3>
                 <input type='text' placeholder="New Status" onSubmit={setProfileMessage} onChange={e=>setStatusMessage(e.target.value)} />
-                <button type='button' onClick={setProfileMessage} placeholder="submit" >Set Status</button>
+                <button type='button' className="blue-button-thin" onClick={setProfileMessage} placeholder="submit" >Set Status</button>
             </div>
             <h3 className="profile-headers">Set Profile Picture</h3>
             <div className="text-center profile-grid ">
@@ -231,8 +231,11 @@ const OwnedProfileNft = () => {
                     nftMetaData.map((i)=>{
                     return(
                         <div className="profile-picture" key={i[0]}>
-                            <img className="img-thumbnail"  src={i[1]} />
-                            <button type="click" value={i[0]} onClick={e=>handleSetStateProfile(e)}>Set As Profile</button>
+                            <img className="img-thumbnail" alt="profile nft" src={i[1]} />
+                            <div className="profile-choice-btn-div">
+
+                                <button className="blue-button-thin" type="click" value={i[0]} onClick={e=>handleSetStateProfile(e)}>Set As Profile</button>
+                            </div>
                             <p>{i[0]}</p>
                         </div>
                     )

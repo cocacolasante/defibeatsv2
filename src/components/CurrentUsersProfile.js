@@ -100,8 +100,8 @@ const client = ipfsClient({
         
         <div className='profile-upload'>
             <h3 className="profile-headers">Upload New Profile Photo</h3>
-            <input onChange={uploadToIpfs} type='file' placeholder="Upload Profile Picture..." />
-            <button onClick={createProfilePic} >Mint Profile Photo Now</button>
+            <input className="blue-button-thin" onChange={uploadToIpfs} type='file' placeholder="Upload Profile Picture..." />
+            <button className="blue-button-thin" onClick={createProfilePic} >Mint Profile Photo Now</button>
         </div>
     </div>
   )

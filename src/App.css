@@ -274,7 +274,9 @@
 
   
 }
-
+.profile-choice-btn-div{
+  padding-top: 7px;
+}
 
 .link-button{
   border: 1px solid black;
