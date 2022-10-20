@@ -5,18 +5,18 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: rgb(2,0,36);
-background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);
+  background: rgb(19,18,18);
+background: linear-gradient(90deg, rgba(19,18,18,1) 16%, rgba(16,46,71,1) 60%, rgba(0,76,139,1) 100%);
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-    background: rgb(2,0,36);
-    background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);
+    background: rgb(19,18,18);
+    background: linear-gradient(90deg, rgba(19,18,18,1) 16%, rgba(16,46,71,1) 60%, rgba(0,76,139,1) 100%);
 }
 
 html{
-  background: rgb(2,0,36);
-  background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);
+  background: rgb(19,18,18);
+  background: linear-gradient(90deg, rgba(19,18,18,1) 16%, rgba(16,46,71,1) 60%, rgba(0,76,139,1) 100%);
 }

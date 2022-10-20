@@ -5,7 +5,6 @@ import defibeatsAbi from "../assets/defibeats.json"
 import profileNftAbi from "../assets/profilenft.json"
 import {PROFILENFT_ADDRESS} from "../config"
 import { Link } from "react-router-dom"
-import SearchComponent from "./SearchComponent"
 
 
 
@@ -17,7 +16,6 @@ const AllSongs = () => {
   const [search, setSearch] = useState("")
 
 
-  const toWei = (num) => ethers.utils.parseEther(num.toString())
   const fromWei = (num) => ethers.utils.formatEther(num)
 
   const getSongData = async () => {
@@ -195,7 +193,7 @@ const AllSongs = () => {
                     return(
                     <div className="song-card-mapping layoutoutline-solid" key={i[4]}> 
                         <h3>Name: {i[1]} </h3>
-                        <img className="song-producer-image" src={i[8]} />                  
+                        <img className="song-producer-image" alt="song producer" src={i[8]} />                  
                             
                         <p>Original Producer: {i[7].slice(0, 6)}...{i[7].slice(-6)}</p>
                         <div>
@@ -211,8 +209,8 @@ const AllSongs = () => {
                             <source src={i[9]} />
                           </audio>      
                         </div>
-                        <div>
-                          <Link to={`/browse/${i[0]}`} >View Profile</Link>
+                        <div className="link-profile-div">
+                          <Link className="blue-button-thin" to={`/browse/${i[0]}`} >View Profile</Link>
                         </div>         
                   </div>
                 )

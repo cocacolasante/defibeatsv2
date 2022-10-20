@@ -102,7 +102,6 @@ const SearchBar = () => {
 
   return (
     <div className="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top ">
-    {console.log(network)}
         {network !== "Polygon Mumbai Testnet" ? <h1>Connect to Mumbai Testnet</h1> :(
             <>
                 <div className="button-container">
