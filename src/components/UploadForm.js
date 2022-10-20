@@ -139,16 +139,16 @@ const UploadForm = () => {
             <input type='text' onChange={(e)=>setCollectionName(e.target.value)} placeholder="Enter Collection Name..." />
           </div>
           <div>
-            <label for='description'>Enter short song description or message</label>
+            <label for='description'>Enter short song description or message about song</label>
             <br />
-            <textarea placeholder='description' onChange={(e)=>setDescription(e.target.value)} />   
+            <textarea maxLength="100" placeholder='description' onChange={(e)=>setDescription(e.target.value)} />   
           </div>
           <br />
           <div className="form-div">
             <label>Song File</label>
-            <input onChange={uploadToIpfs} type='file' placeholder="Enter Song File..." />
+            <input  onChange={uploadToIpfs} type='file' placeholder="Enter Song File..." />
           </div>
-          <input type="submit" value="Mint Song Now!" />
+          <input className="blue-button-thin" type="submit" value="Mint Song Now!" />
         </form>
       </div>
     </div>
