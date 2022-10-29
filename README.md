@@ -9,7 +9,7 @@ How To Use:
 MUMBAI TESTNET
 
 1. Install Metamask and connect to Mumbai Testnet -instructions for testnet at this link https://medium.com/stakingbits/how-to-connect-polygon-mumbai-testnet-to-metamask-fc3487a3871f
-1.b go to https://mumbaifaucet.com/ to get free test matic
+1.b go to https://mumbaifaucet.com/ to get free test matic to pay for gas and fees
 
 2. Connect wallet to dApp
 3. Go to profile tab - upload and mint your profile NFT // set Username and Status
