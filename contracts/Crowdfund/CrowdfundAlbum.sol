@@ -95,6 +95,19 @@ contract CrowdfundContract{
 
     }
 
+    function cancelCrowdfund() public {
+        for(uint i; i < allInvestors.length; i++){
+
+            uint refundAmount = investors[allInvestors[i]];
+            investors[allInvestors[i]] = 0; // protect from reentrancy attacks from changin state variable prior to external call
+
+            IEscrow(escrowAddress).refundInvest(refundAmount);
+            payable(allInvestors[i]).transfer(refundAmount);
+
+            
+        }
+    }
+
 
 
 
