@@ -10,13 +10,13 @@ contract Escrow{
     }
 
     receive() external payable{}
-    
+
     constructor() payable {
         admin = msg.sender;
     }
 
     function releaseFund() public onlyAdmin {
-
+        
     }
 
 

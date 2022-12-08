@@ -70,6 +70,7 @@ contract CrowdfundContract{
         require(msg.value>=minimumInvestment, "please send minimum amount");
 
         investors[msg.sender]+= msg.value;
+        
         allInvestors.push(msg.sender);
 
         payable(escrowAddress).transfer(msg.value);

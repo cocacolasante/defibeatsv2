@@ -57,7 +57,20 @@ describe("CrowdfundAlbum", () =>{
             expect(await CrowdfundContract.allInvestors(0)).to.equal(user1.address)
         })
         it("checks the escrow received the funds", async () =>{
+            expect(await ethers.provider.getBalance(EscrowContract.address)).to.equal("100000000000000000")
+        })
+        it("checks for repeat investments", async () =>{
+            await CrowdfundContract.connect(user1).invest({value: "100000000000000000"})
+            expect(await CrowdfundContract.investors(user1.address)).to.equal("200000000000000000")
+            expect(await ethers.provider.getBalance(EscrowContract.address)).to.equal("200000000000000000")
             
+        })
+        it("checks others can invest", async () =>{
+            await CrowdfundContract.connect(user2).invest({value: "100000000000000000"})
+            expect(await CrowdfundContract.investors(user2.address)).to.equal("100000000000000000")
+            expect(await CrowdfundContract.allInvestors(1)).to.equal(user2.address)
+            expect(await ethers.provider.getBalance(EscrowContract.address)).to.equal("200000000000000000")
+
         })
     })
 })
