@@ -80,6 +80,20 @@ contract CrowdfundContract{
     // create a function if person invests over x amount they can mint a free nft
 
 
+    function cancelInvestment() public {
+        require(investors[msg.sender] > 0, "can only cancel your own investment");
+
+        uint refundAmount = investors[msg.sender];
+        investors[msg.sender] = 0;
+        IEscrow(escrowAddress).refundInvest(refundAmount);
+
+        for(uint i; i < allInvestors.length; i++){
+            if(allInvestors[i] == msg.sender){
+                delete allInvestors[i];
+            }
+        }
+
+    }
 
 
 

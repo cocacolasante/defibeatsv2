@@ -3,6 +3,7 @@ pragma solidity ^0.8.9;
 
 contract Escrow{
     address private admin;
+    address private crowdfundContract;
 
     modifier onlyAdmin {
         require(msg.sender == admin, "only admin can call function");
@@ -15,10 +16,20 @@ contract Escrow{
         admin = msg.sender;
     }
 
+    // add only admin modifer during combined test
+    function refundInvest(uint amount) public payable {
+        payable(crowdfundContract).transfer(amount);
+    }
+
     function releaseFund() public onlyAdmin {
         
     }
 
+
+    // setter functions
+    function setCrowdfundContract(address crowdfund) public onlyAdmin{
+        crowdfundContract = crowdfund;
+    }
 
 
     // getter functions

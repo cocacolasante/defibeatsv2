@@ -5,6 +5,8 @@ const toWeiStr = (num) => ethers.utils.parseEther(num.toString())
 const toWeiInt = (num) => ethers.utils.parseEther(num) 
 const fromWei = (num) => ethers.utils.formatEther(num)
 
+const nullAddress = "0x0000000000000000000000000000000000000000"
+
 describe("CrowdfundAlbum", () =>{
     let CrowdfundContract, EscrowContract, deployer, user1, user2, user3, user4, artist
     beforeEach(async () =>{
@@ -30,6 +32,8 @@ describe("CrowdfundAlbum", () =>{
         
         // console.log(`Crowdfund Contract deployed ${CrowdfundContract.address}`)
 
+        await EscrowContract.connect(deployer).setCrowdfundContract(CrowdfundContract.address)
+
 
 
     })
@@ -46,7 +50,7 @@ describe("CrowdfundAlbum", () =>{
         })
 
     })
-    describe("donate functions", () =>{
+    describe("invest functions", () =>{
         beforeEach(async () =>{
             await CrowdfundContract.connect(user1).invest({value: "100000000000000000"})
         })
@@ -71,6 +75,31 @@ describe("CrowdfundAlbum", () =>{
             expect(await CrowdfundContract.allInvestors(1)).to.equal(user2.address)
             expect(await ethers.provider.getBalance(EscrowContract.address)).to.equal("200000000000000000")
 
+        })
+        describe("cancel and refund functions", () =>{
+            beforeEach(async () =>{
+                await CrowdfundContract.connect(user2).invest({value: "100000000000000000"})
+                await CrowdfundContract.connect(user3).invest({value: "100000000000000000"})
+                await CrowdfundContract.connect(user4).invest({value: "100000000000000000"})
+            })
+            it("checks the refund function returns money", async () =>{
+                await CrowdfundContract.connect(user2).cancelInvestment()
+                expect(await ethers.provider.getBalance(EscrowContract.address)).to.equal("300000000000000000")
+            })
+            it("checks the address was removed from allInvestors", async () =>{
+                await CrowdfundContract.connect(user2).cancelInvestment()
+                
+
+                expect(await CrowdfundContract.allInvestors(1)).to.equal(nullAddress)
+            })
+            it("checks if invested twice, both instances refunded and removed", async ()=>{
+                await CrowdfundContract.connect(user2).invest({value: "100000000000000000"})
+                await CrowdfundContract.connect(user2).cancelInvestment()
+                expect(await CrowdfundContract.allInvestors(1)).to.equal(nullAddress)
+                expect(await CrowdfundContract.allInvestors(4)).to.equal(nullAddress)
+                
+
+            })
         })
     })
 })
