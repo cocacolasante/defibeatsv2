@@ -27,7 +27,7 @@ describe("CrowdfundAlbum", () =>{
 
 
         const crowdfundcontractFactory = await ethers.getContractFactory("CrowdfundContract")
-        CrowdfundContract = await crowdfundcontractFactory.deploy(artist.address, 100, 849000, "dopest on the block", EscrowContract.address)
+        CrowdfundContract = await crowdfundcontractFactory.deploy(artist.address, 100, 0, "dopest on the block", EscrowContract.address)
         await CrowdfundContract.deployed()
         
         // console.log(`Crowdfund Contract deployed ${CrowdfundContract.address}`)
@@ -100,6 +100,39 @@ describe("CrowdfundAlbum", () =>{
                 
 
             })
+            it("checks the cancel function pays back all users", async () =>{
+                let initialBalance2 = await ethers.provider.getBalance(user2.address)
+                // eslint-disable-next-line no-undef
+                initialBalance2 = BigInt(initialBalance2);
+                let initialBalance3 = await ethers.provider.getBalance(user3.address)
+                initialBalance3 = BigInt(initialBalance3);
+
+                let initialBalance4 = await ethers.provider.getBalance(user4.address)
+                initialBalance4 = BigInt(initialBalance4);
+
+
+                await CrowdfundContract.connect(deployer).cancelCrowdfund();
+                expect(await ethers.provider.getBalance(EscrowContract.address)).to.equal(0)
+                // eslint-disable-next-line no-undef
+                expect(await ethers.provider.getBalance(user2.address) ).to.equal(initialBalance2 + BigInt(100000000000000000))
+                expect(await ethers.provider.getBalance(user3.address) ).to.equal(initialBalance3 + BigInt(100000000000000000))
+                expect(await ethers.provider.getBalance(user4.address) ).to.equal(initialBalance4 + BigInt(100000000000000000))
+                expect(await ethers.provider.getBalance(CrowdfundContract.address)).to.equal(0)
+            })
+        })
+        describe("complete crowdfund", async () =>{
+            beforeEach(async() =>{
+                await CrowdfundContract.connect(user2).invest({value: "100000000000000000"})
+                await CrowdfundContract.connect(user3).invest({value: "100000000000000000"})
+                await CrowdfundContract.connect(user4).invest({value: "100000000000000000"})
+            })
+            it("checks the complete function", async () =>{
+                let escrowBalance = await ethers.provider.getBalance(EscrowContract.address)
+                let initialBalance = await ethers.provider.getBalance(artist.address)
+                await CrowdfundContract.connect(deployer).completeCrowdfund()
+                expect(await ethers.provider.getBalance(artist.address)).to.equal("10000400000000000000000")
+            })
+            
         })
     })
 })

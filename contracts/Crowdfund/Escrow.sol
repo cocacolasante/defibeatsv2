@@ -21,8 +21,8 @@ contract Escrow{
         payable(crowdfundContract).transfer(amount);
     }
 
-    function releaseFund() public onlyAdmin {
-        
+    function releaseFund() public  {
+        payable(crowdfundContract).transfer(address(this).balance);
     }
 
 
@@ -36,5 +36,9 @@ contract Escrow{
 
     function returnAdmin() public view returns(address){
         return admin;
+    }
+
+    function returnCrowdfundContract() public view returns(address){
+        return crowdfundContract;
     }
 }

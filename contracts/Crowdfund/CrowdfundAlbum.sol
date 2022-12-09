@@ -42,6 +42,7 @@ contract CrowdfundContract{
     address private escrowAddress;
 
 
+    uint public amountToGoal;
     uint public goalAmount;
     uint public endDate;
     bool public goalReached;
@@ -75,6 +76,12 @@ contract CrowdfundContract{
 
         payable(escrowAddress).transfer(msg.value);
 
+        amountToGoal+=msg.value;
+
+        if(amountToGoal >= goalAmount){
+            goalReached = true;
+        }
+
     }
 
     // create a function if person invests over x amount they can mint a free nft
@@ -105,6 +112,8 @@ contract CrowdfundContract{
             payable(allInvestors[i]).transfer(refundAmount);
 
             
+
+            
         }
     }
 
@@ -113,14 +122,14 @@ contract CrowdfundContract{
 
 
 
-
-    function completeCrowdfund() public returns(bool){
+    function completeCrowdfund() public {
         require(block.timestamp >= endDate, "still running");
+        require(goalReached ==true, "goal not reached");
 
-        // logic to transfer 
+        IEscrow(escrowAddress).releaseFund();
 
-
-        return goalReached = true;
+        payable(artistAddress).transfer(address(this).balance);
+        
     }
 
 
