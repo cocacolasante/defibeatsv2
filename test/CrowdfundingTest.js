@@ -127,8 +127,6 @@ describe("CrowdfundAlbum", () =>{
                 await CrowdfundContract.connect(user4).invest({value: "100000000000000000"})
             })
             it("checks the complete function", async () =>{
-                let escrowBalance = await ethers.provider.getBalance(EscrowContract.address)
-                let initialBalance = await ethers.provider.getBalance(artist.address)
                 await CrowdfundContract.connect(deployer).completeCrowdfund()
                 expect(await ethers.provider.getBalance(artist.address)).to.equal("10000400000000000000000")
             })

@@ -2,6 +2,7 @@
 pragma solidity ^0.8.9;
 
 import "./interfaces/IEscrow.sol";
+import "./CrowdfundNFT.sol";
 
 contract CrowdfundCreator{
     address public owner;
@@ -40,7 +41,7 @@ contract CrowdfundContract{
     address private crowdfundAdmin;
     address private artistAddress;
     address private escrowAddress;
-
+    CrowdfundNFT private rewardNFT;
 
     uint public amountToGoal;
     uint public goalAmount;
@@ -57,13 +58,15 @@ contract CrowdfundContract{
 
     receive() external payable{}
 
-    constructor(address _artist, uint _goalAmount, uint _endDate, string memory _albumName, address _escrowAddress)payable{
+    constructor(address _artist, uint _goalAmount, uint _endDate, string memory _albumName, address _escrowAddress, string memory _nftBaseUri)payable{
         artistAddress = _artist;
         goalAmount = _goalAmount;
         endDate = _endDate;
         albumName = _albumName;
         crowdfundAdmin = msg.sender;
         escrowAddress = _escrowAddress;
+        rewardNFT = new CrowdfundNFT(_albumName, _nftBaseUri);
+
     }
 
 
@@ -111,9 +114,7 @@ contract CrowdfundContract{
             IEscrow(escrowAddress).refundInvest(refundAmount);
             payable(allInvestors[i]).transfer(refundAmount);
 
-            
-
-            
+                        
         }
     }
 
@@ -129,6 +130,10 @@ contract CrowdfundContract{
         IEscrow(escrowAddress).releaseFund();
 
         payable(artistAddress).transfer(address(this).balance);
+
+         for(uint i; i < allInvestors.length; i++){
+            rewardNFT.mint(allInvestors[i]);
+        }
         
     }
 
