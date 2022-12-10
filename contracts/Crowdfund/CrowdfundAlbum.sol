@@ -2,26 +2,64 @@
 pragma solidity ^0.8.9;
 
 import "./interfaces/IEscrow.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
 import "./CrowdfundNFT.sol";
+import "./interfaces/ICrowdfundContract.sol";
 
 contract CrowdfundCreator{
+    using Counters for Counters.Counter;
+    Counters.Counter private projectID;
+
     address public owner;
 
+    mapping(uint => Project) public projects;
 
     struct Project{
         address artist;
         uint goal;
         uint endDate;
         bool completed;
+        bool canceled;
+        address crowdfundContract;
     }
+
+    event ProjectCompleted(uint projectId, address projectAddress, address artist);
+
+    modifier onlyPrjOwnOrOwner(uint _projectId) {
+        require(msg.sender == projects[_projectId].artist || msg.sender == owner, "not artist or admin" );
+        _;
+    }
+
     constructor(){
         owner = msg.sender;
 
     }
     
 
-    function createCrowdfund() public {
+    function createCrowdfund(address _artist, uint _goalAmount, uint _endDate, string memory _albumName, address _escrowAddress, string memory _nftBaseUri) public {
+        projectID.increment();
+        uint newProjectId = projectID.current();
 
+        CrowdfundContract newProject = new CrowdfundContract( _artist,  _goalAmount, _endDate, _albumName, _escrowAddress, _nftBaseUri);
+        Project memory newPrjStruct = Project(_artist, _goalAmount, _endDate,false, false, address(newProject));
+        projects[newProjectId] = newPrjStruct;
+
+
+    }
+
+    function completeCrowdfundProject(uint _projectId) public onlyPrjOwnOrOwner(_projectId){
+        projects[_projectId].completed = true;
+        address currentCrowdfundAddress = projects[_projectId].crowdfundContract;
+        ICrowdfundContract(currentCrowdfundAddress).completeCrowdfund();
+
+        emit ProjectCompleted(_projectId, currentCrowdfundAddress, projects[_projectId].artist);
+
+    }
+
+    function cancelCrowdfund(uint _projectId) public onlyPrjOwnOrOwner(_projectId){
+        projects[_projectId].canceled = true;
+        address currentCrowdfundAddress = projects[_projectId].crowdfundContract;
+        ICrowdfundContract(currentCrowdfundAddress).cancelCrowdfund();
     }
 
     
@@ -56,7 +94,14 @@ contract CrowdfundContract{
 
     address[] public allInvestors;
 
+    modifier onlyAdmin {
+        require(msg.sender == crowdfundAdmin, "only admin function");
+        _;        
+    }
+
     receive() external payable{}
+
+    // nft base uri is used for the rewards nft they will receive at the end
 
     constructor(address _artist, uint _goalAmount, uint _endDate, string memory _albumName, address _escrowAddress, string memory _nftBaseUri)payable{
         artistAddress = _artist;
@@ -105,7 +150,8 @@ contract CrowdfundContract{
 
     }
 
-    function cancelCrowdfund() public {
+    // add require statements
+    function cancelCrowdfund() public onlyAdmin{
         for(uint i; i < allInvestors.length; i++){
 
             uint refundAmount = investors[allInvestors[i]];
@@ -123,7 +169,7 @@ contract CrowdfundContract{
 
 
 
-    function completeCrowdfund() public {
+    function completeCrowdfund() public onlyAdmin{
         require(block.timestamp >= endDate, "still running");
         require(goalReached ==true, "goal not reached");
 
