@@ -5,6 +5,7 @@ import "./interfaces/IEscrow.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "./CrowdfundNFT.sol";
 import "./interfaces/ICrowdfundContract.sol";
+import "./Escrow.sol";
 
 contract CrowdfundCreator{
     using Counters for Counters.Counter;
@@ -36,11 +37,15 @@ contract CrowdfundCreator{
     }
     
 
-    function createCrowdfund(address _artist, uint _goalAmount, uint _endDate, string memory _albumName, address _escrowAddress, string memory _nftBaseUri) public {
+    function createCrowdfund(address _artist, uint _goalAmount, uint _endDate, string memory _albumName, string memory _nftBaseUri) public {
         projectID.increment();
         uint newProjectId = projectID.current();
 
-        CrowdfundContract newProject = new CrowdfundContract( _artist,  _goalAmount, _endDate, _albumName, _escrowAddress, _nftBaseUri);
+        Escrow newEscrow = new Escrow();
+
+        CrowdfundContract newProject = new CrowdfundContract( _artist,  _goalAmount, _endDate, _albumName, address(newEscrow), _nftBaseUri);
+        newEscrow.setCrowdfundContract(address(newProject));
+        
         Project memory newPrjStruct = Project(_artist, _goalAmount, _endDate,false, false, address(newProject));
         projects[newProjectId] = newPrjStruct;
 
