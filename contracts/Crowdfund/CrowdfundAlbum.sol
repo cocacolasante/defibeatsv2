@@ -7,9 +7,9 @@ import "./interfaces/ICrowdfundContract.sol";
 import "./Escrow.sol";
 
 contract CrowdfundCreator{
-    uint private projectID;
+    uint public projectID;
 
-    address private owner;
+    address public owner;
 
     mapping(uint => Project) public projects;
 
@@ -22,7 +22,6 @@ contract CrowdfundCreator{
         address crowdfundContract;
     }
 
-    event ProjectCompleted(uint projectId, address projectAddress, address artist);
 
     modifier onlyPrjOwnOrOwner(uint _projectId) {
         require(msg.sender == projects[_projectId].artist || msg.sender == owner );
@@ -35,7 +34,7 @@ contract CrowdfundCreator{
     }
     
 
-    function createCrowdfund(address _artist, uint _goalAmount, uint _endDate, bytes32  _albumName, string memory _nftBaseUri) public {
+    function createCrowdfund(address _artist, uint _goalAmount, uint _endDate, string memory _albumName, string memory _nftBaseUri) public {
         projectID++;
         uint newProjectId = projectID;
 
@@ -55,7 +54,6 @@ contract CrowdfundCreator{
         address currentCrowdfundAddress = projects[_projectId].crowdfundContract;
         ICrowdfundContract(currentCrowdfundAddress).completeCrowdfund();
 
-        emit ProjectCompleted(_projectId, currentCrowdfundAddress, projects[_projectId].artist);
 
     }
 
@@ -65,13 +63,6 @@ contract CrowdfundCreator{
         ICrowdfundContract(currentCrowdfundAddress).cancelCrowdfund();
     }
 
-
-
-
-
-    function returnOwner() public view returns(address){
-        return owner;
-    }
     
 }
 
@@ -98,7 +89,7 @@ contract CrowdfundContract{
     
     uint public minimumInvestment = 100000000000000000;
 
-    bytes32 albumName;
+    string public albumName;
 
     mapping(address => uint) public investors;
 
@@ -113,15 +104,15 @@ contract CrowdfundContract{
 
     // nft base uri is used for the rewards nft they will receive at the end
 
-    constructor(address _artist, uint _goalAmount, uint _endDate, bytes32 _albumName, address _escrowAddress, string memory _nftBaseUri)payable{
+    constructor(address _artist, uint _goalAmount, uint _endDate, string memory _albumName, address _escrowAddress, string memory _nftBaseUri)payable{
         artistAddress = _artist;
         goalAmount = _goalAmount;
         endDate = _endDate;
         albumName = _albumName;
         crowdfundAdmin = msg.sender;
         escrowAddress = _escrowAddress;
-        string memory albumString =string(abi.encodePacked(_albumName));
-        rewardNFT = new CrowdfundNFT((albumString), _nftBaseUri);
+        
+        rewardNFT = new CrowdfundNFT(_albumName, _nftBaseUri);
 
     }
 
